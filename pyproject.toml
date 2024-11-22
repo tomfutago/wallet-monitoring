@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "wallet-pipeline"
+version = "0.1.0"
+description = ""
+authors = ["tomfutago <tomfutago@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+requests = "^2.32.3"
+pandas = "^2.2.3"
+python-dotenv = "^1.0.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
