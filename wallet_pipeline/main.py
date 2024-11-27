@@ -52,6 +52,7 @@ def pull_zerion_positions(api_key):
 
   # Define key paths to extract from JSON
   key_paths = [
+    ("chain_id", ["relationships", "chain", "data", "id"]),
     ("parent", ["attributes", "parent"]),
     ("protocol", ["attributes", "protocol"]),
     ("name", ["attributes", "name"]),
@@ -158,5 +159,5 @@ def pull_zapper_positions(api_key):
   df.to_csv("./data/zapper_positions.csv")
 
 ############################################
-#pull_zerion_positions(zerion_api_key)
-pull_zapper_positions(zapper_api_key)
+pull_zerion_positions(zerion_api_key)
+#pull_zapper_positions(zapper_api_key)
