@@ -5,9 +5,13 @@ import requests
 import pandas as pd
 import duckdb
 from dotenv import load_dotenv
+from dune_client.client import DuneClient
+from dune_client.query import QueryBase
+from dune_client.types import QueryParameter
 
 # load .env file
 load_dotenv()
+dune = DuneClient.from_env()
 zerion_api_key = os.getenv("ZERION_API_KEY")
 zapper_api_key = os.getenv("ZAPPER_API_KEY")
 test_wallet = os.getenv("TEST_WALLET")
@@ -159,5 +163,8 @@ def pull_zapper_positions(api_key):
   df.to_csv("./data/zapper_positions.csv")
 
 ############################################
-pull_zerion_positions(zerion_api_key)
+#pull_zerion_positions(zerion_api_key)
 #pull_zapper_positions(zapper_api_key)
+
+cover_wallets_df = dune.run_query_dataframe(QueryBase(query_id=4340708))
+print(cover_wallets_df)
