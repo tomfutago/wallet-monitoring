@@ -58,6 +58,7 @@ def pull_zerion_positions(api_key):
   key_paths = [
     ("chain_id", ["relationships", "chain", "data", "id"]),
     ("parent", ["attributes", "parent"]),
+    ("app_id", ["relationships", "dapp", "data", "id"]),
     ("protocol", ["attributes", "protocol"]),
     ("name", ["attributes", "name"]),
     ("position_type", ["attributes", "position_type"]),
@@ -119,7 +120,7 @@ def pull_zapper_positions(api_key):
   key_paths = [
     #("key", ["key"]),
     ("address", ["address"]),
-    #("app_id", ["appId"]),
+    ("app_id", ["appId"]),
     ("app_name", ["appName"]),
     ("app_image_url", ["appImage"]),
     ("network", ["network"]),
@@ -162,9 +163,11 @@ def pull_zapper_positions(api_key):
   # store results as csv
   df.to_csv("./data/zapper_positions.csv")
 
-############################################
-#pull_zerion_positions(zerion_api_key)
-#pull_zapper_positions(zapper_api_key)
+def pull_cover_wallets():
+  cover_wallets_df = dune.run_query_dataframe(QueryBase(query_id=4340708))
+  print(cover_wallets_df)
 
-cover_wallets_df = dune.run_query_dataframe(QueryBase(query_id=4340708))
-print(cover_wallets_df)
+############################################
+pull_zerion_positions(zerion_api_key)
+pull_zapper_positions(zapper_api_key)
+#pull_cover_wallets
