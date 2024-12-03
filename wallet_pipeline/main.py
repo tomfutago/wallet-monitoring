@@ -16,6 +16,9 @@ zerion_api_key = os.getenv("ZERION_API_KEY")
 zapper_api_key = os.getenv("ZAPPER_API_KEY")
 test_wallet = os.getenv("TEST_WALLET")
 
+# create duckdb connection
+duckdb_con = duckdb.connect("./data/wallets.duckdb")
+
 def safe_get(d, *keys, default=None):
   """
   Safely retrieve nested dictionary values.
@@ -94,7 +97,16 @@ def pull_zerion_positions(api_key):
   df.index.name = "id"
 
   # store results as csv
-  df.to_csv("./data/zerion_positions.csv")
+  #df.to_csv("./data/zerion_positions.csv")
+
+  # drop table and start again
+  #duckdb_con.execute("DROP TABLE zerion_positions")
+
+  # create empty table based on df + inserted_at column
+  duckdb_con.execute("CREATE TABLE IF NOT EXISTS zerion_positions AS SELECT *, current_timestamp AS inserted_at FROM df WHERE 1=0")
+
+  # insert contents of df
+  duckdb_con.execute("INSERT INTO zerion_positions SELECT *, current_timestamp AS inserted_at FROM df")
 
 def pull_zapper_positions(api_key):
   # API call
@@ -161,13 +173,25 @@ def pull_zapper_positions(api_key):
   df.index.name = "id"
 
   # store results as csv
-  df.to_csv("./data/zapper_positions.csv")
+  #df.to_csv("./data/zapper_positions.csv")
+
+  # drop table and start again
+  #duckdb_con.execute("DROP TABLE zapper_positions")
+
+  # create empty table based on df + inserted_at column
+  duckdb_con.execute("CREATE TABLE IF NOT EXISTS zapper_positions AS SELECT *, current_timestamp AS inserted_at FROM df WHERE 1=0")
+
+  # insert contents of df
+  duckdb_con.execute("INSERT INTO zapper_positions SELECT *, current_timestamp AS inserted_at FROM df")
 
 def pull_cover_wallets():
   cover_wallets_df = dune.run_query_dataframe(QueryBase(query_id=4340708))
   print(cover_wallets_df)
 
 ############################################
-pull_zerion_positions(zerion_api_key)
+#pull_zerion_positions(zerion_api_key)
 pull_zapper_positions(zapper_api_key)
 #pull_cover_wallets
+
+# close duckdb connection
+duckdb_con.close()

@@ -10,3 +10,6 @@ __pycache__
 
 # Ignore virtual env
 .venv
+
+# Ignore external setup
+.vscode
