@@ -19,12 +19,13 @@ test_wallet = os.getenv("TEST_WALLET")
 # create duckdb connection
 duckdb_con = duckdb.connect("./data/wallets.duckdb")
 
-def clean_up_db():
-  # drop table and start again
-  duckdb_con.execute("DROP TABLE zerion_positions")
-
-  # drop table and start again
-  duckdb_con.execute("DROP TABLE zapper_positions")
+def clean_up_db(drop_tables:bool=False, truncate_tables:bool=False):
+  if drop_tables:
+    duckdb_con.execute("DROP TABLE IF EXISTS zerion_positions")
+    duckdb_con.execute("DROP TABLE IF EXISTS zapper_positions")
+  elif truncate_tables:
+    duckdb_con.execute("TRUNCATE TABLE zerion_positions")
+    duckdb_con.execute("TRUNCATE TABLE zapper_positions")
 
 def safe_get(d, *keys, default=None):
   """
@@ -67,7 +68,7 @@ def pull_zerion_positions(api_key: str, address: str):
   # Define key paths to extract from JSON
   key_paths = [
     ("chain_id", ["relationships", "chain", "data", "id"]),
-    ("parent", ["attributes", "parent"]),
+    #("parent", ["attributes", "parent"]),
     ("app_id", ["relationships", "dapp", "data", "id"]),
     ("protocol", ["attributes", "protocol"]),
     ("name", ["attributes", "name"]),
@@ -100,19 +101,22 @@ def pull_zerion_positions(api_key: str, address: str):
     for item in safe_get(json_data, "data", default=[])
   ])
 
-  # rename index
-  df.index.name = "id"
+  if not df.empty:
+    # rename index
+    df.index.name = "id"
 
-  # store results as csv
-  #df.to_csv("./data/zerion_positions.csv")
+    # store results as csv
+    #df.to_csv("./data/zerion_positions.csv")
+    #print(df.columns.to_list())
 
-  # create empty table based on df + inserted_at column
-  duckdb_con.execute("CREATE TABLE IF NOT EXISTS zerion_positions AS SELECT *, current_timestamp AS inserted_at FROM df WHERE 1=0")
+    # create empty table based on df + inserted_at column
+    #duckdb_con.execute("CREATE TABLE IF NOT EXISTS zerion_positions AS SELECT *, current_timestamp AS inserted_at FROM df")
 
-  # insert contents of df
-  duckdb_con.execute("INSERT INTO zerion_positions SELECT *, current_timestamp AS inserted_at FROM df")
+    # insert contents of df
+    #print(duckdb_con.execute("SELECT *, current_timestamp AS inserted_at FROM df").fetchone())
+    duckdb_con.execute("INSERT INTO zerion_positions SELECT *, current_timestamp AS inserted_at FROM df")
 
-def pull_zapper_positions(api_key):
+def pull_zapper_positions(api_key: str, address: str):
   # API call
   auth_str = f"{api_key}:"
   encoded_auth_str = base64.b64encode(auth_str.encode("utf-8")).decode("utf-8")
@@ -173,17 +177,18 @@ def pull_zapper_positions(api_key):
     for token in safe_get(asset, "tokens", default=[])
   ])
 
-  # rename index
-  df.index.name = "id"
+  if not df.empty:
+    # rename index
+    df.index.name = "id"
 
-  # store results as csv
-  #df.to_csv("./data/zapper_positions.csv")
+    # store results as csv
+    #df.to_csv("./data/zapper_positions.csv")
 
-  # create empty table based on df + inserted_at column
-  duckdb_con.execute("CREATE TABLE IF NOT EXISTS zapper_positions AS SELECT *, current_timestamp AS inserted_at FROM df WHERE 1=0")
+    # create empty table based on df + inserted_at column
+    #duckdb_con.execute("CREATE TABLE IF NOT EXISTS zapper_positions AS SELECT *, current_timestamp AS inserted_at FROM df")
 
-  # insert contents of df
-  duckdb_con.execute("INSERT INTO zapper_positions SELECT *, current_timestamp AS inserted_at FROM df")
+    # insert contents of df
+    duckdb_con.execute("INSERT INTO zapper_positions SELECT *, current_timestamp AS inserted_at FROM df")
 
 def pull_cover_wallets():
   df = dune.run_query_dataframe(QueryBase(query_id=4340708))
@@ -194,12 +199,30 @@ def pull_cover_wallets():
   # insert contents of df
   duckdb_con.execute("INSERT INTO cover_wallets SELECT *, current_timestamp AS inserted_at FROM df")
 
-############################################
-#clean_up_db()
-#pull_zerion_positions(zerion_api_key, test_wallet)
-#pull_zapper_positions(zapper_api_key, test_wallet)
+def loop_through_cover_wallets():
+  address = "0xbad"
+  current_api = ""
 
-pull_cover_wallets()
+  try:
+    # execute query and fetch results as df
+    result_df = duckdb_con.execute("SELECT DISTINCT monitored_wallet FROM cover_wallets").fetchdf()    
+    for _, row in result_df.iterrows():
+      address = row["monitored_wallet"]
+      current_api = "zerion"
+      pull_zerion_positions(api_key=zerion_api_key, address=address)
+      current_api = "zapper"
+      pull_zapper_positions(api_key=zapper_api_key, address=address)
+      
+  except Exception as e:
+    print(f"error for {current_api} and {address}: {e}")
+
+############################################
+clean_up_db(truncate_tables=True)
+#pull_zerion_positions(zerion_api_key, "0x036d6e8b88e21760f6759a31dabc8bdf3f026b98")
+#pull_zapper_positions(zapper_api_key, "0x036d6e8b88e21760f6759a31dabc8bdf3f026b98")
+
+#pull_cover_wallets()
+loop_through_cover_wallets()
 
 # close duckdb connection
 duckdb_con.close()
