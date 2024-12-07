@@ -19,13 +19,11 @@ test_wallet = os.getenv("TEST_WALLET")
 # create duckdb connection
 duckdb_con = duckdb.connect("./data/wallets.duckdb")
 
-def clean_up_db(drop_tables: bool=False, truncate_tables: bool=False):
-  if drop_tables:
-    duckdb_con.execute("DROP TABLE IF EXISTS zerion_positions")
-    duckdb_con.execute("DROP TABLE IF EXISTS zapper_positions")
-  elif truncate_tables:
-    duckdb_con.execute("TRUNCATE TABLE zerion_positions")
-    duckdb_con.execute("TRUNCATE TABLE zapper_positions")
+def clean_up_db(table_name: str, drop_table: bool=False, truncate_table: bool=False):
+  if drop_table:
+    duckdb_con.execute(f"DROP TABLE IF EXISTS {table_name}")
+  elif truncate_table:
+    duckdb_con.execute(f"TRUNCATE TABLE {table_name}")
 
 def safe_get(d, *keys, default=None):
   """
@@ -232,12 +230,15 @@ def loop_through_cover_wallets():
     print(f"error for {current_api} and {address}: {e}")
 
 ############################################
-#clean_up_db(drop_tables=True, truncate_tables=False)
+#clean_up_db(table_name="zerion_positions", drop_table=True, truncate_table=False)
 #pull_zerion_positions(api_key=zerion_api_key, cover_id=-1, address="0x036d6e8b88e21760f6759a31dabc8bdf3f026b98")
+#clean_up_db(table_name="zapper_positions", drop_table=True, truncate_table=False)
 #pull_zapper_positions(api_key=zapper_api_key, cover_id=-1, address="0x036d6e8b88e21760f6759a31dabc8bdf3f026b98")
 
-#pull_cover_wallets()
-loop_through_cover_wallets()
+clean_up_db(table_name="cover_wallets", drop_table=True)
+pull_cover_wallets()
+
+#loop_through_cover_wallets()
 
 # close duckdb connection
 duckdb_con.close()
