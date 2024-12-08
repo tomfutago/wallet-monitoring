@@ -1,36 +1,27 @@
-## Hello Evidence
+## Wallet Monitoring
 
-### Orders Table
+### Capital Pool
 
-```my_query_summary_top100
-select
-   order_datetime,
-   first_name,
-   last_name,
-   email
-from needful_things.test
-order by order_datetime desc
-limit 100
+```capital_pool
+select * from wallets.capital_pool order by 1
 ```
 
-<DataTable data={my_query_summary_top100}>
-   <Column id=order_datetime title="Order Date"/>
-   <Column id=first_name title="huzzzaaa" />
-   <Column id=email />
+<DataTable data={capital_pool}>
+  <Column id=block_date title="Date"/>
+  <Column id=avg_eth_usd_price title="ETH/USD price" />
+  <Column id=avg_capital_pool_eth_total title="ETH total" />
+  <Column id=avg_capital_pool_usd_total title="USD total" />
 </DataTable>
 
-### Orders by Month
 
-```orders_by_month
-select order_month, count(*) as orders from needful_things.test
-group by order_month order by order_month desc
-limit 12
+```cover_wallets
+select * from wallets.cover_wallets order by 1
 ```
-<BarChart
-    data={orders_by_month}
-    x=order_month
-    y=orders
-	xFmt="mmm yyyy"
-	xAxisTitle="Month"
-	yAxisTitle="Orders"
-/>
+
+```zerion_data
+select * from wallets.zerion_data order by 1
+```
+
+```zapper_data
+select * from wallets.zapper_data order by 1
+```
