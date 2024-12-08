@@ -204,12 +204,43 @@ def pull_zapper_positions(api_key: str, cover_id: int, address: str):
 def pull_cover_wallets():
   df = dune.run_query_dataframe(QueryBase(query_id=4340708))
 
-  # create empty table based on df + inserted_at column
-  query = f"SELECT *, current_timestamp AS inserted_at FROM df"
-  duckdb_con.execute(f"CREATE TABLE IF NOT EXISTS cover_wallets AS {query}")
+  # flush & fill load
+  clean_up_db(table_name="cover_wallets", truncate_table=True)
 
-  # insert contents of df
-  duckdb_con.execute(f"INSERT INTO cover_wallets {query}")
+  if not df.empty:
+    # check if table exists
+    query = f"SELECT COUNT(*)::BOOLEAN AS cnt FROM duckdb_tables() WHERE table_name = 'cover_wallets'"
+    table_exists = duckdb_con.execute(query).fetchone()[0]
+    # prep main query
+    query = f"SELECT *, current_timestamp AS inserted_at FROM df"
+
+    if table_exists:
+      # flush & fill load
+      clean_up_db(table_name="cover_wallets", truncate_table=True)
+      # insert contents of df
+      duckdb_con.execute(f"INSERT INTO cover_wallets {query}")
+    else:
+      # create table based on df + inserted_at column
+      duckdb_con.execute(f"CREATE TABLE IF NOT EXISTS cover_wallets AS {query}")
+
+def pull_capital_pool():
+  df = dune.run_query_dataframe(QueryBase(query_id=4391959))
+
+  if not df.empty:
+    # check if table exists
+    query = f"SELECT COUNT(*)::BOOLEAN AS cnt FROM duckdb_tables() WHERE table_name = 'capital_pool'"
+    table_exists = duckdb_con.execute(query).fetchone()[0]
+    # prep main query
+    query = f"SELECT *, current_timestamp AS inserted_at FROM df"
+
+    if table_exists:
+      # flush & fill load
+      clean_up_db(table_name="capital_pool", truncate_table=True)
+      # insert contents of df
+      duckdb_con.execute(f"INSERT INTO capital_pool {query}")
+    else:
+      # create table based on df + inserted_at column
+      duckdb_con.execute(f"CREATE TABLE IF NOT EXISTS capital_pool AS {query}")
 
 def loop_through_cover_wallets():
   address = "0xbad"
@@ -235,12 +266,12 @@ def loop_through_cover_wallets():
 #clean_up_db(table_name="zapper_positions", drop_table=True, truncate_table=False)
 #pull_zapper_positions(api_key=zapper_api_key, cover_id=-1, address="0x036d6e8b88e21760f6759a31dabc8bdf3f026b98")
 
-#clean_up_db(table_name="cover_wallets", drop_table=True)
-#pull_cover_wallets()
+pull_capital_pool()
+pull_cover_wallets()
 
-clean_up_db(table_name="zerion_positions", drop_table=False, truncate_table=True)
-clean_up_db(table_name="zapper_positions", drop_table=False, truncate_table=True)
-loop_through_cover_wallets()
+#clean_up_db(table_name="zerion_positions", drop_table=False, truncate_table=True)
+#clean_up_db(table_name="zapper_positions", drop_table=False, truncate_table=True)
+#loop_through_cover_wallets()
 
 # close duckdb connection
 duckdb_con.close()
