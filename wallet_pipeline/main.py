@@ -53,7 +53,7 @@ def pull_zerion_positions(api_key: str, cover_id: int, address: str):
     f"https://api.zerion.io/v1/wallets/{address}/positions/"
     f"?filter[positions]=no_filter"
     f"&currency=usd"
-    f"&filter[chain_ids]=ethereum,binance-smart-chain,base,arbitrum,avalanche,polygon,optimism,xdai"
+    #f"&filter[chain_ids]=ethereum,binance-smart-chain,base,arbitrum,avalanche,polygon,optimism,xdai"
     f"&filter[trash]=only_non_trash"
     f"&sort=value"
   )
@@ -131,8 +131,8 @@ def pull_zapper_positions(api_key: str, cover_id: int, address: str):
 
   api_url_base = (
     f"https://api.zapper.xyz/v2/balances/apps?addresses%5B%5D={address}"
-    f"&networks%5B%5D=ethereum&networks%5B%5D=polygon&networks%5B%5D=optimism&networks%5B%5D=gnosis"
-    f"&networks%5B%5D=binance-smart-chain&networks%5B%5D=avalanche&networks%5B%5D=arbitrum&networks%5B%5D=base"
+    #f"&networks%5B%5D=ethereum&networks%5B%5D=polygon&networks%5B%5D=optimism&networks%5B%5D=gnosis"
+    #f"&networks%5B%5D=binance-smart-chain&networks%5B%5D=avalanche&networks%5B%5D=arbitrum&networks%5B%5D=base"
   )
 
   response = requests.get(api_url_base, headers=headers)
@@ -235,10 +235,12 @@ def loop_through_cover_wallets():
 #clean_up_db(table_name="zapper_positions", drop_table=True, truncate_table=False)
 #pull_zapper_positions(api_key=zapper_api_key, cover_id=-1, address="0x036d6e8b88e21760f6759a31dabc8bdf3f026b98")
 
-clean_up_db(table_name="cover_wallets", drop_table=True)
-pull_cover_wallets()
+#clean_up_db(table_name="cover_wallets", drop_table=True)
+#pull_cover_wallets()
 
-#loop_through_cover_wallets()
+clean_up_db(table_name="zerion_positions", drop_table=False, truncate_table=True)
+clean_up_db(table_name="zapper_positions", drop_table=False, truncate_table=True)
+loop_through_cover_wallets()
 
 # close duckdb connection
 duckdb_con.close()
