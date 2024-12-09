@@ -25,3 +25,7 @@ select * from wallets.zerion_data order by 1
 ```zapper_data
 select * from wallets.zapper_data order by 1
 ```
+
+```wallet_positions
+select * from wallets.wallet_positions order by 1
+```
