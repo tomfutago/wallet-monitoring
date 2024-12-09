@@ -2,6 +2,7 @@ select
   cover_id,
   chain_id,
   address,
+  app_id,
   protocol,
   name,
   position_type,

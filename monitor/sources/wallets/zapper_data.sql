@@ -2,6 +2,7 @@ select
   cover_id,
   network,
   address,
+  app_id,
   app_name,
   balance_usd,
   updated_at,

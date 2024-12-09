@@ -1,3 +1,8 @@
+---
+queries:
+  - wallet_positions: wallet_positions.sql
+---
+
 ## Wallet Monitoring
 
 ### Capital Pool
@@ -15,7 +20,7 @@ select * from wallets.capital_pool order by 1
 
 
 ```mapping
-select * from wallets.mapping
+select * from mapping.plan_mapping
 ```
 
 ```cover_wallets
@@ -31,9 +36,5 @@ select * from wallets.zapper_data order by 1
 ```
 
 ```wallet_positions
-select * from wallets.wallet_positions order by 1
-```
-
-```zerion_apps
-select * from wallets.zerion_apps order by 2
+select * from ${wallet_positions}
 ```
