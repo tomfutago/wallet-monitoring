@@ -19,22 +19,26 @@ select * from wallets.capital_pool order by 1
 </DataTable>
 
 
-```mapping
-select * from mapping.plan_mapping
-```
-
-```cover_wallets
-select * from wallets.cover_wallets order by 1
-```
-
-```zerion_data
-select * from wallets.zerion_data order by 1
-```
-
-```zapper_data
-select * from wallets.zapper_data order by 1
-```
-
-```wallet_positions
-select * from ${wallet_positions}
+```plans
+with agg_wallet_positions as (
+  select
+    plan_id,
+    plan,
+    count(distinct cover_id) as cnt_cover,
+    count(distinct monitored_wallet) as cnt_wallet,
+    sum(sum_assured) as total_cover,
+    sum(amount_usd) as total_exposed_usd,
+    sum(amount_eth) as total_exposed_eth
+  from ${wallet_positions}
+  group by 1, 2
+)
+select
+  plan,
+  cnt_cover,
+  cnt_wallet,
+  total_cover,
+  total_exposed_usd,
+  total_exposed_eth
+from agg_wallet_positions
+order by plan_id
 ```

@@ -67,6 +67,7 @@ final_output as (
   select
     c.cover_id,
     c.plan,
+    case c.plan when 'Entry' then 1 when 'Essential' then 2 when 'Elite' then 3 end plan_id,
     c.cover_start_date,
     c.cover_end_date,
     c.cover_asset,
