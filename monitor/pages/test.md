@@ -14,6 +14,10 @@ select * from wallets.capital_pool order by 1
 </DataTable>
 
 
+```mapping
+select * from wallets.mapping
+```
+
 ```cover_wallets
 select * from wallets.cover_wallets order by 1
 ```
@@ -28,4 +32,8 @@ select * from wallets.zapper_data order by 1
 
 ```wallet_positions
 select * from wallets.wallet_positions order by 1
+```
+
+```zerion_apps
+select * from wallets.zerion_apps order by 2
 ```
