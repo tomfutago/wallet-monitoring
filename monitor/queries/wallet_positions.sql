@@ -93,7 +93,7 @@ final_output as (
     api.inserted_at
   from wallets.cover_wallets c
     inner join api_data_combined api on c.cover_id = api.cover_id and c.monitored_wallet = api.address
-    --inner join mapping_full m on c.plan = m.plan and api.protocol = m.protocol
+    inner join mapping_full m on c.plan = m.plan and api.protocol = m.protocol
 )
 
 select

@@ -208,7 +208,6 @@ order by 1
       y=usd_total
       series=total_type
       type=stacked100
-      labels=true
       swapXY=true
     />
   </Tab>
@@ -233,3 +232,4 @@ order by 1
     />
   </Tab>
 </Tabs>
+
