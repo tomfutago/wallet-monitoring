@@ -108,6 +108,8 @@ order by plan_id, protocol
       y=usd_total
       series=total_type
       swapXY=true
+      type=grouped
+      sort=false
     />
     <BarChart 
       data={plan_stack}
@@ -118,6 +120,7 @@ order by plan_id, protocol
       type=stacked100
       labels=true
       swapXY=true
+      sort=false
     />
   </Tab>
   <Tab label='ETH'>
@@ -128,6 +131,8 @@ order by plan_id, protocol
       y=eth_total
       series=total_type
       swapXY=true
+      type=grouped
+      sort=false
     />
     <BarChart 
       data={plan_stack}
@@ -138,6 +143,7 @@ order by plan_id, protocol
       type=stacked100
       labels=true
       swapXY=true
+      sort=false
     />
   </Tab>
 </Tabs>
@@ -200,6 +206,7 @@ order by 1
       y=usd_total
       series=total_type
       swapXY=true
+      type=grouped
     />
     <BarChart 
       data={protocol_stack}
@@ -219,6 +226,7 @@ order by 1
       y=eth_total
       series=total_type
       swapXY=true
+      type=grouped
     />
     <BarChart 
       data={protocol_stack}
