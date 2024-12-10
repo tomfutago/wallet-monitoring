@@ -26,9 +26,10 @@ with agg_wallet_positions as (
     plan,
     count(distinct cover_id) as cnt_cover,
     count(distinct monitored_wallet) as cnt_wallet,
-    sum(sum_assured) as total_cover,
-    sum(amount_usd) as total_exposed_usd,
-    sum(amount_eth) as total_exposed_eth
+    sum(usd_cover_amount) as usd_cover,
+    sum(eth_cover_amount) as eth_cover,
+    sum(amount_usd) as usd_exposed,
+    sum(amount_eth) as eth_exposed
   from ${wallet_positions}
   group by 1, 2
 )
@@ -36,9 +37,10 @@ select
   plan,
   cnt_cover,
   cnt_wallet,
-  total_cover,
-  total_exposed_usd,
-  total_exposed_eth
+  usd_cover,
+  eth_cover,
+  usd_exposed,
+  eth_exposed
 from agg_wallet_positions
 order by plan_id
 ```
