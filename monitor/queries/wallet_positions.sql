@@ -1,6 +1,11 @@
 with
 
-mapping as (
+mapping_full as (
+  select plan, protocol, zapper_id, zapper_name, zerion_id, zerion_name
+  from mapping.plan_mapping
+),
+
+mapping_unique_procols as (
   select distinct protocol, zapper_id, zapper_name, zerion_id, zerion_name
   from mapping.plan_mapping
 ),
@@ -23,7 +28,7 @@ zerion_data_latest as (
     max_by(zp.updated_at, zp.inserted_at) as updated_at,
     max(zp.inserted_at) as inserted_at
   from wallets.zerion_data zp
-    inner join mapping m on zp.app_id = m.zerion_id
+    inner join mapping_unique_procols m on zp.app_id = m.zerion_id
     left join prices p on zp.updated_at::date = p.block_date::date
   where zp.position_type <> 'wallet'
   group by 1, 2, 3, 4
@@ -40,7 +45,7 @@ zapper_data_latest as (
     max_by(zp.updated_at, zp.inserted_at) as updated_at,
     max(zp.inserted_at) as inserted_at
   from wallets.zapper_data zp
-    inner join mapping m on zp.app_id = m.zerion_id
+    inner join mapping_unique_procols m on zp.app_id = m.zerion_id
     left join prices p on zp.updated_at::date = p.block_date
   group by 1, 2, 3, 4
 ),
@@ -88,6 +93,7 @@ final_output as (
     api.inserted_at
   from wallets.cover_wallets c
     inner join api_data_combined api on c.cover_id = api.cover_id and c.monitored_wallet = api.address
+    --inner join mapping_full m on c.plan = m.plan and api.protocol = m.protocol
 )
 
 select
