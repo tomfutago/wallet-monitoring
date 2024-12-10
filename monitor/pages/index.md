@@ -1,56 +1,105 @@
 ---
-title: Welcome to Evidence
+title: Wallet Monitoring
+queries:
+  - wallet_positions: wallet_positions.sql
 ---
 
-<Details title='How to edit this page'>
-
-  This page can be found in your project at `/pages/index.md`. Make a change to the markdown file and save it to see the change take effect in your browser.
-</Details>
-
-```sql categories
+```plan_list
+with agg_wallet_positions as (
   select
-      category
-  from needful_things.orders
-  group by category
+    plan_id,
+    plan,
+    count(distinct cover_id) as cnt_cover,
+    count(distinct monitored_wallet) as cnt_wallet,
+    sum(usd_cover_amount) as usd_cover,
+    sum(eth_cover_amount) as eth_cover,
+    sum(amount_usd) as usd_exposed,
+    sum(amount_eth) as eth_exposed
+  from ${wallet_positions}
+  group by 1, 2
+)
+select
+  plan,
+  cnt_cover,
+  cnt_wallet,
+  usd_cover,
+  eth_cover,
+  usd_exposed,
+  eth_exposed
+from agg_wallet_positions
+order by plan_id
 ```
 
-<Dropdown data={categories} name=category value=category>
-    <DropdownOption value="%" valueLabel="All Categories"/>
-</Dropdown>
-
-<Dropdown name=year>
-    <DropdownOption value=% valueLabel="All Years"/>
-    <DropdownOption value=2019/>
-    <DropdownOption value=2020/>
-    <DropdownOption value=2021/>
-</Dropdown>
-
-```sql orders_by_category
-  select 
-      date_trunc('month', order_datetime) as month,
-      sum(sales) as sales_usd,
-      category
-  from needful_things.orders
-  where category like '${inputs.category.value}'
-  and date_part('year', order_datetime) like '${inputs.year.value}'
-  group by all
-  order by sales_usd desc
+```plan_stack
+with agg_wallet_positions as (
+  select
+    plan_id,
+    plan,
+    'Covered Amount' as total_type,
+    sum(usd_cover_amount) as usd_total,
+    sum(eth_cover_amount) as eth_total
+  from ${wallet_positions}
+  group by 1, 2
+  union all
+  select
+    plan_id,
+    plan,
+    'Exposed Funds' as total_type,
+    sum(amount_usd) as usd_total,
+    sum(amount_eth) as eth_total
+  from ${wallet_positions}
+  group by 1, 2
+)
+select
+  plan,
+  total_type,
+  usd_total,
+  eth_total
+from agg_wallet_positions
+order by plan_id
 ```
 
-<BarChart
-    data={orders_by_category}
-    title="Sales by Month, {inputs.category.label}"
-    x=month
-    y=sales_usd
-    series=category
-/>
+## Exposed Funds vs Covered Amount per Cover Plan
 
-## What's Next?
-- [Connect your data sources](settings)
-- Edit/add markdown files in the `pages` folder
-- Deploy your project with [Evidence Cloud](https://evidence.dev/cloud)
-
-## Get Support
-- Message us on [Slack](https://slack.evidence.dev/)
-- Read the [Docs](https://docs.evidence.dev/)
-- Open an issue on [Github](https://github.com/evidence-dev/evidence)
+<Tabs>
+  <Tab label='USD'>
+    <BarChart 
+      data={plan_stack}
+      title='Totals'
+      x=plan
+      y=usd_total
+      series=total_type
+      swapXY=true
+    />
+    <BarChart 
+      data={plan_stack}
+      title='% Share'
+      x=plan
+      y=usd_total
+      series=total_type
+      type=stacked100
+      labels=true
+      swapXY=true
+    />
+  </Tab>
+  <Tab label='ETH'>
+    <BarChart 
+      data={plan_stack}
+      title='Totals'
+      x=plan
+      y=eth_total
+      series=total_type
+      swapXY=true
+    />
+    <BarChart 
+      data={plan_stack}
+      title="% Share"
+      x=plan
+      y=eth_total
+      series=total_type
+      type=stacked100
+      labels=true
+      swapXY=true
+    />
+  </Tab>
+</Tabs>
