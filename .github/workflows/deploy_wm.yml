@@ -17,7 +17,7 @@ jobs:
           cache: npm
 
       - name: Install dependencies
-        run: cd monitor && npm install
+        run: cd ./monitor && npm install
 
       - name: build
         env:
@@ -26,7 +26,7 @@ jobs:
           ## EVIDENCE_SOURCE__my_source__username: ${{ secrets.EVIDENCE_SOURCE__MY_SOURCE__USERNAME }}
           ## EVIDENCE_SOURCE__my_source__private_key: ${{ secrets.EVIDENCE_SOURCE__MY_SOURCE__PRIVATE_KEY }}
         run: |
-          cd monitor
+          cd ./monitor
           npm run sources
           npm run build:strict
 
