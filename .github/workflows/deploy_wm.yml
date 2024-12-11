@@ -17,7 +17,7 @@ jobs:
           cache: npm
 
       - name: Install dependencies
-        run: npm install
+        run: cd monitor && npm install
 
       - name: build
         env:
@@ -26,13 +26,14 @@ jobs:
           ## EVIDENCE_SOURCE__my_source__username: ${{ secrets.EVIDENCE_SOURCE__MY_SOURCE__USERNAME }}
           ## EVIDENCE_SOURCE__my_source__private_key: ${{ secrets.EVIDENCE_SOURCE__MY_SOURCE__PRIVATE_KEY }}
         run: |
+          cd monitor
           npm run sources
           npm run build:strict
 
       - name: Upload Artifacts
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'build/${{ github.event.repository.name }}'
+          path: 'monitor/build/${{ github.event.repository.name }}'
 
   deploy:
     needs: build
