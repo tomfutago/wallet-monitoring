@@ -1,2 +1,2 @@
 deployment:
-  basePath: /wallet-monitoring
+  basePath: /wallet-monitoring/monitor
