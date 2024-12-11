@@ -63,7 +63,7 @@ def pull_zerion_positions(api_key: str, cover_id: int, address: str):
   json_data = response.json()
   #print(json.dumps(json_data, indent=4))
 
-  # Define key paths to extract from JSON
+  # define key paths to extract from json
   key_paths = [
     ("chain_id", ["relationships", "chain", "data", "id"]),
     #("parent", ["attributes", "parent"]),
@@ -90,7 +90,7 @@ def pull_zerion_positions(api_key: str, cover_id: int, address: str):
     ("updated_at_block", ["attributes", "updated_at_block"]),
   ]
 
-  # build df
+  # build df using key paths
   df = pd.DataFrame([
     {
       "address": address,  # static column
@@ -140,7 +140,7 @@ def pull_zapper_positions(api_key: str, cover_id: int, address: str):
   json_data = response.json()
   #print(json.dumps(json_data, indent=4))
 
-  # Define key paths
+  # define key paths to extract from json
   key_paths = [
     #("key", ["key"]),
     ("address", ["address"]),
@@ -163,7 +163,7 @@ def pull_zapper_positions(api_key: str, cover_id: int, address: str):
     ("updated_at", ["updatedAt"]),
   ]
 
-  # Build DataFrame using key_paths
+  # build df using key paths
   df = pd.DataFrame([
     {
       key: (
@@ -261,17 +261,20 @@ def loop_through_cover_wallets():
     print(f"error for {current_api} and {address}: {e}")
 
 ############################################
+# tests
 #clean_up_db(table_name="zerion_positions", drop_table=True, truncate_table=False)
 #pull_zerion_positions(api_key=zerion_api_key, cover_id=-1, address="0x036d6e8b88e21760f6759a31dabc8bdf3f026b98")
 #clean_up_db(table_name="zapper_positions", drop_table=True, truncate_table=False)
 #pull_zapper_positions(api_key=zapper_api_key, cover_id=-1, address="0x036d6e8b88e21760f6759a31dabc8bdf3f026b98")
 
+# refresh base Dune data (flush & fill)
 pull_capital_pool()
 pull_cover_wallets()
 
+# load wallets data
 #clean_up_db(table_name="zerion_positions", drop_table=False, truncate_table=True)
 #clean_up_db(table_name="zapper_positions", drop_table=False, truncate_table=True)
-#loop_through_cover_wallets()
+loop_through_cover_wallets()
 
 # close duckdb connection
 duckdb_con.close()
