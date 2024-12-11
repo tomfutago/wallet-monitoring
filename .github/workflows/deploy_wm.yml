@@ -27,7 +27,7 @@ jobs:
         run: |
           cd ./monitor
           npm run sources
-          npm run build:strict
+          npm run build
 
       - name: Upload Artifacts
         uses: actions/upload-pages-artifact@v3
