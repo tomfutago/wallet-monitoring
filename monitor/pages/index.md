@@ -161,11 +161,11 @@ order by plan_id, protocol
   <Column id=eth_exposed title="funds exposed (Ξ)" />
 </DataTable>
 
-<Dropdown name=plan title="Select Plan" defaultValue="Entry Cover">
-    <DropdownOption value="Entry Cover"/>
-    <DropdownOption value="Essential Cover"/>
-    <DropdownOption value="Elite Cover"/>
-</Dropdown>
+<ButtonGroup name=plan title="Select Plan">
+    <ButtonGroupItem valueLabel="Entry Cover" value="Entry Cover" />
+    <ButtonGroupItem valueLabel="Essential Cover" value="Essential Cover" />
+    <ButtonGroupItem valueLabel="Elite Cover" value="Elite Cover" default />
+</ButtonGroup>
 
 ```protocol_stack
 with agg_wallet_positions as (
@@ -193,7 +193,7 @@ select
   usd_total,
   eth_total
 from agg_wallet_positions
-where plan = '${inputs.plan.value}'
+where plan = '${inputs.plan}'
 order by 1
 ```
 
@@ -240,3 +240,5 @@ order by 1
     />
   </Tab>
 </Tabs>
+
+<LastRefreshed prefix="Data last updated"/>
