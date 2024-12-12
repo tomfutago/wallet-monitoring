@@ -204,9 +204,6 @@ def pull_zapper_positions(api_key: str, cover_id: int, address: str):
 def pull_cover_wallets():
   df = dune.run_query_dataframe(QueryBase(query_id=4340708))
 
-  # flush & fill load
-  clean_up_db(table_name="cover_wallets", truncate_table=True)
-
   if not df.empty:
     # check if table exists
     query = f"SELECT COUNT(*)::BOOLEAN AS cnt FROM duckdb_tables() WHERE table_name = 'cover_wallets'"
@@ -254,8 +251,8 @@ def loop_through_cover_wallets():
       address = row["monitored_wallet"]
       current_api = "zerion"
       pull_zerion_positions(api_key=zerion_api_key, cover_id=cover_id, address=address)
-      current_api = "zapper"
-      pull_zapper_positions(api_key=zapper_api_key, cover_id=cover_id, address=address)
+      #current_api = "zapper"
+      #pull_zapper_positions(api_key=zapper_api_key, cover_id=cover_id, address=address)
 
   except Exception as e:
     print(f"error for {current_api} and {address}: {e}")
@@ -268,8 +265,8 @@ def loop_through_cover_wallets():
 #pull_zapper_positions(api_key=zapper_api_key, cover_id=-1, address="0x036d6e8b88e21760f6759a31dabc8bdf3f026b98")
 
 # refresh base Dune data (flush & fill)
-pull_capital_pool()
-pull_cover_wallets()
+#pull_capital_pool()
+#pull_cover_wallets()
 
 # load wallets data
 #clean_up_db(table_name="zerion_positions", drop_table=False, truncate_table=True)
