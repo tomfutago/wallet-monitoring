@@ -1,7 +1,5 @@
 ---
 title: Wallet Monitoring
-queries:
-  - wallet_positions: wallet_positions.sql
 ---
 
 ```plan_list
@@ -17,7 +15,7 @@ wallet_cover as (
   from (
     select distinct
       plan_id, plan, cover_id, usd_cover_amount, eth_cover_amount
-    from wallets.cover_wallets
+    from wallets.src_cover_wallets
   ) cw
   group by 1, 2
 ),
@@ -33,7 +31,7 @@ agg_wallet_positions as (
     sum(w.amount_usd) as usd_exposed,
     sum(w.amount_eth) as eth_exposed
   from wallet_cover c
-    inner join ${wallet_positions} w on c.plan_id = w.plan_id
+    inner join wallets.wallet_positions w on c.plan_id = w.plan_id
   group by 1, 2, 3, 5, 6
 )
 
@@ -62,7 +60,7 @@ wallet_cover as (
   from (
     select distinct
       plan_id, plan, cover_id, usd_cover_amount, eth_cover_amount
-    from wallets.cover_wallets
+    from wallets.src_cover_wallets
   ) cw
   group by 1, 2
 ),
@@ -82,7 +80,7 @@ agg_wallet_positions as (
     'Exposed Funds' as total_type,
     sum(amount_usd) as usd_total,
     sum(amount_eth) as eth_total
-  from ${wallet_positions}
+  from wallets.wallet_positions
   group by 1, 2
 )
 
@@ -108,7 +106,7 @@ wallet_cover as (
   from (
     select distinct
       plan_id, plan, cover_id, usd_cover_amount, eth_cover_amount
-    from wallets.cover_wallets
+    from wallets.src_cover_wallets
   ) cw
   group by 1, 2
 ),
@@ -125,7 +123,7 @@ agg_wallet_positions as (
     sum(w.amount_usd) as usd_exposed,
     sum(w.amount_eth) as eth_exposed
   from wallet_cover c
-    inner join ${wallet_positions} w on c.plan_id = w.plan_id
+    inner join wallets.wallet_positions w on c.plan_id = w.plan_id
   group by 1, 2, 3, 4, 6, 7
 )
 
@@ -235,7 +233,7 @@ wallet_cover as (
   from (
     select distinct
       plan_id, plan, cover_id, usd_cover_amount, eth_cover_amount
-    from wallets.cover_wallets
+    from wallets.src_cover_wallets
   ) cw
   group by 1, 2
 ),
@@ -248,7 +246,7 @@ agg_wallet_positions as (
     usd_cover as usd_total,
     eth_cover as eth_total
   from wallet_cover c
-    inner join ${wallet_positions} w on c.plan_id = w.plan_id
+    inner join wallets.wallet_positions w on c.plan_id = w.plan_id
   union all
   select
     plan,
@@ -256,7 +254,7 @@ agg_wallet_positions as (
     'Exposed Funds' as total_type,
     sum(amount_usd) as usd_total,
     sum(amount_eth) as eth_total
-  from ${wallet_positions}
+  from wallets.wallet_positions
   group by 1, 2
 )
 
