@@ -3,87 +3,37 @@ title: Wallet Monitoring
 ---
 
 ```plan_list
-with
-
-wallet_cover as (
-  select
-    plan_id,
-    plan,
-    count(distinct cover_id) as cnt_cover,
-    sum(usd_cover_amount) as usd_cover,
-    sum(eth_cover_amount) as eth_cover
-  from (
-    select distinct
-      plan_id, plan, cover_id, usd_cover_amount, eth_cover_amount
-    from wallets.src_cover_wallets
-  ) cw
-  group by 1, 2
-),
-
-agg_wallet_positions as (
-  select
-    c.plan_id,
-    c.plan,
-    c.cnt_cover,
-    count(distinct w.monitored_wallet) as cnt_wallet,
-    c.usd_cover,
-    c.eth_cover,
-    sum(w.amount_usd) as usd_exposed,
-    sum(w.amount_eth) as eth_exposed
-  from wallet_cover c
-    inner join wallets.wallet_positions w on c.plan_id = w.plan_id
-  group by 1, 2, 3, 5, 6
-)
-
 select
-  plan,
-  cnt_cover,
-  cnt_wallet,
-  usd_cover,
-  eth_cover,
-  usd_exposed,
-  eth_exposed
-from agg_wallet_positions
-order by plan_id
+  pc.plan,
+  pc.cnt_cover,
+  pc.cnt_wallet,
+  pc.usd_cover,
+  pc.eth_cover,
+  pw.usd_exposed,
+  pw.eth_exposed
+from wallets.int_plan_cover_agg pc
+  left join wallets.int_plan_wallet_agg pw on pc.plan_id = pw.plan_id
+order by pc.plan_id
 ```
 
 ```plan_stack
-with
-
-wallet_cover as (
-  select
-    plan_id,
-    plan,
-    count(distinct cover_id) as cnt_cover,
-    sum(usd_cover_amount) as usd_cover,
-    sum(eth_cover_amount) as eth_cover
-  from (
-    select distinct
-      plan_id, plan, cover_id, usd_cover_amount, eth_cover_amount
-    from wallets.src_cover_wallets
-  ) cw
-  group by 1, 2
-),
-
-agg_wallet_positions as (
+with agg_wallet_positions as (
   select
     plan_id,
     plan,
     'Covered Amount' as total_type,
     usd_cover as usd_total,
     eth_cover as eth_total
-  from wallet_cover
+  from wallets.int_plan_cover_agg
   union all
   select
     plan_id,
     plan,
     'Exposed Funds' as total_type,
-    sum(amount_usd) as usd_total,
-    sum(amount_eth) as eth_total
-  from wallets.wallet_positions
-  group by 1, 2
+    usd_exposed as usd_total,
+    eth_exposed as eth_total
+  from wallets.int_plan_wallet_agg
 )
-
 select
   plan,
   total_type,
@@ -94,50 +44,18 @@ order by plan_id
 ```
 
 ```plan_protocol_list
-with
-
-wallet_cover as (
-  select
-    plan_id,
-    plan,
-    count(distinct cover_id) as cnt_cover,
-    sum(usd_cover_amount) as usd_cover,
-    sum(eth_cover_amount) as eth_cover
-  from (
-    select distinct
-      plan_id, plan, cover_id, usd_cover_amount, eth_cover_amount
-    from wallets.src_cover_wallets
-  ) cw
-  group by 1, 2
-),
-
-agg_wallet_positions as (
-  select
-    c.plan_id,
-    c.plan,
-    w.protocol,
-    c.cnt_cover,
-    count(distinct w.monitored_wallet) as cnt_wallet,
-    c.usd_cover,
-    c.eth_cover,
-    sum(w.amount_usd) as usd_exposed,
-    sum(w.amount_eth) as eth_exposed
-  from wallet_cover c
-    inner join wallets.wallet_positions w on c.plan_id = w.plan_id
-  group by 1, 2, 3, 4, 6, 7
-)
-
 select
-  plan,
-  protocol,
-  cnt_cover,
-  cnt_wallet,
-  usd_cover,
-  eth_cover,
-  usd_exposed,
-  eth_exposed
-from agg_wallet_positions
-order by plan_id, protocol
+  pc.plan,
+  pw.protocol,
+  pc.cnt_cover,
+  pc.cnt_wallet,
+  pc.usd_cover,
+  pc.eth_cover,
+  pw.usd_exposed,
+  pw.eth_exposed
+from wallets.int_plan_cover_agg pc
+  left join wallets.int_plan_protocol_wallet_agg pw on pc.plan_id = pw.plan_id
+order by pc.plan_id
 ```
 
 ## Exposed Funds vs Covered Amount per Cover Plan
@@ -221,43 +139,25 @@ order by plan_id, protocol
 </ButtonGroup>
 
 ```protocol_stack
-with
-
-wallet_cover as (
+with agg_wallet_positions as (
   select
     plan_id,
     plan,
-    count(distinct cover_id) as cnt_cover,
-    sum(usd_cover_amount) as usd_cover,
-    sum(eth_cover_amount) as eth_cover
-  from (
-    select distinct
-      plan_id, plan, cover_id, usd_cover_amount, eth_cover_amount
-    from wallets.src_cover_wallets
-  ) cw
-  group by 1, 2
-),
-
-agg_wallet_positions as (
-  select
-    c.plan,
-    w.protocol,
+    plan as protocol,
     'Covered Amount' as total_type,
     usd_cover as usd_total,
     eth_cover as eth_total
-  from wallet_cover c
-    inner join wallets.wallet_positions w on c.plan_id = w.plan_id
+  from wallets.int_plan_cover_agg
   union all
   select
+    plan_id,
     plan,
     protocol,
     'Exposed Funds' as total_type,
-    sum(amount_usd) as usd_total,
-    sum(amount_eth) as eth_total
-  from wallets.wallet_positions
-  group by 1, 2
+    usd_exposed as usd_total,
+    eth_exposed as eth_total
+  from wallets.int_plan_protocol_wallet_agg
 )
-
 select
   protocol,
   total_type,
@@ -273,19 +173,9 @@ order by 1
     <BarChart 
       data={protocol_stack}
       title='Totals'
-      x=protocol
+      x=total_type
       y=usd_total
-      series=total_type
-      swapXY=true
-      type=grouped
-    />
-    <BarChart 
-      data={protocol_stack}
-      title='% Share'
-      x=protocol
-      y=usd_total
-      series=total_type
-      type=stacked100
+      series=protocol
       swapXY=true
     />
   </Tab>
@@ -293,20 +183,9 @@ order by 1
     <BarChart 
       data={protocol_stack}
       title='Totals'
-      x=protocol
+      x=total_type
       y=eth_total
-      series=total_type
-      swapXY=true
-      type=grouped
-    />
-    <BarChart 
-      data={protocol_stack}
-      title="% Share"
-      x=protocol
-      y=eth_total
-      series=total_type
-      type=stacked100
-      labels=true
+      series=protocol
       swapXY=true
     />
   </Tab>

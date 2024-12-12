@@ -1,4 +1,4 @@
-select
+select distinct
   cover_id,
   case plan
     when 'Entry Cover' then 1
@@ -12,7 +12,6 @@ select
   native_cover_amount,
   usd_cover_amount,
   eth_cover_amount,
-  cover_owner,
-  monitored_wallet
+  cover_owner
 from wallets.cover_wallets
-order by cover_id, monitored_wallet
+order by 1

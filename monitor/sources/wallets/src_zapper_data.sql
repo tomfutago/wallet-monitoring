@@ -5,6 +5,7 @@ select
   app_id,
   app_name,
   balance_usd,
-  updated_at,
+  cast(updated_at as timestamp) as updated_at,
   inserted_at
 from wallets.zapper_positions
+order by cover_id, app_id, network

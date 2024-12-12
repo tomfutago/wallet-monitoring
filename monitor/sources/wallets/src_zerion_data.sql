@@ -8,6 +8,7 @@ select
   position_type,
   value,
   price,
-  updated_at,
+  cast(updated_at as timestamp) as updated_at,
   inserted_at
 from wallets.zerion_positions
+order by cover_id, app_id, chain_id
