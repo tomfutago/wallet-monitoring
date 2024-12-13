@@ -5,8 +5,9 @@
 *.pyc
 __pycache__
 
-# Ignore files related to API keys
+# Ignore secrets
 .env
+secrets.toml
 
 # Ignore virtual env
 .venv
