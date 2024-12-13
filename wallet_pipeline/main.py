@@ -267,13 +267,15 @@ def loop_through_cover_wallets():
 #duckdb_con.execute("CREATE TABLE plan_mapping AS FROM './data/plan_mapping.csv'")
 
 # refresh base Dune data (flush & fill)
-pull_capital_pool()
-pull_cover_wallets()
+#pull_capital_pool()
+#pull_cover_wallets()
 
 # load wallets data
 #clean_up_db(table_name="zerion_positions", drop_table=False, truncate_table=True)
 #clean_up_db(table_name="zapper_positions", drop_table=False, truncate_table=True)
-loop_through_cover_wallets()
+#loop_through_cover_wallets()
+
+duckdb_con.execute("COPY debank_protocols TO 'debank_protocols.csv' (HEADER, DELIMITER ',');")
 
 # close duckdb connection
 duckdb_con.close()
