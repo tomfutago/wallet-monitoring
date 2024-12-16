@@ -1,6 +1,7 @@
 import dlt
 from dlt.sources.rest_api import rest_api_source
 
+debank_access_key = dlt.secrets["sources.debank.access_key"]
 duckdb_destination = "../data/wallets.duckdb"
 
 def load_chains():
@@ -9,7 +10,7 @@ def load_chains():
       "base_url": "https://pro-openapi.debank.com/",
       "headers": {
         "accept": "application/json",
-        "AccessKey": dlt.secrets["sources.debank.access_key"]
+        "AccessKey": debank_access_key
       },
       "paginator": "single_page",
     },
@@ -39,7 +40,7 @@ def load_protocols():
       "base_url": "https://pro-openapi.debank.com/",
       "headers": {
         "accept": "application/json",
-        "AccessKey": dlt.secrets["sources.debank.access_key"]
+        "AccessKey": debank_access_key
       },
       "paginator": "single_page",
     },
@@ -69,7 +70,7 @@ def load_user_all_simple_protocol_list(wallet: str):
       "base_url": "https://pro-openapi.debank.com/",
       "headers": {
         "accept": "application/json",
-        "AccessKey": dlt.secrets["sources.debank.access_key"]
+        "AccessKey": debank_access_key
       },
       "paginator": "single_page",
     },
