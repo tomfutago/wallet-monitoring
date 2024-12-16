@@ -20,6 +20,11 @@ if __name__ == "__main__":
   # create duckdb connection
   duckdb_con = duckdb.connect("../data/wallets.duckdb")
   
+  # flush & fill load
+  load_capital_pool()
+  load_cover_wallets()
+
+  # append current wallet balances
   loop_through_cover_wallets()
 
   # close duckdb connection
