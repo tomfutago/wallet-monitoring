@@ -1,12 +1,12 @@
 with
 
 mapping_full as (
-  select plan, protocol, zapper_id, zapper_name, zerion_id, zerion_name
+  select plan, protocol, debank_id, debank_name
   from wallets.plan_mapping
 ),
 
 mapping_unique_procols as (
-  select distinct protocol, zapper_id, zapper_name, zerion_id, zerion_name
+  select distinct protocol, debank_id, debank_name
   from wallets.plan_mapping
 ),
 

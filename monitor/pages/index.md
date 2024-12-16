@@ -2,7 +2,7 @@
 title: Wallet Monitoring
 ---
 
-```plan_list
+```plan_cover_list
 select
   pc.plan,
   pc.cnt_cover,
@@ -16,7 +16,7 @@ from wallets.int_plan_cover_agg pc
 order by pc.plan_id
 ```
 
-```plan_stack
+```plan_cover_stack
 with agg_wallet_positions as (
   select
     plan_id,
@@ -43,7 +43,7 @@ from agg_wallet_positions
 order by plan_id
 ```
 
-```plan_protocol_list
+```plan_cover_protocol_list
 select
   pc.plan,
   pw.protocol,
@@ -60,7 +60,7 @@ order by pc.plan_id
 
 ## Exposed Funds vs Covered Amount per Cover Plan
 
-<DataTable data={plan_list}>
+<DataTable data={plan_cover_list}>
   <Column id=plan title="plan"/>
   <Column id=cnt_cover title="# covers" />
   <Column id=cnt_wallet title="# wallets" />
@@ -73,7 +73,7 @@ order by pc.plan_id
 <Tabs>
   <Tab label='USD'>
     <BarChart 
-      data={plan_stack}
+      data={plan_cover_stack}
       title='Totals'
       x=plan
       y=usd_total
@@ -83,7 +83,7 @@ order by pc.plan_id
       sort=false
     />
     <BarChart 
-      data={plan_stack}
+      data={plan_cover_stack}
       title='% Share'
       x=plan
       y=usd_total
@@ -96,7 +96,7 @@ order by pc.plan_id
   </Tab>
   <Tab label='ETH'>
     <BarChart 
-      data={plan_stack}
+      data={plan_cover_stack}
       title='Totals'
       x=plan
       y=eth_total
@@ -106,7 +106,7 @@ order by pc.plan_id
       sort=false
     />
     <BarChart 
-      data={plan_stack}
+      data={plan_cover_stack}
       title="% Share"
       x=plan
       y=eth_total
@@ -121,7 +121,7 @@ order by pc.plan_id
 
 ## Exposed Funds vs Covered Amount per Cover Plan & Protocol
 
-<DataTable data={plan_protocol_list}>
+<DataTable data={plan_cover_protocol_list}>
   <Column id=plan title="plan" />
   <Column id=protocol title="protocol"/>
   <Column id=cnt_cover title="# covers" />
@@ -138,7 +138,7 @@ order by pc.plan_id
     <ButtonGroupItem valueLabel="Elite Cover" value="Elite Cover" default />
 </ButtonGroup>
 
-```protocol_stack
+```plan_cover_protocol_stack
 with agg_wallet_positions as (
   select
     plan_id,
@@ -171,7 +171,7 @@ order by 1
 <Tabs>
   <Tab label='USD'>
     <BarChart 
-      data={protocol_stack}
+      data={plan_cover_protocol_stack}
       title='Totals'
       x=total_type
       y=usd_total
@@ -181,7 +181,7 @@ order by 1
   </Tab>
   <Tab label='ETH'>
     <BarChart 
-      data={protocol_stack}
+      data={plan_cover_protocol_stack}
       title='Totals'
       x=total_type
       y=eth_total
