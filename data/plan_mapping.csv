@@ -1,202 +1,202 @@
 plan,protocol,zapper_id,zapper_name,zerion_id,zerion_name,debank_id,debank_name
-Entry,0x,zero-x,0x,,,0x,0x
-Essential,0x,zero-x,0x,,,0x,0x
-Elite,0x,zero-x,0x,,,0x,0x
-Entry,1Inch,one-inch,1inch,1inch,1inch,1inch2,1inch
-Essential,1Inch,one-inch,1inch,1inch,1inch,1inch2,1inch
-Elite,1Inch,one-inch,1inch,1inch,1inch,1inch2,1inch
-Essential,Aave v2,aave-v2,Aave V2,aave-v2,Aave V2,aave2,Aave V2
-Elite,Aave v2,aave-v2,Aave V2,aave-v2,Aave V2,aave2,Aave V2
-Essential,Aave v3,aave-v3,Aave V3,aave-pool-v3,Aave V3,aave3,Aave V3
-Elite,Aave v3,aave-v3,Aave V3,aave-pool-v3,Aave V3,aave3,Aave V3
-Essential,Aerodrome,aerodrome,Aerodrome,aerodrome,Aerodrome,base_aerodrome,Aerodrome
-Elite,Aerodrome,aerodrome,Aerodrome,aerodrome,Aerodrome,base_aerodrome,Aerodrome
-Elite,Aevo,aevo,Aevo,,,aevo,Aevo
-Elite,Ajna,ajna,Ajna V2,,,ajna,Ajna.finance
-Elite,AlienBase,alien-based,Alien Base,,,base_alienbase,Alien Base
-Elite,Aloe,aloe-labs,Aloe Labs,,,aloe,Aloe
-Essential,Angle,angle,Angle,,,angle,Angle Protocol
-Elite,Angle,angle,Angle,,,angle,Angle Protocol
-Elite,Arcadia,arcadia-finance,Arcadia Finance,arcadia-finance,Arcadia Finance,arcadia,Arcadia Finance
-Elite,Arrakis Finance,arrakis,Arrakis Finance,,,arrakis,Arrakis Finance
-Essential,Aura,aura,Aura Finance,aura-finance,Aura Finance,aurafinance,Aura Finance
-Elite,Aura,aura,Aura Finance,aura-finance,Aura Finance,aurafinance,Aura Finance
-Entry,Balancer v2,balancer-v2,Balancer V2,balancer-v2,Balancer V2,balancer2,Balancer V2
-Essential,Balancer v2,balancer-v2,Balancer V2,balancer-v2,Balancer V2,balancer2,Balancer V2
-Elite,Balancer v2,balancer-v2,Balancer V2,balancer-v2,Balancer V2,balancer2,Balancer V2
-Elite,Balancer v3,,,,,,
-Elite,BaseSwap,baseswap,BaseSwap,,,base_baseswap,Base Swap
-Essential,Beefy,beefy,Beefy Finance,,,beefy,Beefy
-Elite,Beefy,beefy,Beefy Finance,,,beefy,Beefy
-Essential,Beethoven X,beethoven-x,Beethoven-X,beethoven-x,Beethoven x,op_beethovenx,Beethoven x
-Elite,Beethoven X,beethoven-x,Beethoven-X,beethoven-x,Beethoven x,op_beethovenx,Beethoven x
-Essential,Camelot,camelot,Camelot,camelot,Camelot,arb_camelot,Camelot
-Elite,Camelot,camelot,Camelot,camelot,Camelot,arb_camelot,Camelot
-Essential,Compound v2,compound,Compound,compound-v2,Compound V2,compound,Compound
-Elite,Compound v2,compound,Compound,compound-v2,Compound V2,compound,Compound
-Essential,Compound v3,compound-v3,Compound III,compound-v3,Compound V3,compound3,Compound V3
-Elite,Compound v3,compound-v3,Compound III,compound-v3,Compound V3,compound3,Compound V3
-Elite,Conic Finance,conic-finance,Conic Finance,,,conic,Conic Finance
-Elite,Contango,contango,Contango,,,contango,Contango
-Essential,Convex,convex,Convex,convex,Convex,convex,Convex
-Elite,Convex,convex,Convex,convex,Convex,convex,Convex
-Entry,CowAMM,,,,,,
-Essential,CowAMM,,,,,,
-Elite,CowAMM,,,,,,
-Entry,CowSwap,cow-swap,CoW Swap,,,cowswap,CoW Swap
-Essential,CowSwap,cow-swap,CoW Swap,,,cowswap,CoW Swap
-Elite,CowSwap,cow-swap,CoW Swap,,,cowswap,CoW Swap
-Entry,Curve,curve,Curve,curve,Curve,curve,Curve
-Essential,Curve,curve,Curve,curve,Curve,curve,Curve
-Elite,Curve,curve,Curve,curve,Curve,curve,Curve
-Elite,Curve LlamaLend,,,,,lendcurve,Curve LlamaLend
-Entry,DAI Savings Rate (sDAI),,,,,,
-Essential,DAI Savings Rate (sDAI),,,,,,
-Elite,DAI Savings Rate (sDAI),,,,,,
-Elite,DeFi Saver,defisaver,DefiSaver,,,defisaver,DeFi Saver
-Elite,Derive (formerly Lyra),lyra,Lyra,,,lyra,Derive V1
-Elite,Dolomite,dolomite,Dolomite,,,arb_dolomite,Dolomite
-Elite,Eclipse,,,,,eclipsebridge,Eclipse Bridge
-Entry,EigenLayer,eigen-layer,Eigen Layer,eigenlayer,EigenLayer,eigenlayer,EigenLayer
-Essential,EigenLayer,eigen-layer,Eigen Layer,eigenlayer,EigenLayer,eigenlayer,EigenLayer
-Elite,EigenLayer,eigen-layer,Eigen Layer,eigenlayer,EigenLayer,eigenlayer,EigenLayer
-Elite,Elixir,elixir,Elixir,elixir,Elixir,elixir,Elixir
-Essential,Enzyme,enzyme-finance,Enzyme Finance,enzyme,Enzyme,enzyme,Enzyme
-Elite,Enzyme,enzyme-finance,Enzyme Finance,enzyme,Enzyme,enzyme,Enzyme
-Elite,Equalizer,equalizer,Equalizer,,,equalizer,Equalizer
-Elite,Equilibria,equilibria,Equilibria,equilibria,Equilibria,equilibria,Equilibria
-Essential,Ether.fi,ether-fi,ether.fi,etherfi,ether.fi,etherfi,ether.fi
-Elite,Ether.fi,ether-fi,ether.fi,etherfi,ether.fi,etherfi,ether.fi
-Elite,Ether.fi Liquid,,,,,,
-Elite,Ether.fi Vaults,,,,,,
-Elite,Euler Finance v2,,,,,euler2,Euler
-Elite,Exactly,exactly,Exactly,exactly,Exactly,exactly,Exactly
-Elite,ExtraFi,extra,Extra Finance,extra-finance,Extra Finance,base_extrafinance,Extra Finance
-Essential,f(x) Protocol,fx-protocol,f(x) protocol,,,fxprotocol,f(x) Protocol
-Elite,f(x) Protocol,fx-protocol,f(x) protocol,,,fxprotocol,f(x) Protocol
-Essential,Flat Money,flat-money,Flat Money,,,base_flat,Flat Money
-Elite,Flat Money,flat-money,Flat Money,,,base_flat,Flat Money
-Essential,Fluid,,,,,fluid,Fluid
-Elite,Fluid,,,,,fluid,Fluid
-Essential,Frax Finance,frax,Frax,frax,Frax,frax,Frax
-Elite,Frax Finance,frax,Frax,frax,Frax,frax,Frax
-Elite,Frax Staked ETH,,,,,,
-Elite,Fraxlend,frax-lend,Frax Lend,,,fraxlend,Fraxlend
-Elite,Fraxswap,frax-swap,Frax Swap,,,,
-Elite,Gains Network,gains-network,Gains Network,,,arb_gainsnetwork,Gains Network
-Elite,Gearbox,gearbox,Gearbox,gearbox,Gearbox,gearbox,Gearbox
-Essential,GMX,gmx,GMX,,,arb_gmx,GMX
-Elite,GMX,gmx,GMX,,,arb_gmx,GMX
-Elite,Harvest Finance,harvest,Harvest,,,harvest,Harvest
-Elite,HOT AMM,,,,,,
-Elite,Hyperliquid,hyperliquid,Hyperliquid,,,arb_hyperliquid,Hyperliquid
-Elite,Index Coop,index-coop,Index Coop,,,index,Index Coop
-Elite,Instadapp Lite,instadapp,Instadapp,,,instadapplite,Instadapp Lite
-Elite,Inverse Finance FiRM,inverse-firm,Inverse Finance - FiRM,,,,
-Essential,Inverse sDOLA,inverse,Inverse Finance,,,inverse,Inverse
-Elite,Inverse sDOLA,inverse,Inverse Finance,,,inverse,Inverse
-Essential,Karak,karak,Karak,,,karak,Karak
-Elite,Karak,karak,Karak,,,karak,Karak
-Elite,KelpDAO,kelp,Kelp,kelp-dao,Kelp DAO,kelpdao,Kelp DAO
-Essential,Kiln,,,,,kiln,Kiln
-Elite,Kiln,,,,,kiln,Kiln
-Essential,Kwenta,kwenta,Kwenta,,,kwenta,Kwenta
-Elite,Kwenta,kwenta,Kwenta,,,kwenta,Kwenta
-Entry,Lido,lido,Lido,,,lido,LIDO
-Essential,Lido,lido,Lido,,,lido,LIDO
-Elite,Lido,lido,Lido,,,lido,LIDO
-Essential,Liquity,liquity,Liquity,,,liquity,Liquity
-Elite,Liquity,liquity,Liquity,,,liquity,Liquity
-Essential,Lombard Finance EVM instance,,,,,lombard,Lombard
-Elite,Lombard Finance EVM instance,,,,,lombard,Lombard
-Elite,MakerDAO,,,,,,
-Elite,Maverick,maverick-protocol,Maverick Protocol,maverick,Maverick,maverick,Maverick
-Elite,Mellow Finance,,,,,mellow,mellow
-Essential,Moonwell,moonwell,Moonwell,moonwell,Moonwell,base_moonwell,Moonwell
-Elite,Moonwell,moonwell,Moonwell,moonwell,Moonwell,base_moonwell,Moonwell
-Essential,Morpho,morpho,Morpho,morpho-blue,Morpho Blue,morphoblue,Morpho
-Essential,Morpho Vaults,morpho,Morpho,morpho-blue,Morpho Blue,morphovaults,Morpho Vaults
-Elite,Morpho,morpho,Morpho,morpho-blue,Morpho Blue,morphoblue,Morpho
-Elite,Morpho Vaults,morpho,Morpho,morpho-blue,Morpho Blue,morphovaults,Morpho Vaults
-Elite,Mummy,mummy-finance,Mummy Finance,,,ftm_mummy,Mummy Finance
-Essential,Notional v3,notional-finance-v3,Notional Finance V3,notional,Notional,notional,Notional
-Elite,Notional v3,notional-finance-v3,Notional Finance V3,,,notional,Notional
-Elite,Origin OUSD,,,,,ousd,Origin Dollar
-Essential,Origin Protocol,origin,Origin,,,originstory,Origin Protocol
-Elite,Origin Protocol,origin,Origin,,,originstory,Origin Protocol
-Elite,Origin superOETH,,,,,,
-Essential,PancakeSwap,pancakeswap,PancakeSwap,pancake-swap,PancakeSwap,pancakeswap,PancakeSwap
-Elite,PancakeSwap,pancakeswap,PancakeSwap,pancake-swap,PancakeSwap,pancakeswap,PancakeSwap
-Entry,Paraswap,paraswap,Paraswap,paraswap,ParaSwap,paraswap,ParaSwap
-Essential,Paraswap,paraswap,Paraswap,paraswap,ParaSwap,paraswap,ParaSwap
-Elite,Paraswap,paraswap,Paraswap,paraswap,ParaSwap,paraswap,ParaSwap
-Essential,Pendle,pendle,Pendle,pendle-v2,Pendle V2,pendle,Pendle
-Elite,Pendle,pendle,Pendle,pendle-v2,Pendle V2,pendle,Pendle
-Elite,Pharaoh,pharaoh-exchange,Pharaoh Exchange,,,avax_pharaoh,Pharaoh Exchange
-Essential,PoolTogether v5,pool-together-v5,PoolTogether,,,pooltogether,PoolTogether
-Elite,PoolTogether v5,pool-together-v6,PoolTogether,,,pooltogether,PoolTogether
-Essential,Prisma Finance,prisma-finance,Prisma Finance,prisma-finance,Prisma Finance,prisma,Prisma Finance
-Elite,Prisma Finance,prisma-finance,Prisma Finance,prisma-finance,Prisma Finance,prisma,Prisma Finance
-Essential,Puffer Finance,puffer-finance,Puffer Finance,,,puffer,Puffer Finance
-Elite,Puffer Finance,puffer-finance,Puffer Finance,,,puffer,Puffer Finance
-Elite,Quickswap,quickswap,Quickswap,quickswap,QuickSwap,matic_quickswap,QuickSwap
-Elite,Ramses,ramses,Ramses,,,arb_ramses,RAMSES
-Elite,Reflexer Finance,reflexer,Reflexer,,,reflexer,Reflexer
-Essential,Renzo,renzo,Renzo,,,renzo,Renzo
-Elite,Renzo,renzo,Renzo,,,renzo,Renzo
-Elite,Reserve Finance,reserve-protocol,Reserve Protocol,reserve-protocol,Reserve Protocol,reserve,Reserve Protocol
-Entry,Rocket Pool,rocket-pool,Rocket Pool,,,rocketpool,Rocket Pool
-Essential,Rocket Pool,rocket-pool,Rocket Pool,,,rocketpool,Rocket Pool
-Elite,Rocket Pool,rocket-pool,Rocket Pool,,,rocketpool,Rocket Pool
-Entry,Safe,safe-gnosis,Safe (Fka Gnosis Safe),,,gnosis_safe,Gnosis Safe
-Essential,Safe,safe-gnosis,Safe (Fka Gnosis Safe),,,gnosis_safe,Gnosis Safe
-Elite,Safe,safe-gnosis,Safe (Fka Gnosis Safe),,,gnosis_safe,Gnosis Safe
-Entry,Savings crvUSD (scrvUSD),curve-stablecoin,Curve Stablecoin,,,crvusd,Curve Stablecoin
-Essential,Savings crvUSD (scrvUSD),,,,,crvusd,Curve Stablecoin
-Elite,Savings crvUSD (scrvUSD),,,,,crvusd,Curve Stablecoin
-Elite,Set Protocol v2,,,,,,
-Elite,Silo,silo-finance,Silo Finance,silo,Silo,arb_silo,Silo
-Essential,Sky Protocol,sky,Sky,,,sky,Sky
-Elite,Sky Protocol,sky,Sky,,,sky,Sky
-Entry,Sky Savings Rate (sUSDS),sky,Sky,,,,
-Essential,Sky Savings Rate (sUSDS),sky,Sky,,,,
-Elite,Sky Savings Rate (sUSDS),sky,Sky,,,,
-Essential,Spark Protocol,,,spark,Spark,spark,Spark
-Elite,Spark Protocol,,,spark,Spark,spark,Spark
-Elite,Spectra Finance,,,,,spectra,Spectra
-Essential,Stader,stader,Stader,stader,Stader,stader,Stader
-Elite,Stader,stader,Stader,stader,Stader,stader,Stader
-Elite,StakeDAO,stake-dao,StakeDAO,,,stakedao,Stake DAO
-Entry,Stakewise,stakewise,StakeWise,,,stakewise,StakeWise
-Essential,Stakewise,stakewise,StakeWise,,,stakewise,StakeWise
-Elite,Stakewise,stakewise,StakeWise,,,stakewise,StakeWise
-Elite,Sturdy,sturdy,Sturdy,sturdy-v2,Sturdy V2,sturdy,Sturdy
-Elite,Summerfi,Summer-fi,Summer.fi,,,summer,Summer.fi
-Elite,Superform,superform-labs,Superform Labs,,,superform,Superform
-Elite,SushiSwap,sushiswap,SushiSwap,,,sushiswap,SushiSwap
-Essential,Swell,swell,Swell,,,swellnetwork,Swell
-Elite,Swell,swell,Swell,,,swellnetwork,Swell
-Essential,Symbiotic,symbiotic,Symbiotic,,,symbiotic,Symbiotic
-Elite,Symbiotic,symbiotic,Symbiotic,,,symbiotic,Symbiotic
-Essential,Synthetix,synthetix,Synthetix,synthetix,Synthetix,symbiotic,Symbiotic
-Elite,Synthetix,synthetix,Synthetix,synthetix,Synthetix,synthetix,Synthetix
-Essential,Syrup,syrup,Syrup,syrup,Syrup,syrup,Syrup
-Elite,Syrup,syrup,Syrup,syrup,Syrup,syrup,Syrup
-Essential,Term Finance,,,term-finance,Term Finance,term,Term Finance
-Elite,Term Finance,,,term-finance,Term Finance,term,Term Finance
-Essential,Toros Finance,,,,,op_toros,Toros
-Elite,Toros Finance,,,,,op_toros,Toros
-Elite,Treehouse,,,treehouse,Treehouse,treehouse,Treehouse
-Entry,Uniswap v2,uniswap-v2,Uniswap V2,uniswap-v2,Uniswap V2,uniswap2,Uniswap V2
-Essential,Uniswap v2,uniswap-v2,Uniswap V2,uniswap-v2,Uniswap V2,uniswap2,Uniswap V2
-Entry,Uniswap v3,uniswap-v3,Uniswap V3,uniswap-v3,Uniswap V3,uniswap3,Uniswap V3
-Essential,Uniswap v3,uniswap-v3,Uniswap V3,uniswap-v3,Uniswap V3,uniswap3,Uniswap V3
-Elite,Uniswap v3,uniswap-v3,Uniswap V3,uniswap-v3,Uniswap V3,uniswap3,Uniswap V3
-Elite,Usual,usual,Usual,,,usualmoney,Usual
-Elite,Veda,,,,,ftm_vedao,veDAO
-Essential,Velodrome,velodrome,Velodrome,,,op_velodrome,Velodrome
-Elite,Velodrome,velodrome,Velodrome,,,op_velodrome,Velodrome
-Elite,Yearn Finance,yearn,Yearn,,,iearn,Yearn
-Essential,Yearn v2,,,yearn-v2,Yearn V2,yearn2,Yearn V2
-Elite,Yearn v2,,,yearn-v2,Yearn V2,yearn2,Yearn V2
-Elite,Yearn v3,yearn-v3,Yearn V3,yearn-v3,Yearn V3,yearn3,Yearn V3
+Entry Cover,0x,zero-x,0x,,,0x,0x
+Essential Cover,0x,zero-x,0x,,,0x,0x
+Elite Cover,0x,zero-x,0x,,,0x,0x
+Entry Cover,1Inch,one-inch,1inch,1inch,1inch,1inch2,1inch
+Essential Cover,1Inch,one-inch,1inch,1inch,1inch,1inch2,1inch
+Elite Cover,1Inch,one-inch,1inch,1inch,1inch,1inch2,1inch
+Essential Cover,Aave v2,aave-v2,Aave V2,aave-v2,Aave V2,aave2,Aave V2
+Elite Cover,Aave v2,aave-v2,Aave V2,aave-v2,Aave V2,aave2,Aave V2
+Essential Cover,Aave v3,aave-v3,Aave V3,aave-pool-v3,Aave V3,aave3,Aave V3
+Elite Cover,Aave v3,aave-v3,Aave V3,aave-pool-v3,Aave V3,aave3,Aave V3
+Essential Cover,Aerodrome,aerodrome,Aerodrome,aerodrome,Aerodrome,base_aerodrome,Aerodrome
+Elite Cover,Aerodrome,aerodrome,Aerodrome,aerodrome,Aerodrome,base_aerodrome,Aerodrome
+Elite Cover,Aevo,aevo,Aevo,,,aevo,Aevo
+Elite Cover,Ajna,ajna,Ajna V2,,,ajna,Ajna.finance
+Elite Cover,AlienBase,alien-based,Alien Base,,,base_alienbase,Alien Base
+Elite Cover,Aloe,aloe-labs,Aloe Labs,,,aloe,Aloe
+Essential Cover,Angle,angle,Angle,,,angle,Angle Protocol
+Elite Cover,Angle,angle,Angle,,,angle,Angle Protocol
+Elite Cover,Arcadia,arcadia-finance,Arcadia Finance,arcadia-finance,Arcadia Finance,arcadia,Arcadia Finance
+Elite Cover,Arrakis Finance,arrakis,Arrakis Finance,,,arrakis,Arrakis Finance
+Essential Cover,Aura,aura,Aura Finance,aura-finance,Aura Finance,aurafinance,Aura Finance
+Elite Cover,Aura,aura,Aura Finance,aura-finance,Aura Finance,aurafinance,Aura Finance
+Entry Cover,Balancer v2,balancer-v2,Balancer V2,balancer-v2,Balancer V2,balancer2,Balancer V2
+Essential Cover,Balancer v2,balancer-v2,Balancer V2,balancer-v2,Balancer V2,balancer2,Balancer V2
+Elite Cover,Balancer v2,balancer-v2,Balancer V2,balancer-v2,Balancer V2,balancer2,Balancer V2
+Elite Cover,Balancer v3,,,,,,
+Elite Cover,BaseSwap,baseswap,BaseSwap,,,base_baseswap,Base Swap
+Essential Cover,Beefy,beefy,Beefy Finance,,,beefy,Beefy
+Elite Cover,Beefy,beefy,Beefy Finance,,,beefy,Beefy
+Essential Cover,Beethoven X,beethoven-x,Beethoven-X,beethoven-x,Beethoven x,op_beethovenx,Beethoven x
+Elite Cover,Beethoven X,beethoven-x,Beethoven-X,beethoven-x,Beethoven x,op_beethovenx,Beethoven x
+Essential Cover,Camelot,camelot,Camelot,camelot,Camelot,arb_camelot,Camelot
+Elite Cover,Camelot,camelot,Camelot,camelot,Camelot,arb_camelot,Camelot
+Essential Cover,Compound v2,compound,Compound,compound-v2,Compound V2,compound,Compound
+Elite Cover,Compound v2,compound,Compound,compound-v2,Compound V2,compound,Compound
+Essential Cover,Compound v3,compound-v3,Compound III,compound-v3,Compound V3,compound3,Compound V3
+Elite Cover,Compound v3,compound-v3,Compound III,compound-v3,Compound V3,compound3,Compound V3
+Elite Cover,Conic Finance,conic-finance,Conic Finance,,,conic,Conic Finance
+Elite Cover,Contango,contango,Contango,,,contango,Contango
+Essential Cover,Convex,convex,Convex,convex,Convex,convex,Convex
+Elite Cover,Convex,convex,Convex,convex,Convex,convex,Convex
+Entry Cover,CowAMM,,,,,,
+Essential Cover,CowAMM,,,,,,
+Elite Cover,CowAMM,,,,,,
+Entry Cover,CowSwap,cow-swap,CoW Swap,,,cowswap,CoW Swap
+Essential Cover,CowSwap,cow-swap,CoW Swap,,,cowswap,CoW Swap
+Elite Cover,CowSwap,cow-swap,CoW Swap,,,cowswap,CoW Swap
+Entry Cover,Curve,curve,Curve,curve,Curve,curve,Curve
+Essential Cover,Curve,curve,Curve,curve,Curve,curve,Curve
+Elite Cover,Curve,curve,Curve,curve,Curve,curve,Curve
+Elite Cover,Curve LlamaLend,,,,,lendcurve,Curve LlamaLend
+Entry Cover,DAI Savings Rate (sDAI),,,,,,
+Essential Cover,DAI Savings Rate (sDAI),,,,,,
+Elite Cover,DAI Savings Rate (sDAI),,,,,,
+Elite Cover,DeFi Saver,defisaver,DefiSaver,,,defisaver,DeFi Saver
+Elite Cover,Derive (formerly Lyra),lyra,Lyra,,,lyra,Derive V1
+Elite Cover,Dolomite,dolomite,Dolomite,,,arb_dolomite,Dolomite
+Elite Cover,Eclipse,,,,,eclipsebridge,Eclipse Bridge
+Entry Cover,EigenLayer,eigen-layer,Eigen Layer,eigenlayer,EigenLayer,eigenlayer,EigenLayer
+Essential Cover,EigenLayer,eigen-layer,Eigen Layer,eigenlayer,EigenLayer,eigenlayer,EigenLayer
+Elite Cover,EigenLayer,eigen-layer,Eigen Layer,eigenlayer,EigenLayer,eigenlayer,EigenLayer
+Elite Cover,Elixir,elixir,Elixir,elixir,Elixir,elixir,Elixir
+Essential Cover,Enzyme,enzyme-finance,Enzyme Finance,enzyme,Enzyme,enzyme,Enzyme
+Elite Cover,Enzyme,enzyme-finance,Enzyme Finance,enzyme,Enzyme,enzyme,Enzyme
+Elite Cover,Equalizer,equalizer,Equalizer,,,equalizer,Equalizer
+Elite Cover,Equilibria,equilibria,Equilibria,equilibria,Equilibria,equilibria,Equilibria
+Essential Cover,Ether.fi,ether-fi,ether.fi,etherfi,ether.fi,etherfi,ether.fi
+Elite Cover,Ether.fi,ether-fi,ether.fi,etherfi,ether.fi,etherfi,ether.fi
+Elite Cover,Ether.fi Liquid,,,,,,
+Elite Cover,Ether.fi Vaults,,,,,,
+Elite Cover,Euler Finance v2,,,,,euler2,Euler
+Elite Cover,Exactly,exactly,Exactly,exactly,Exactly,exactly,Exactly
+Elite Cover,ExtraFi,extra,Extra Finance,extra-finance,Extra Finance,base_extrafinance,Extra Finance
+Essential Cover,f(x) Protocol,fx-protocol,f(x) protocol,,,fxprotocol,f(x) Protocol
+Elite Cover,f(x) Protocol,fx-protocol,f(x) protocol,,,fxprotocol,f(x) Protocol
+Essential Cover,Flat Money,flat-money,Flat Money,,,base_flat,Flat Money
+Elite Cover,Flat Money,flat-money,Flat Money,,,base_flat,Flat Money
+Essential Cover,Fluid,,,,,fluid,Fluid
+Elite Cover,Fluid,,,,,fluid,Fluid
+Essential Cover,Frax Finance,frax,Frax,frax,Frax,frax,Frax
+Elite Cover,Frax Finance,frax,Frax,frax,Frax,frax,Frax
+Elite Cover,Frax Staked ETH,,,,,,
+Elite Cover,Fraxlend,frax-lend,Frax Lend,,,fraxlend,Fraxlend
+Elite Cover,Fraxswap,frax-swap,Frax Swap,,,,
+Elite Cover,Gains Network,gains-network,Gains Network,,,arb_gainsnetwork,Gains Network
+Elite Cover,Gearbox,gearbox,Gearbox,gearbox,Gearbox,gearbox,Gearbox
+Essential Cover,GMX,gmx,GMX,,,arb_gmx,GMX
+Elite Cover,GMX,gmx,GMX,,,arb_gmx,GMX
+Elite Cover,Harvest Finance,harvest,Harvest,,,harvest,Harvest
+Elite Cover,HOT AMM,,,,,,
+Elite Cover,Hyperliquid,hyperliquid,Hyperliquid,,,arb_hyperliquid,Hyperliquid
+Elite Cover,Index Coop,index-coop,Index Coop,,,index,Index Coop
+Elite Cover,Instadapp Lite,instadapp,Instadapp,,,instadapplite,Instadapp Lite
+Elite Cover,Inverse Finance FiRM,inverse-firm,Inverse Finance - FiRM,,,,
+Essential Cover,Inverse sDOLA,inverse,Inverse Finance,,,inverse,Inverse
+Elite Cover,Inverse sDOLA,inverse,Inverse Finance,,,inverse,Inverse
+Essential Cover,Karak,karak,Karak,,,karak,Karak
+Elite Cover,Karak,karak,Karak,,,karak,Karak
+Elite Cover,KelpDAO,kelp,Kelp,kelp-dao,Kelp DAO,kelpdao,Kelp DAO
+Essential Cover,Kiln,,,,,kiln,Kiln
+Elite Cover,Kiln,,,,,kiln,Kiln
+Essential Cover,Kwenta,kwenta,Kwenta,,,kwenta,Kwenta
+Elite Cover,Kwenta,kwenta,Kwenta,,,kwenta,Kwenta
+Entry Cover,Lido,lido,Lido,,,lido,LIDO
+Essential Cover,Lido,lido,Lido,,,lido,LIDO
+Elite Cover,Lido,lido,Lido,,,lido,LIDO
+Essential Cover,Liquity,liquity,Liquity,,,liquity,Liquity
+Elite Cover,Liquity,liquity,Liquity,,,liquity,Liquity
+Essential Cover,Lombard Finance EVM instance,,,,,lombard,Lombard
+Elite Cover,Lombard Finance EVM instance,,,,,lombard,Lombard
+Elite Cover,MakerDAO,,,,,,
+Elite Cover,Maverick,maverick-protocol,Maverick Protocol,maverick,Maverick,maverick,Maverick
+Elite Cover,Mellow Finance,,,,,mellow,mellow
+Essential Cover,Moonwell,moonwell,Moonwell,moonwell,Moonwell,base_moonwell,Moonwell
+Elite Cover,Moonwell,moonwell,Moonwell,moonwell,Moonwell,base_moonwell,Moonwell
+Essential Cover,Morpho,morpho,Morpho,morpho-blue,Morpho Blue,morphoblue,Morpho
+Essential Cover,Morpho Vaults,morpho,Morpho,morpho-blue,Morpho Blue,morphovaults,Morpho Vaults
+Elite Cover,Morpho,morpho,Morpho,morpho-blue,Morpho Blue,morphoblue,Morpho
+Elite Cover,Morpho Vaults,morpho,Morpho,morpho-blue,Morpho Blue,morphovaults,Morpho Vaults
+Elite Cover,Mummy,mummy-finance,Mummy Finance,,,ftm_mummy,Mummy Finance
+Essential Cover,Notional v3,notional-finance-v3,Notional Finance V3,notional,Notional,notional,Notional
+Elite Cover,Notional v3,notional-finance-v3,Notional Finance V3,,,notional,Notional
+Elite Cover,Origin OUSD,,,,,ousd,Origin Dollar
+Essential Cover,Origin Protocol,origin,Origin,,,originstory,Origin Protocol
+Elite Cover,Origin Protocol,origin,Origin,,,originstory,Origin Protocol
+Elite Cover,Origin superOETH,,,,,,
+Essential Cover,PancakeSwap,pancakeswap,PancakeSwap,pancake-swap,PancakeSwap,pancakeswap,PancakeSwap
+Elite Cover,PancakeSwap,pancakeswap,PancakeSwap,pancake-swap,PancakeSwap,pancakeswap,PancakeSwap
+Entry Cover,Paraswap,paraswap,Paraswap,paraswap,ParaSwap,paraswap,ParaSwap
+Essential Cover,Paraswap,paraswap,Paraswap,paraswap,ParaSwap,paraswap,ParaSwap
+Elite Cover,Paraswap,paraswap,Paraswap,paraswap,ParaSwap,paraswap,ParaSwap
+Essential Cover,Pendle,pendle,Pendle,pendle-v2,Pendle V2,pendle,Pendle
+Elite Cover,Pendle,pendle,Pendle,pendle-v2,Pendle V2,pendle,Pendle
+Elite Cover,Pharaoh,pharaoh-exchange,Pharaoh Exchange,,,avax_pharaoh,Pharaoh Exchange
+Essential Cover,PoolTogether v5,pool-together-v5,PoolTogether,,,pooltogether,PoolTogether
+Elite Cover,PoolTogether v5,pool-together-v6,PoolTogether,,,pooltogether,PoolTogether
+Essential Cover,Prisma Finance,prisma-finance,Prisma Finance,prisma-finance,Prisma Finance,prisma,Prisma Finance
+Elite Cover,Prisma Finance,prisma-finance,Prisma Finance,prisma-finance,Prisma Finance,prisma,Prisma Finance
+Essential Cover,Puffer Finance,puffer-finance,Puffer Finance,,,puffer,Puffer Finance
+Elite Cover,Puffer Finance,puffer-finance,Puffer Finance,,,puffer,Puffer Finance
+Elite Cover,Quickswap,quickswap,Quickswap,quickswap,QuickSwap,matic_quickswap,QuickSwap
+Elite Cover,Ramses,ramses,Ramses,,,arb_ramses,RAMSES
+Elite Cover,Reflexer Finance,reflexer,Reflexer,,,reflexer,Reflexer
+Essential Cover,Renzo,renzo,Renzo,,,renzo,Renzo
+Elite Cover,Renzo,renzo,Renzo,,,renzo,Renzo
+Elite Cover,Reserve Finance,reserve-protocol,Reserve Protocol,reserve-protocol,Reserve Protocol,reserve,Reserve Protocol
+Entry Cover,Rocket Pool,rocket-pool,Rocket Pool,,,rocketpool,Rocket Pool
+Essential Cover,Rocket Pool,rocket-pool,Rocket Pool,,,rocketpool,Rocket Pool
+Elite Cover,Rocket Pool,rocket-pool,Rocket Pool,,,rocketpool,Rocket Pool
+Entry Cover,Safe,safe-gnosis,Safe (Fka Gnosis Safe),,,gnosis_safe,Gnosis Safe
+Essential Cover,Safe,safe-gnosis,Safe (Fka Gnosis Safe),,,gnosis_safe,Gnosis Safe
+Elite Cover,Safe,safe-gnosis,Safe (Fka Gnosis Safe),,,gnosis_safe,Gnosis Safe
+Entry Cover,Savings crvUSD (scrvUSD),curve-stablecoin,Curve Stablecoin,,,crvusd,Curve Stablecoin
+Essential Cover,Savings crvUSD (scrvUSD),,,,,crvusd,Curve Stablecoin
+Elite Cover,Savings crvUSD (scrvUSD),,,,,crvusd,Curve Stablecoin
+Elite Cover,Set Protocol v2,,,,,,
+Elite Cover,Silo,silo-finance,Silo Finance,silo,Silo,arb_silo,Silo
+Essential Cover,Sky Protocol,sky,Sky,,,sky,Sky
+Elite Cover,Sky Protocol,sky,Sky,,,sky,Sky
+Entry Cover,Sky Savings Rate (sUSDS),sky,Sky,,,,
+Essential Cover,Sky Savings Rate (sUSDS),sky,Sky,,,,
+Elite Cover,Sky Savings Rate (sUSDS),sky,Sky,,,,
+Essential Cover,Spark Protocol,,,spark,Spark,spark,Spark
+Elite Cover,Spark Protocol,,,spark,Spark,spark,Spark
+Elite Cover,Spectra Finance,,,,,spectra,Spectra
+Essential Cover,Stader,stader,Stader,stader,Stader,stader,Stader
+Elite Cover,Stader,stader,Stader,stader,Stader,stader,Stader
+Elite Cover,StakeDAO,stake-dao,StakeDAO,,,stakedao,Stake DAO
+Entry Cover,Stakewise,stakewise,StakeWise,,,stakewise,StakeWise
+Essential Cover,Stakewise,stakewise,StakeWise,,,stakewise,StakeWise
+Elite Cover,Stakewise,stakewise,StakeWise,,,stakewise,StakeWise
+Elite Cover,Sturdy,sturdy,Sturdy,sturdy-v2,Sturdy V2,sturdy,Sturdy
+Elite Cover,Summerfi,Summer-fi,Summer.fi,,,summer,Summer.fi
+Elite Cover,Superform,superform-labs,Superform Labs,,,superform,Superform
+Elite Cover,SushiSwap,sushiswap,SushiSwap,,,sushiswap,SushiSwap
+Essential Cover,Swell,swell,Swell,,,swellnetwork,Swell
+Elite Cover,Swell,swell,Swell,,,swellnetwork,Swell
+Essential Cover,Symbiotic,symbiotic,Symbiotic,,,symbiotic,Symbiotic
+Elite Cover,Symbiotic,symbiotic,Symbiotic,,,symbiotic,Symbiotic
+Essential Cover,Synthetix,synthetix,Synthetix,synthetix,Synthetix,symbiotic,Symbiotic
+Elite Cover,Synthetix,synthetix,Synthetix,synthetix,Synthetix,synthetix,Synthetix
+Essential Cover,Syrup,syrup,Syrup,syrup,Syrup,syrup,Syrup
+Elite Cover,Syrup,syrup,Syrup,syrup,Syrup,syrup,Syrup
+Essential Cover,Term Finance,,,term-finance,Term Finance,term,Term Finance
+Elite Cover,Term Finance,,,term-finance,Term Finance,term,Term Finance
+Essential Cover,Toros Finance,,,,,op_toros,Toros
+Elite Cover,Toros Finance,,,,,op_toros,Toros
+Elite Cover,Treehouse,,,treehouse,Treehouse,treehouse,Treehouse
+Entry Cover,Uniswap v2,uniswap-v2,Uniswap V2,uniswap-v2,Uniswap V2,uniswap2,Uniswap V2
+Essential Cover,Uniswap v2,uniswap-v2,Uniswap V2,uniswap-v2,Uniswap V2,uniswap2,Uniswap V2
+Entry Cover,Uniswap v3,uniswap-v3,Uniswap V3,uniswap-v3,Uniswap V3,uniswap3,Uniswap V3
+Essential Cover,Uniswap v3,uniswap-v3,Uniswap V3,uniswap-v3,Uniswap V3,uniswap3,Uniswap V3
+Elite Cover,Uniswap v3,uniswap-v3,Uniswap V3,uniswap-v3,Uniswap V3,uniswap3,Uniswap V3
+Elite Cover,Usual,usual,Usual,,,usualmoney,Usual
+Elite Cover,Veda,,,,,ftm_vedao,veDAO
+Essential Cover,Velodrome,velodrome,Velodrome,,,op_velodrome,Velodrome
+Elite Cover,Velodrome,velodrome,Velodrome,,,op_velodrome,Velodrome
+Elite Cover,Yearn Finance,yearn,Yearn,,,iearn,Yearn
+Essential Cover,Yearn v2,,,yearn-v2,Yearn V2,yearn2,Yearn V2
+Elite Cover,Yearn v2,,,yearn-v2,Yearn V2,yearn2,Yearn V2
+Elite Cover,Yearn v3,yearn-v3,Yearn V3,yearn-v3,Yearn V3,yearn3,Yearn V3
