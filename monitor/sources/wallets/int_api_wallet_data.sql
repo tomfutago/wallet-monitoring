@@ -1,63 +1,48 @@
 with
 
 mapping_unique_procols as (
-  select distinct protocol, zapper_id, zapper_name, zerion_id, zerion_name
+  select distinct protocol, debank_id, debank_name
   from wallets.plan_mapping
 ),
 
-prices as (
+latest_prices as (
   select
     block_date,
-    avg_eth_usd_price
+    max_by(avg_eth_usd_price, block_date) as avg_eth_usd_price
   from wallets.capital_pool
+  group by 1
 ),
 
-zerion_data_latest as (
+debank_data_latest as (
   select
-    zp.cover_id,
-    zp.chain_id as chain,
-    zp.address,
+    d.cover_id,
+    d.chain,
+    d.wallet,
     m.protocol,
-    max_by(zp.value, zp.inserted_at) as amount_usd,
-    max_by(zp.value / p.avg_eth_usd_price, zp.inserted_at) as amount_eth,
-    max_by(cast(zp.updated_at as timestamp), zp.inserted_at) as updated_at,
-    max(zp.inserted_at) as inserted_at
-  from wallets.zerion_positions zp
-    inner join mapping_unique_procols m on zp.app_id = m.zerion_id
-    left join prices p on zp.updated_at::date = p.block_date::date
-  where zp.position_type <> 'wallet'
-  group by 1, 2, 3, 4
-),
-
-zapper_data_latest as (
-  select
-    zp.cover_id,
-    zp.network as chain,
-    zp.address,
-    m.protocol,
-    max_by(zp.balance_usd, zp.inserted_at) as amount_usd,
-    max_by(zp.balance_usd / p.avg_eth_usd_price, zp.inserted_at) as amount_eth,
-    max_by(cast(zp.updated_at as timestamp), zp.inserted_at) as updated_at,
-    max(zp.inserted_at) as inserted_at
-  from wallets.zapper_positions zp
-    inner join mapping_unique_procols m on zp.app_id = m.zerion_id
-    left join prices p on zp.updated_at::date = p.block_date
+    max_by(d.net_usd_value, to_timestamp(cast(d._dlt_load_id as double))) as net_usd_value,
+    max_by(d.asset_usd_value, to_timestamp(cast(d._dlt_load_id as double))) as asset_usd_value,
+    max_by(d.debt_usd_value, to_timestamp(cast(d._dlt_load_id as double))) as debt_usd_value,
+    max_by(d.net_usd_value / p.avg_eth_usd_price, to_timestamp(cast(d._dlt_load_id as double))) as net_eth_value,
+    max_by(d.asset_usd_value / p.avg_eth_usd_price, to_timestamp(cast(d._dlt_load_id as double))) as asset_eth_value,
+    max_by(d.debt_usd_value / p.avg_eth_usd_price, to_timestamp(cast(d._dlt_load_id as double))) as debt_eth_value,
+    max(to_timestamp(cast(d._dlt_load_id as double))) as load_dt
+  from wallets.debank_wallet_protocol_balance d
+    inner join mapping_unique_procols m on d.name = m.debank_name
+    cross join latest_prices p
   group by 1, 2, 3, 4
 )
 
 select
-  coalesce(zr.cover_id, zp.cover_id) as cover_id,
-  coalesce(zr.address, zp.address) as address,
-  coalesce(zr.chain, zp.chain) as chain,
-  coalesce(zr.protocol, zp.protocol) as protocol,
-  if(coalesce(zr.updated_at, to_timestamp(0)) >= coalesce(zp.updated_at, to_timestamp(0)), zr.amount_usd, zp.amount_usd) as amount_usd,
-  if(coalesce(zr.updated_at, to_timestamp(0)) >= coalesce(zp.updated_at, to_timestamp(0)), zr.amount_eth, zp.amount_eth) as amount_eth,
-  if(coalesce(zr.updated_at, to_timestamp(0)) >= coalesce(zp.updated_at, to_timestamp(0)), zr.updated_at, zp.updated_at) as updated_at,
-  if(coalesce(zr.updated_at, to_timestamp(0)) >= coalesce(zp.updated_at, to_timestamp(0)), zr.inserted_at, zp.inserted_at) as inserted_at
-from zerion_data_latest zr
-  full outer join zapper_data_latest zp
-    on zp.cover_id = zr.cover_id
-    and zp.address = zr.address
-    and zp.chain = zr.chain
-    and zp.protocol = zr.protocol
+  cover_id,
+  chain,
+  wallet,
+  protocol,
+  net_usd_value,
+  asset_usd_value,
+  debt_usd_value,
+  net_eth_value,
+  asset_eth_value,
+  debt_eth_value,
+  load_dt
+from debank_data_latest
 order by 1, 2, 3, 4

@@ -6,9 +6,7 @@ select
   end plan_id,
   plan,
   protocol,
-  zapper_id,
-  zapper_name,
-  zerion_id,
-  zerion_name
+  debank_id,
+  debank_name
 from wallets.plan_mapping
 order by plan_id, protocol
