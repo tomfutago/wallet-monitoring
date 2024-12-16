@@ -81,7 +81,6 @@ def load_user_all_simple_protocol_list(cover_id: int, wallet: str):
           "path": "/v1/user/all_simple_protocol_list",
           "params": {"id": wallet},
         },
-        "write_disposition": "replace"
       }
     ]
   })
@@ -97,10 +96,15 @@ def load_user_all_simple_protocol_list(cover_id: int, wallet: str):
     for row in api_source.resources["debank_wallet_protocol_balance"]:
       yield {**row, "wallet": wallet, "cover_id": cover_id}
 
-  load_info = pipeline.run([dlt.resource(name="debank_wallet_protocol_balance", write_disposition="replace")(transformed_data)])
+  load_info = pipeline.run([
+    dlt.resource(
+      name="debank_wallet_protocol_balance", 
+      write_disposition="append"
+    )(transformed_data)
+  ])
   print(load_info)
 
 if __name__ == "__main__":
   #load_chains()
   #load_protocols()
-  load_user_all_simple_protocol_list(cover_id=100, wallet="0x4fdb601aebf2c6ad947d97a00b7eeaf71cc5bf93")
+  load_user_all_simple_protocol_list(cover_id=100, wallet="0x4fdb601aebf2c6ad947d97a00b7eeaf71cc5bf93") #test
