@@ -16,7 +16,7 @@ zerion_api_key = os.getenv("ZERION_API_KEY")
 zapper_api_key = os.getenv("ZAPPER_API_KEY")
 
 # create duckdb connection
-duckdb_con = duckdb.connect("./data/wallets.duckdb")
+duckdb_con = duckdb.connect("../data/wallets.duckdb")
 
 def clean_up_db(table_name: str, drop_table: bool=False, truncate_table: bool=False):
   if drop_table:
@@ -264,7 +264,7 @@ def loop_through_cover_wallets():
 #pull_zapper_positions(api_key=zapper_api_key, cover_id=-1, address="0x036d6e8b88e21760f6759a31dabc8bdf3f026b98")
 
 clean_up_db(table_name="plan_mapping", drop_table=True, truncate_table=False)
-duckdb_con.execute("CREATE TABLE plan_mapping AS FROM './data/plan_mapping.csv'")
+duckdb_con.execute("CREATE TABLE plan_mapping AS FROM '../data/plan_mapping.csv'")
 
 # refresh base Dune data (flush & fill)
 #pull_capital_pool()
