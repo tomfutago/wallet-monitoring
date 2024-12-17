@@ -49,7 +49,7 @@ order by 2, 3
   <Column id=eth_exposed title="funds exposed (Ξ)" />
 </DataTable>
 
-<DataTable data={cover_wallet_protocol_list} totalRow=true>
+<DataTable data={cover_wallet_protocol_list} totalRow=true search=true>
   <Column id=cover_id title="cover id" totalAgg="grand total"/>
   <Column id=wallet title="wallet"/>
   <Column id=protocol title="protocol" />

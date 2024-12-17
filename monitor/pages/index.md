@@ -158,7 +158,7 @@ where plan = '${inputs.plan}'
 order by 1
 ```
 
-<DataTable data={plan_cover_protocol_list} totalRow=true>
+<DataTable data={plan_cover_protocol_list} totalRow=true search=true>
   <Column id=plan title="plan" totalAgg="grand total" />
   <Column id=protocol title="protocol"/>
   <Column id=cnt_cover title="# covers" totalAgg=mean />
