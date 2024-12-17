@@ -38,12 +38,8 @@ debank_data_latest as (
 )
 
 select
-  case c.plan
-    when 'Entry Cover' then 1
-    when 'Essential Cover' then 2
-    when 'Elite Cover' then 3
-  end plan_id,
-  c.plan,
+  c.cover_id,
+  concat(left(api.wallet, 6), '..', right(api.wallet, 4)) as wallet,
   api.protocol,
   sum(api.net_usd_value) as usd_exposed,
   sum(api.net_eth_value) as eth_exposed
@@ -52,4 +48,4 @@ from wallets.cover_wallets c
   inner join mapping_full m on c.plan = m.plan and api.protocol = m.protocol
 group by 1, 2, 3
 having sum(api.net_usd_value) > 0 or sum(api.net_eth_value) > 0
-order by 1, 3
+order by 1, 2, 3
