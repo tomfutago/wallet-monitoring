@@ -43,31 +43,16 @@ from agg_wallet_positions
 order by plan_id
 ```
 
-```plan_cover_protocol_list
-select
-  pc.plan,
-  pw.protocol,
-  pc.cnt_cover,
-  pc.cnt_wallet,
-  pc.usd_cover,
-  pc.eth_cover,
-  pw.usd_exposed,
-  pw.eth_exposed
-from wallets.int_plan_cover_agg pc
-  left join wallets.int_plan_protocol_wallet_agg pw on pc.plan_id = pw.plan_id
-order by pc.plan_id
-```
-
 ## Exposed Funds vs Covered Amount per Cover Plan
 
-<DataTable data={plan_cover_list}>
-  <Column id=plan title="plan"/>
+<DataTable data={plan_cover_list} totalRow=true>
+  <Column id=plan title="plan" totalAgg="grand total"/>
   <Column id=cnt_cover title="# covers" />
   <Column id=cnt_wallet title="# wallets" />
   <Column id=usd_cover title="cover ($)" />
   <Column id=eth_cover title="cover (Ξ)" />
-  <Column id=usd_exposed title="funds exposed ($)" />
-  <Column id=eth_exposed title="funds exposed (Ξ)" />
+  <Column id=usd_exposed title="funds exposed ($)" contentType=colorscale colorScale=negative />
+  <Column id=eth_exposed title="funds exposed (Ξ)" contentType=colorscale colorScale=negative />
 </DataTable>
 
 <Tabs>
@@ -121,22 +106,27 @@ order by pc.plan_id
 
 ## Exposed Funds vs Covered Amount per Cover Plan & Protocol
 
-<DataTable data={plan_cover_protocol_list}>
-  <Column id=plan title="plan" />
-  <Column id=protocol title="protocol"/>
-  <Column id=cnt_cover title="# covers" />
-  <Column id=cnt_wallet title="# wallets" />
-  <Column id=usd_cover title="cover ($)" />
-  <Column id=eth_cover title="cover (Ξ)" />
-  <Column id=usd_exposed title="funds exposed ($)" />
-  <Column id=eth_exposed title="funds exposed (Ξ)" />
-</DataTable>
-
 <ButtonGroup name=plan title="Select Plan">
-    <ButtonGroupItem valueLabel="Entry Cover" value="Entry Cover" />
+    <ButtonGroupItem valueLabel="Entry Cover" value="Entry Cover" default />
     <ButtonGroupItem valueLabel="Essential Cover" value="Essential Cover" />
-    <ButtonGroupItem valueLabel="Elite Cover" value="Elite Cover" default />
+    <ButtonGroupItem valueLabel="Elite Cover" value="Elite Cover" />
 </ButtonGroup>
+
+```plan_cover_protocol_list
+select
+  pc.plan,
+  pw.protocol,
+  pc.cnt_cover,
+  pc.cnt_wallet,
+  pc.usd_cover,
+  pc.eth_cover,
+  pw.usd_exposed,
+  pw.eth_exposed
+from wallets.int_plan_cover_agg pc
+  left join wallets.int_plan_protocol_wallet_agg pw on pc.plan_id = pw.plan_id
+where pc.plan = '${inputs.plan}'
+order by pc.plan_id
+```
 
 ```plan_cover_protocol_stack
 with agg_wallet_positions as (
@@ -167,6 +157,17 @@ from agg_wallet_positions
 where plan = '${inputs.plan}'
 order by 1
 ```
+
+<DataTable data={plan_cover_protocol_list} totalRow=true>
+  <Column id=plan title="plan" totalAgg="grand total" />
+  <Column id=protocol title="protocol"/>
+  <Column id=cnt_cover title="# covers" totalAgg=mean />
+  <Column id=cnt_wallet title="# wallets" totalAgg=mean />
+  <Column id=usd_cover title="cover ($)" totalAgg=mean />
+  <Column id=eth_cover title="cover (Ξ)" totalAgg=mean />
+  <Column id=usd_exposed title="funds exposed ($)" totalAgg=sum contentType=colorscale colorScale=negative />
+  <Column id=eth_exposed title="funds exposed (Ξ)" totalAgg=sum contentType=colorscale colorScale=negative />
+</DataTable>
 
 <Tabs>
   <Tab label='USD'>
