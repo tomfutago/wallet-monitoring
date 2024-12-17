@@ -58,3 +58,4 @@ order by 2, 3
   <Column id=usd_exposed title="funds exposed ($)" totalAgg=sum />
   <Column id=eth_exposed title="funds exposed (Ξ)" totalAgg=sum />
 </DataTable>
+
