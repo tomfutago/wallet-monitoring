@@ -16,4 +16,4 @@ secrets.toml
 .vscode
 
 # ignore duckdb
-*.duckdb
+#*.duckdb
