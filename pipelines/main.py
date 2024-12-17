@@ -1,6 +1,6 @@
 import duckdb
-from pipelines.debank_pipeline import *
-from pipelines.dune_pipeline import *
+from debank_pipeline import *
+from dune_pipeline import *
 
 def loop_through_cover_wallets():
   wallet = "0xbad"
@@ -22,7 +22,10 @@ if __name__ == "__main__":
   
   # flush & fill load
   load_capital_pool()
-  load_cover_wallets()
+
+  # get last loaded cover_id and append all new ones
+  max_cover_id = duckdb_con.execute("SELECT MAX(cover_id) FROM cover_wallets").fetchone()[0]
+  load_cover_wallets(max_cover_id)
 
   # append current wallet balances
   loop_through_cover_wallets()
