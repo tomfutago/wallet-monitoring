@@ -1,4 +1,4 @@
-name: run pipelines
+name: manual run pipelines
 
 on:
   workflow_dispatch:

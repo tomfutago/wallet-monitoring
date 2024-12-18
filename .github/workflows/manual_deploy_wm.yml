@@ -1,4 +1,4 @@
-name: deploy wallet monitoring to gh pages
+name: manual deploy wallet monitoring
 
 on:
   workflow_dispatch:
