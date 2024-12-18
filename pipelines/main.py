@@ -24,11 +24,11 @@ if __name__ == "__main__":
   load_capital_pool()
 
   # get last loaded cover_id and append all new ones
-  #max_cover_id = duckdb_con.execute("SELECT MAX(cover_id) FROM cover_wallets").fetchone()[0]
-  #load_cover_wallets(max_cover_id)
+  max_cover_id = duckdb_con.execute("SELECT MAX(cover_id) FROM cover_wallets").fetchone()[0]
+  load_cover_wallets(max_cover_id)
 
   # append current wallet balances
-  #loop_through_cover_wallets()
+  loop_through_cover_wallets()
 
   # close duckdb connection
   duckdb_con.close()
