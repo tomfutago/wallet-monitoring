@@ -46,5 +46,5 @@ from wallets.cover_wallets c
   inner join debank_data_latest api on c.cover_id = api.cover_id and c.monitored_wallet = api.wallet
   inner join mapping_full m on c.plan = m.plan and api.protocol = m.protocol
 group by 1, 2
-having sum(api.net_usd_value) > 0 or sum(api.net_eth_value) > 0
+having sum(api.net_usd_value) >= 0.01
 order by 1
