@@ -11,7 +11,7 @@ jobs:
   run-pipelines:
     runs-on: ubuntu-latest
     outputs:
-      wallet_db_path: ${{ steps.copy-wallet-db.outputs.wallet_db_path }}
+      wallet_db_path: ${{ steps.store-wallet-db.outputs.wallet_db_path }}
     steps:
       - name: check out
         uses: actions/checkout@v4
@@ -28,10 +28,11 @@ jobs:
           cd pipelines && poetry run python main.py
 
       - name: store wallets db for deployment
-        id: copy-wallet-db
+        id: store-wallet-db
         run: |
           cd $GITHUB_WORKSPACE
           echo "wallet_db_path=$GITHUB_WORKSPACE/data/wallets.duckdb" >> $GITHUB_ENV
+          echo "::set-output name=wallet_db_path::$GITHUB_WORKSPACE/data/wallets.duckdb"
 
       - name: debug wallet_db_path
         run: cat $GITHUB_ENV
