@@ -9,7 +9,7 @@ env:
 
 jobs:
   run-pipelines:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     outputs:
       wallet_db_path: ${{ steps.store-wallet-db.outputs.wallet_db_path }}
     steps:
@@ -32,14 +32,11 @@ jobs:
         run: |
           cd $GITHUB_WORKSPACE
           echo "wallet_db_path=$GITHUB_WORKSPACE/data/wallets.duckdb" >> $GITHUB_ENV
-          echo "::set-output name=wallet_db_path::$GITHUB_WORKSPACE/data/wallets.duckdb"
-
-      - name: debug wallet_db_path
-        run: cat $GITHUB_ENV
+          echo "wallet_db_path=$GITHUB_WORKSPACE/data/wallets.duckdb" >> $GITHUB_OUTPUT
   
   deploy-wallet-monitoring:
     needs: run-pipelines
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     permissions:
       pages: write
