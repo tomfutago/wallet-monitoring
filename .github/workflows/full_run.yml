@@ -29,8 +29,13 @@ jobs:
 
       - name: store wallets db for deployment
         id: copy-wallet-db
-        run: echo "wallet_db_path=./data/wallets.duckdb" >> $GITHUB_ENV
+        run: |
+          cd $GITHUB_WORKSPACE
+          echo "wallet_db_path=$GITHUB_WORKSPACE/data/wallets.duckdb" >> $GITHUB_ENV
 
+      - name: debug wallet_db_path
+        run: cat $GITHUB_ENV
+  
   deploy-wallet-monitoring:
     needs: run-pipelines
     runs-on: ubuntu-latest
