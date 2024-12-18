@@ -39,6 +39,9 @@ jobs:
       pages: write
       id-token: write
 
+    env:
+      wallet_db_path: ${{ needs.run-pipelines.outputs.wallet_db_path }}
+
     steps:
       - name: check out
         uses: actions/checkout@v4
