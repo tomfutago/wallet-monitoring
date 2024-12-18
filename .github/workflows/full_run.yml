@@ -29,7 +29,7 @@ jobs:
 
       - name: store wallets db for deployment
         id: copy-wallet-db
-        run: echo "wallet_db_path=../data/wallets.duckdb" >> $GITHUB_ENV
+        run: echo "wallet_db_path=./data/wallets.duckdb" >> $GITHUB_ENV
 
   deploy-wallet-monitoring:
     needs: run-pipelines
@@ -52,7 +52,9 @@ jobs:
         run: cd ./monitor && npm install
 
       - name: copy updated wallets db
-        run: cp -f ${{ env.wallet_db_path }} ./monitor/sources/wallets/wallets.duckdb
+        run: |
+          echo "Copying wallet_db_path: ${{ env.wallet_db_path }}"
+          cp -f ${{ env.wallet_db_path }} ./monitor/sources/wallets/wallets.duckdb
 
       - name: build
         env:
