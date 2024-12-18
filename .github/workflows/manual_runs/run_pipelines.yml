@@ -1,4 +1,4 @@
-name: run_pipelines
+name: run pipelines
 
 on:
   workflow_dispatch:

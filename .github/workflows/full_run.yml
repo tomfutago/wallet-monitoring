@@ -1,0 +1,71 @@
+name: run pipelines and deploy wallet monitoring
+
+on:
+  workflow_dispatch:
+
+env:
+  SOURCES__DUNE__API_KEY: ${{ secrets.SOURCES__DUNE__API_KEY }}
+  SOURCES__DEBANK__ACCESS_KEY: ${{ secrets.SOURCES__DEBANK__ACCESS_KEY }}
+
+jobs:
+  run-pipelines:
+    runs-on: ubuntu-latest
+    outputs:
+      wallet_db_path: ${{ steps.copy-wallet-db.outputs.wallet_db_path }}
+    steps:
+      - name: check out
+        uses: actions/checkout@v4
+
+      - name: set up python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.11'
+
+      - name: install poetry and run pipelines
+        run: |
+          pip install poetry
+          poetry install
+          cd pipelines && poetry run python main.py
+
+      - name: store wallets db for deployment
+        id: copy-wallet-db
+        run: echo "wallet_db_path=../data/wallets.duckdb" >> $GITHUB_ENV
+
+  deploy-wallet-monitoring:
+    needs: run-pipelines
+    runs-on: ubuntu-latest
+
+    permissions:
+      pages: write
+      id-token: write
+
+    steps:
+      - name: check out
+        uses: actions/checkout@v4
+
+      - name: install node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: install dependencies
+        run: cd ./monitor && npm install
+
+      - name: copy updated wallets db
+        run: cp -f ${{ env.wallet_db_path }} ./monitor/sources/wallets/wallets.duckdb
+
+      - name: build
+        env:
+          BASE_PATH: '/${{ github.event.repository.name }}'
+        run: |
+          cd ./monitor
+          npm run sources
+          npm run build
+
+      - name: upload artifacts
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: 'monitor/build/${{ github.event.repository.name }}'
+
+      - name: deploy
+        uses: actions/deploy-pages@v4
