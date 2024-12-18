@@ -10,7 +10,9 @@ Elite Cover,Aave v2,aave-v2,Aave V2,aave-v2,Aave V2,aave2,Aave V2
 Essential Cover,Aave v3,aave-v3,Aave V3,aave-pool-v3,Aave V3,aave3,Aave V3
 Elite Cover,Aave v3,aave-v3,Aave V3,aave-pool-v3,Aave V3,aave3,Aave V3
 Essential Cover,Aerodrome,aerodrome,Aerodrome,aerodrome,Aerodrome,base_aerodrome,Aerodrome
+Essential Cover,Aerodrome,,,,,base_aerodrome3,Aerodrome V3
 Elite Cover,Aerodrome,aerodrome,Aerodrome,aerodrome,Aerodrome,base_aerodrome,Aerodrome
+Elite Cover,Aerodrome,,,,,base_aerodrome3,Aerodrome V3
 Elite Cover,Aevo,aevo,Aevo,,,aevo,Aevo
 Elite Cover,Ajna,ajna,Ajna V2,,,ajna,Ajna.finance
 Elite Cover,AlienBase,alien-based,Alien Base,,,base_alienbase,Alien Base
@@ -86,7 +88,9 @@ Elite Cover,Fraxswap,frax-swap,Frax Swap,,,,
 Elite Cover,Gains Network,gains-network,Gains Network,,,arb_gainsnetwork,Gains Network
 Elite Cover,Gearbox,gearbox,Gearbox,gearbox,Gearbox,gearbox,Gearbox
 Essential Cover,GMX,gmx,GMX,,,arb_gmx,GMX
+Essential Cover,GMX,,,,,arb_gmx2,GMX V2
 Elite Cover,GMX,gmx,GMX,,,arb_gmx,GMX
+Elite Cover,GMX,,,,,arb_gmx2,GMX V2
 Elite Cover,Harvest Finance,harvest,Harvest,,,harvest,Harvest
 Elite Cover,HOT AMM,,,,,,
 Elite Cover,Hyperliquid,hyperliquid,Hyperliquid,,,arb_hyperliquid,Hyperliquid
@@ -101,7 +105,9 @@ Elite Cover,KelpDAO,kelp,Kelp,kelp-dao,Kelp DAO,kelpdao,Kelp DAO
 Essential Cover,Kiln,,,,,kiln,Kiln
 Elite Cover,Kiln,,,,,kiln,Kiln
 Essential Cover,Kwenta,kwenta,Kwenta,,,kwenta,Kwenta
+Essential Cover,Kwenta,,,,,base_kwenta3,Kwenta V3
 Elite Cover,Kwenta,kwenta,Kwenta,,,kwenta,Kwenta
+Elite Cover,Kwenta,,,,,base_kwenta3,Kwenta V3
 Entry Cover,Lido,lido,Lido,,,lido,LIDO
 Essential Cover,Lido,lido,Lido,,,lido,LIDO
 Elite Cover,Lido,lido,Lido,,,lido,LIDO
@@ -111,6 +117,7 @@ Essential Cover,Lombard Finance EVM instance,,,,,lombard,Lombard
 Elite Cover,Lombard Finance EVM instance,,,,,lombard,Lombard
 Elite Cover,MakerDAO,,,,,,
 Elite Cover,Maverick,maverick-protocol,Maverick Protocol,maverick,Maverick,maverick,Maverick
+Elite Cover,Maverick,,,,,maverick2,Maverick V2
 Elite Cover,Mellow Finance,,,,,mellow,mellow
 Essential Cover,Moonwell,moonwell,Moonwell,moonwell,Moonwell,base_moonwell,Moonwell
 Elite Cover,Moonwell,moonwell,Moonwell,moonwell,Moonwell,base_moonwell,Moonwell
@@ -119,6 +126,7 @@ Essential Cover,Morpho Vaults,morpho,Morpho,morpho-blue,Morpho Blue,morphovaults
 Elite Cover,Morpho,morpho,Morpho,morpho-blue,Morpho Blue,morphoblue,Morpho
 Elite Cover,Morpho Vaults,morpho,Morpho,morpho-blue,Morpho Blue,morphovaults,Morpho Vaults
 Elite Cover,Mummy,mummy-finance,Mummy Finance,,,ftm_mummy,Mummy Finance
+Elite Cover,Mummy,,,,,ftm_mummy2,Mummy Finance V2
 Essential Cover,Notional v3,notional-finance-v3,Notional Finance V3,notional,Notional,notional,Notional
 Elite Cover,Notional v3,notional-finance-v3,Notional Finance V3,,,notional,Notional
 Elite Cover,Origin OUSD,,,,,ousd,Origin Dollar
@@ -126,12 +134,16 @@ Essential Cover,Origin Protocol,origin,Origin,,,originstory,Origin Protocol
 Elite Cover,Origin Protocol,origin,Origin,,,originstory,Origin Protocol
 Elite Cover,Origin superOETH,,,,,,
 Essential Cover,PancakeSwap,pancakeswap,PancakeSwap,pancake-swap,PancakeSwap,pancakeswap,PancakeSwap
+Essential Cover,PancakeSwap,,,,,pancakeswap3,PancakeSwap V3
 Elite Cover,PancakeSwap,pancakeswap,PancakeSwap,pancake-swap,PancakeSwap,pancakeswap,PancakeSwap
+Elite Cover,PancakeSwap,,,,,pancakeswap3,PancakeSwap V3
 Entry Cover,Paraswap,paraswap,Paraswap,paraswap,ParaSwap,paraswap,ParaSwap
 Essential Cover,Paraswap,paraswap,Paraswap,paraswap,ParaSwap,paraswap,ParaSwap
 Elite Cover,Paraswap,paraswap,Paraswap,paraswap,ParaSwap,paraswap,ParaSwap
 Essential Cover,Pendle,pendle,Pendle,pendle-v2,Pendle V2,pendle,Pendle
+Essential Cover,Pendle,,,,,pendle2,Pendle V2
 Elite Cover,Pendle,pendle,Pendle,pendle-v2,Pendle V2,pendle,Pendle
+Elite Cover,Pendle,,,,,pendle2,Pendle V2
 Elite Cover,Pharaoh,pharaoh-exchange,Pharaoh Exchange,,,avax_pharaoh,Pharaoh Exchange
 Essential Cover,PoolTogether v5,pool-together-v5,PoolTogether,,,pooltogether,PoolTogether
 Elite Cover,PoolTogether v5,pool-together-v6,PoolTogether,,,pooltogether,PoolTogether
@@ -171,15 +183,19 @@ Entry Cover,Stakewise,stakewise,StakeWise,,,stakewise,StakeWise
 Essential Cover,Stakewise,stakewise,StakeWise,,,stakewise,StakeWise
 Elite Cover,Stakewise,stakewise,StakeWise,,,stakewise,StakeWise
 Elite Cover,Sturdy,sturdy,Sturdy,sturdy-v2,Sturdy V2,sturdy,Sturdy
+Elite Cover,Sturdy,,,,,sturdy2,Sturdy V2
 Elite Cover,Summerfi,Summer-fi,Summer.fi,,,summer,Summer.fi
 Elite Cover,Superform,superform-labs,Superform Labs,,,superform,Superform
 Elite Cover,SushiSwap,sushiswap,SushiSwap,,,sushiswap,SushiSwap
+Elite Cover,SushiSwap,,,,,sushiswap3,SushiSwap V3
 Essential Cover,Swell,swell,Swell,,,swellnetwork,Swell
 Elite Cover,Swell,swell,Swell,,,swellnetwork,Swell
 Essential Cover,Symbiotic,symbiotic,Symbiotic,,,symbiotic,Symbiotic
 Elite Cover,Symbiotic,symbiotic,Symbiotic,,,symbiotic,Symbiotic
 Essential Cover,Synthetix,synthetix,Synthetix,synthetix,Synthetix,symbiotic,Symbiotic
+Essential Cover,Synthetix,,,,,synthetix3,Synthetix V3
 Elite Cover,Synthetix,synthetix,Synthetix,synthetix,Synthetix,synthetix,Synthetix
+Elite Cover,Synthetix,,,,,synthetix3,Synthetix V3
 Essential Cover,Syrup,syrup,Syrup,syrup,Syrup,syrup,Syrup
 Elite Cover,Syrup,syrup,Syrup,syrup,Syrup,syrup,Syrup
 Essential Cover,Term Finance,,,term-finance,Term Finance,term,Term Finance
@@ -193,9 +209,13 @@ Entry Cover,Uniswap v3,uniswap-v3,Uniswap V3,uniswap-v3,Uniswap V3,uniswap3,Unis
 Essential Cover,Uniswap v3,uniswap-v3,Uniswap V3,uniswap-v3,Uniswap V3,uniswap3,Uniswap V3
 Elite Cover,Uniswap v3,uniswap-v3,Uniswap V3,uniswap-v3,Uniswap V3,uniswap3,Uniswap V3
 Elite Cover,Usual,usual,Usual,,,usualmoney,Usual
-Elite Cover,Veda,,,,,ftm_vedao,veDAO
+Elite Cover,Veda,,,,,,
 Essential Cover,Velodrome,velodrome,Velodrome,,,op_velodrome,Velodrome
+Essential Cover,Velodrome,,,,,op_velodrome2,Velodrome V2
+Essential Cover,Velodrome,,,,,op_velodrome3,Velodrome V3
 Elite Cover,Velodrome,velodrome,Velodrome,,,op_velodrome,Velodrome
+Elite Cover,Velodrome,,,,,op_velodrome2,Velodrome V2
+Elite Cover,Velodrome,,,,,op_velodrome3,Velodrome V3
 Elite Cover,Yearn Finance,yearn,Yearn,,,iearn,Yearn
 Essential Cover,Yearn v2,,,yearn-v2,Yearn V2,yearn2,Yearn V2
 Elite Cover,Yearn v2,,,yearn-v2,Yearn V2,yearn2,Yearn V2
