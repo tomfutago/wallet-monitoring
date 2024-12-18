@@ -1,0 +1,22 @@
+name: run_pipelines
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: check out
+        uses: actions/checkout@v4
+
+      - name: set up python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.11'
+
+      - name: install poetry and run pipelines
+        run: |
+          pip install poetry
+          poetry install
+          poetry run python ./pipelines/main.py
