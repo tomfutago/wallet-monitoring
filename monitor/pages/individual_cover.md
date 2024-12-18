@@ -37,8 +37,22 @@ where c.cover_id = '${inputs.cover_id.value}'
 order by 2, 3
 ```
 
-## Cover Overview
+```cover_wallet_protocol_diff_list
+select
+  c.cover_id,
+  cw.wallet,
+  cw.protocol,
+  c.usd_cover,
+  c.eth_cover,
+  cw.usd_exposed,
+  cw.eth_exposed
+from wallets.int_cover_agg c
+  left join wallets.int_cover_protocol_wallet_diff_agg cw on c.cover_id = cw.cover_id
+where c.cover_id = '${inputs.cover_id.value}'
+order by 2, 3
+```
 
+## Cover Overview
 <DataTable data={cover_list}>
   <Column id=cover_id title="cover id"/>
   <Column id=plan title="plan"/>
@@ -49,7 +63,19 @@ order by 2, 3
   <Column id=eth_exposed title="funds exposed (Ξ)" />
 </DataTable>
 
+## Cover Funds Exposed within <Value data={cover_list} column=plan/>
 <DataTable data={cover_wallet_protocol_list} totalRow=true search=true>
+  <Column id=cover_id title="cover id" totalAgg="grand total"/>
+  <Column id=wallet title="wallet"/>
+  <Column id=protocol title="protocol" />
+  <Column id=usd_cover title="cover ($)" totalAgg=mean />
+  <Column id=eth_cover title="cover (Ξ)" totalAgg=mean />
+  <Column id=usd_exposed title="funds exposed ($)" totalAgg=sum />
+  <Column id=eth_exposed title="funds exposed (Ξ)" totalAgg=sum />
+</DataTable>
+
+## Cover Funds Exposed outside <Value data={cover_list} column=plan/>
+<DataTable data={cover_wallet_protocol_diff_list} totalRow=true search=true>
   <Column id=cover_id title="cover id" totalAgg="grand total"/>
   <Column id=wallet title="wallet"/>
   <Column id=protocol title="protocol" />
