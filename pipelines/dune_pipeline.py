@@ -4,8 +4,6 @@ from dune_client.query import QueryBase
 from dune_client.types import QueryParameter
 
 dune_api_key = dlt.secrets["sources.dune.api_key"]
-duckdb_destination = "../data/wallets.duckdb"
-
 dune = DuneClient(dune_api_key)
 
 def load_capital_pool():
@@ -14,7 +12,7 @@ def load_capital_pool():
   if not df.empty:
     pipeline = dlt.pipeline(
       pipeline_name="dune_capital_pool",
-      destination=dlt.destinations.duckdb(duckdb_destination),
+      destination="motherduck",
       dataset_name="main"
     )
 
@@ -37,7 +35,7 @@ def load_cover_wallets(max_cover_id: int):
   if not df.empty:
     pipeline = dlt.pipeline(
       pipeline_name="dune_cover_wallets",
-      destination=dlt.destinations.duckdb(duckdb_destination),
+      destination="motherduck",
       dataset_name="main"
     )
 
@@ -49,5 +47,5 @@ def load_cover_wallets(max_cover_id: int):
     print(load_info)
 
 if __name__ == "__main__":
-  #load_capital_pool()
-  load_cover_wallets(max_cover_id=1600) # test
+  load_capital_pool()
+  #load_cover_wallets(max_cover_id=1600) # test

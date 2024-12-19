@@ -2,7 +2,6 @@ import dlt
 from dlt.sources.rest_api import rest_api_source
 
 debank_access_key = dlt.secrets["sources.debank.access_key"]
-duckdb_destination = "../data/wallets.duckdb"
 
 def load_chains():
   api_source = rest_api_source({
@@ -27,7 +26,7 @@ def load_chains():
 
   pipeline = dlt.pipeline(
     pipeline_name="debank_chains",
-    destination=dlt.destinations.duckdb(duckdb_destination),
+    destination="motherduck",
     dataset_name="main"
   )
 
@@ -57,7 +56,7 @@ def load_protocols():
 
   pipeline = dlt.pipeline(
     pipeline_name="debank_protocols",
-    destination=dlt.destinations.duckdb(duckdb_destination),
+    destination="motherduck",
     dataset_name="main"
   )
 
@@ -87,7 +86,7 @@ def load_user_all_simple_protocol_list(cover_id: int, wallet: str):
 
   pipeline = dlt.pipeline(
     pipeline_name="debank_wallet_protocol_balance",
-    destination=dlt.destinations.duckdb(duckdb_destination),
+    destination="motherduck",
     dataset_name="main"
   )
 
