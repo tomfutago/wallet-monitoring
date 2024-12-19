@@ -1,8 +1,8 @@
 name: run pipelines and deploy wallet monitoring
 
 on:
-  schedule:
-    - cron: '0 2 * * *' # daily at 2am UTC
+  #schedule:
+  #  - cron: '0 2 * * *' # daily at 2am UTC
   workflow_dispatch: # keep for manual runs
 
 env:
