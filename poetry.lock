@@ -351,6 +351,7 @@ files = [
 [package.dependencies]
 click = ">=7.1"
 cron-descriptor = {version = ">=1.2.32", optional = true, markers = "extra == \"cli\""}
+duckdb = {version = ">=0.9", optional = true, markers = "extra == \"duckdb\" or extra == \"motherduck\""}
 fsspec = ">=2022.4.0"
 gitpython = ">=3.1.29"
 giturlparse = ">=0.10.0"
@@ -2075,4 +2076,4 @@ propcache = ">=0.2.0"
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.11,<3.13"
-content-hash = "de6e9b492711cfd208bd2bfb8d3344c65f8b078565969a8e753621d5ee402b55"
+content-hash = "6fc15dd181c794867d2e44caaf81108eac994d87ec7a2c20939d0226535467e0"
