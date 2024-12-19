@@ -12,8 +12,8 @@ env:
 jobs:
   run-pipelines:
     runs-on: ubuntu-22.04
-    outputs:
-      wallet_db_path: ${{ steps.store-wallet-db.outputs.wallet_db_path }}
+    #outputs:
+    #  wallet_db_path: ${{ steps.store-wallet-db.outputs.wallet_db_path }}
     steps:
       - name: check out
         uses: actions/checkout@v4
@@ -29,9 +29,9 @@ jobs:
           poetry install
           cd pipelines && poetry run python main.py
 
-      - name: store wallets db for deployment
-        id: store-wallet-db
-        run: echo "wallet_db_path=$GITHUB_WORKSPACE/data/wallets.duckdb" >> $GITHUB_OUTPUT
+      #- name: store wallets db for deployment
+      #  id: store-wallet-db
+      #  run: echo "wallet_db_path=$GITHUB_WORKSPACE/data/wallets.duckdb" >> $GITHUB_OUTPUT
   
   deploy-wallet-monitoring:
     needs: run-pipelines
@@ -41,8 +41,8 @@ jobs:
       pages: write
       id-token: write
 
-    env:
-      wallet_db_path: ${{ needs.run-pipelines.outputs.wallet_db_path }}
+    #env:
+    #  wallet_db_path: ${{ needs.run-pipelines.outputs.wallet_db_path }}
 
     steps:
       - name: check out
@@ -56,10 +56,10 @@ jobs:
       - name: install dependencies
         run: cd ./monitor && npm install
 
-      - name: copy updated wallets db
-        run: |
-          echo "Copying wallet_db_path: ${{ env.wallet_db_path }}"
-          cp -f ${{ env.wallet_db_path }} ./monitor/sources/wallets/wallets.duckdb
+      #- name: copy updated wallets db
+      #  run: |
+      #    echo "Copying wallet_db_path: ${{ env.wallet_db_path }}"
+      #    cp -f ${{ env.wallet_db_path }} ./monitor/sources/wallets/wallets.duckdb
 
       - name: build
         env:
