@@ -10,33 +10,34 @@ env:
   DESTINATION__MOTHERDUCK__CREDENTIALS__PASSWORD: ${{ secrets.DESTINATION__MOTHERDUCK__CREDENTIALS__PASSWORD }}
   SOURCES__DUNE__API_KEY: ${{ secrets.SOURCES__DUNE__API_KEY }}
   SOURCES__DEBANK__ACCESS_KEY: ${{ secrets.SOURCES__DEBANK__ACCESS_KEY }}
+  EVIDENCE_SOURCE__md_wallets__token: ${{ secrets.EVIDENCE_SOURCE__MD_WALLETS__TOKEN }}
 
 jobs:
-  run-pipelines:
-    runs-on: ubuntu-22.04
+  #run-pipelines:
+  #  runs-on: ubuntu-22.04
     #outputs:
     #  wallet_db_path: ${{ steps.store-wallet-db.outputs.wallet_db_path }}
-    steps:
-      - name: check out
-        uses: actions/checkout@v4
+  #  steps:
+  #    - name: check out
+  #      uses: actions/checkout@v4
 
-      - name: set up python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.11'
+  #    - name: set up python
+  #      uses: actions/setup-python@v2
+  #      with:
+  #        python-version: '3.11'
 
-      - name: install poetry and run pipelines
-        run: |
-          pip install poetry
-          poetry install
-          cd pipelines && poetry run python main.py
+  #    - name: install poetry and run pipelines
+  #      run: |
+  #        pip install poetry
+  #        poetry install
+  #        cd pipelines && poetry run python main.py
 
       #- name: store wallets db for deployment
       #  id: store-wallet-db
       #  run: echo "wallet_db_path=$GITHUB_WORKSPACE/data/wallets.duckdb" >> $GITHUB_OUTPUT
   
   deploy-wallet-monitoring:
-    needs: run-pipelines
+  #  needs: run-pipelines
     runs-on: ubuntu-22.04
 
     permissions:
