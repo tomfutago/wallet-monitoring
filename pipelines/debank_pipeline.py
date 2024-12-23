@@ -85,7 +85,7 @@ def load_user_all_simple_protocol_list(wallet: str):
   })
 
   pipeline = dlt.pipeline(
-    pipeline_name="debank_wallet_protocol_balance",
+    pipeline_name="debank_wallet_protocol_balance_updated",
     destination="motherduck",
     dataset_name="main"
   )
@@ -98,7 +98,8 @@ def load_user_all_simple_protocol_list(wallet: str):
   load_info = pipeline.run([
     dlt.resource(
       name="debank_wallet_protocol_balance", 
-      write_disposition="append"
+      write_disposition="append",
+      table_name="debank_wallet_protocol_balance"
     )(transformed_data)
   ])
   print(load_info)
