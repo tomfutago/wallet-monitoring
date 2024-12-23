@@ -14,17 +14,16 @@ def loop_through_cover_wallets():
     )
 
     with pipeline.sql_client() as client:
-      with client.execute_query("SELECT DISTINCT cover_id, monitored_wallet FROM cover_wallets") as cursor:
+      with client.execute_query("SELECT DISTINCT monitored_wallet FROM cover_wallets") as cursor:
         result_df = cursor.df()
     
     if not result_df.empty:
       for _, row in result_df.iterrows():
-        cover_id = row["cover_id"]
         wallet = row["monitored_wallet"]
-        load_user_all_simple_protocol_list(cover_id, wallet)
+        load_user_all_simple_protocol_list(wallet)
 
   except Exception as e:
-    print(f"error for cover_id: {cover_id} and wallet: {wallet}: {e}")
+    print(f"error for wallet: {wallet}: {e}")
 
 if __name__ == "__main__":
   # get last loaded cover_id and append all new ones
