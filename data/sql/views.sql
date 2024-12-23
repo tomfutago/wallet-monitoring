@@ -9,8 +9,7 @@ select
   protocol,
   debank_id,
   debank_name
-from wallets.plan_mapping
-order by plan_id, protocol;
+from wallets.plan_mapping;
 
 create or replace view vw_cover as
 select distinct
@@ -28,8 +27,7 @@ select distinct
   usd_cover_amount,
   eth_cover_amount,
   cover_owner
-from wallets.cover_wallets
-order by 1;
+from wallets.cover_wallets;
 
 create or replace view vw_cover_wallet as
 select
@@ -48,17 +46,98 @@ select
   eth_cover_amount,
   cover_owner,
   monitored_wallet
-from wallets.cover_wallets
-order by cover_id, monitored_wallet;
+from wallets.cover_wallets;
 
 create or replace view vw_debank_data as
 select
   wallet,
-  name as protocol,
+  name as debank_name,
   chain,
   net_usd_value,
   asset_usd_value,
   debt_usd_value,
   to_timestamp(cast(_dlt_load_id as double)) as load_dt
-from wallets.debank_wallet_protocol_balance
-order by 1, 2, 3;
+from wallets.debank_wallet_protocol_balance;
+
+create or replace view vw_debank_data_latest as
+with
+
+latest_prices as (
+  select max_by(avg_eth_usd_price, block_date) as avg_eth_usd_price
+  from wallets.capital_pool
+),
+
+debank_data_latest as (
+  select
+    d.wallet,
+    d.debank_name,
+    d.chain,
+    max_by(d.net_usd_value, d.load_dt) as net_usd_value,
+    max_by(d.asset_usd_value, d.load_dt) as asset_usd_value,
+    max_by(d.debt_usd_value, d.load_dt) as debt_usd_value,
+    max_by(d.net_usd_value / p.avg_eth_usd_price, d.load_dt) as net_eth_value,
+    max_by(d.asset_usd_value / p.avg_eth_usd_price, d.load_dt) as asset_eth_value,
+    max_by(d.debt_usd_value / p.avg_eth_usd_price, d.load_dt) as debt_eth_value,
+    max(d.load_dt) as load_dt
+  from wallets.vw_debank_data d
+    cross join latest_prices p
+  group by 1, 2, 3
+)
+
+select
+  wallet,
+  debank_name,
+  chain,
+  net_usd_value,
+  asset_usd_value,
+  debt_usd_value,
+  net_eth_value,
+  asset_eth_value,
+  debt_eth_value,
+  load_dt
+from debank_data_latest;
+
+create or replace view vw_debank_data_latest_match as
+with
+
+mapping_unique_procols as (
+  select distinct protocol, debank_id, debank_name
+  from wallets.plan_mapping
+)
+
+select
+  d.wallet,
+  m.protocol,
+  d.chain,
+  d.net_usd_value,
+  d.asset_usd_value,
+  d.debt_usd_value,
+  d.net_eth_value,
+  d.asset_eth_value,
+  d.debt_eth_value,
+  d.load_dt
+from wallets.vw_debank_data_latest d
+  inner join mapping_unique_procols m on d.debank_name = m.debank_name;
+
+create or replace view vw_debank_data_latest_diff as
+with
+
+mapping_unique_procols as (
+  select distinct protocol, debank_id, debank_name
+  from wallets.plan_mapping
+)
+
+select
+  d.wallet,
+  m.protocol,
+  d.chain,
+  d.net_usd_value,
+  d.asset_usd_value,
+  d.debt_usd_value,
+  d.net_eth_value,
+  d.asset_eth_value,
+  d.debt_eth_value,
+  d.load_dt
+from wallets.vw_debank_data_latest d
+  left join mapping_unique_procols m on d.debank_name = m.debank_name
+where m.protocol is null;
