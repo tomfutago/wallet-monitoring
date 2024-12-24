@@ -20,9 +20,8 @@ jobs:
       - name: build
         env:
           BASE_PATH: '/${{ github.event.repository.name }}'
-          ## Add and uncomment any environment variables here
-          ## EVIDENCE_SOURCE__my_source__username: ${{ secrets.EVIDENCE_SOURCE__MY_SOURCE__USERNAME }}
-          ## EVIDENCE_SOURCE__my_source__private_key: ${{ secrets.EVIDENCE_SOURCE__MY_SOURCE__PRIVATE_KEY }}
+          EVIDENCE_SOURCE__md_wallets__database: ${{ secrets.EVIDENCE_SOURCE__MD_WALLETS__DATABASE }}
+          EVIDENCE_SOURCE__md_wallets__token: ${{ secrets.EVIDENCE_SOURCE__MD_WALLETS__TOKEN }}
         run: |
           cd ./monitor
           npm run sources
