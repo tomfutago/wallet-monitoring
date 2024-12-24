@@ -141,3 +141,17 @@ select
 from wallets.vw_debank_data_latest d
   left join mapping_unique_procols m on d.debank_name = m.debank_name
 where m.protocol is null;
+
+create or replace view vw_cover_wallet_enriched as
+select
+  c.plan_id,
+  c.plan,
+  c.cover_id,
+  api.protocol,
+  api.wallet,
+  concat(left(api.wallet, 6), '..', right(api.wallet, 4)) as wallet_short,
+  api.net_usd_value as usd_exposed,
+  api.net_eth_value as eth_exposed
+from wallets.vw_cover_wallet c
+  inner join wallets.vw_debank_data_latest_match api on c.monitored_wallet = api.wallet
+  inner join wallets.vw_plan_mapping m on c.plan_id = m.plan_id and api.protocol = m.protocol;
