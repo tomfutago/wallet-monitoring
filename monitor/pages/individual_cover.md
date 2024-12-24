@@ -8,7 +8,7 @@ select * from md_wallets.int_duped_wallets order by 1
 
 ## Duped wallets
 <DataTable data={duped_wallets} totalRow=true>
-  <Column id=wallet title=wallet/>
+  <Column id=wallet title=wallet totalAgg="grand total"/>
   <Column id=plans title=plans/>
   <Column id=covers title=covers/>
   <Column id=count title="# wallets" totalAgg=sum />
