@@ -2,6 +2,18 @@
 title: Individual Cover Tracker
 ---
 
+```duped_wallets
+select * from md_wallets.int_duped_wallets order by 1
+```
+
+## Duped wallets
+<DataTable data={duped_wallets} totalRow=true>
+  <Column id=wallet title=wallet/>
+  <Column id=plans title=plans/>
+  <Column id=covers title=covers/>
+  <Column id=count title="# wallets" totalAgg=sum />
+</DataTable>
+
 ```cover_dropdown
 select cover_id from md_wallets.src_cover order by 1
 ```
