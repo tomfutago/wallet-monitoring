@@ -55,7 +55,7 @@ select
   chain,
   net_usd_value,
   asset_usd_value,
-  debt_usd_value,
+  coalesce(debt_usd_value__v_double, debt_usd_value) as debt_usd_value,
   to_timestamp(cast(_dlt_load_id as double)) as load_dt
 from wallets.debank_wallet_protocol_balance;
 
