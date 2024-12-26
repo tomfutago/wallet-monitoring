@@ -168,11 +168,17 @@ where cover_id = '${inputs.cover_id.value}'
           trigger: 'item',
           formatter: params => `${params.name}: ${Number(params.value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
         },
+        legend: {
+          orient: 'vertical',
+          left: 'right',
+          top: 'top'
+        },
         series: [
           {
             name: 'Access From',
             type: 'pie',
             radius: ['40%', '70%'],
+            center: ['40%', '50%'],
             avoidLabelOverlap: false,
             itemStyle: {
               borderRadius: 10,
@@ -187,7 +193,8 @@ where cover_id = '${inputs.cover_id.value}'
               label: {
                 show: true,
                 fontSize: 30,
-                fontWeight: 'bold'
+                fontWeight: 'bold',
+                formatter: params => `${params.name}: ${params.percent}%`
               }
             },
             labelLine: {
@@ -248,11 +255,17 @@ where cover_id = '${inputs.cover_id.value}'
           trigger: 'item',
           formatter: params => `${params.name}: ${Math.round(params.value).toLocaleString()}`
         },
+        legend: {
+          orient: 'vertical',
+          left: 'right',
+          top: 'top'
+        },
         series: [
           {
             name: 'Access From',
             type: 'pie',
             radius: ['40%', '70%'],
+            center: ['40%', '50%'],
             avoidLabelOverlap: false,
             itemStyle: {
               borderRadius: 10,
@@ -267,7 +280,8 @@ where cover_id = '${inputs.cover_id.value}'
               label: {
                 show: true,
                 fontSize: 30,
-                fontWeight: 'bold'
+                fontWeight: 'bold',
+                formatter: params => `${params.name}: ${params.percent}%`
               }
             },
             labelLine: {
@@ -387,11 +401,17 @@ where cover_id = '${inputs.cover_id.value}'
           trigger: 'item',
           formatter: params => `${params.name}: ${Number(params.value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
         },
+        legend: {
+          orient: 'vertical',
+          left: 'right',
+          top: 'top'
+        },
         series: [
           {
             name: 'Access From',
             type: 'pie',
             radius: ['40%', '70%'],
+            center: ['40%', '50%'],
             avoidLabelOverlap: false,
             itemStyle: {
               borderRadius: 10,
@@ -406,7 +426,8 @@ where cover_id = '${inputs.cover_id.value}'
               label: {
                 show: true,
                 fontSize: 30,
-                fontWeight: 'bold'
+                fontWeight: 'bold',
+                formatter: params => `${params.name}: ${params.percent}%`
               }
             },
             labelLine: {
@@ -467,11 +488,17 @@ where cover_id = '${inputs.cover_id.value}'
           trigger: 'item',
           formatter: params => `${params.name}: ${Math.round(params.value).toLocaleString()}`
         },
+        legend: {
+          orient: 'vertical',
+          left: 'right',
+          top: 'top'
+        },
         series: [
           {
             name: 'Access From',
             type: 'pie',
             radius: ['40%', '70%'],
+            center: ['40%', '50%'],
             avoidLabelOverlap: false,
             itemStyle: {
               borderRadius: 10,
@@ -486,7 +513,8 @@ where cover_id = '${inputs.cover_id.value}'
               label: {
                 show: true,
                 fontSize: 30,
-                fontWeight: 'bold'
+                fontWeight: 'bold',
+                formatter: params => `${params.name}: ${params.percent}%`
               }
             },
             labelLine: {
