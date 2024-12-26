@@ -6,7 +6,7 @@ title: Individual Cover Tracker
 select * from md_wallets.int_duped_wallets order by 1
 ```
 
-## Duped wallets
+## Wallets with Multiple Covers
 <DataTable data={duped_wallets} totalRow=true>
   <Column id=wallet title=wallet totalAgg="grand total"/>
   <Column id=plans title=plans/>
@@ -69,10 +69,10 @@ order by 2, 3
   <Column id=cover_id title="cover id"/>
   <Column id=plan title="plan"/>
   <Column id=cnt_wallet title="# wallets" />
-  <Column id=usd_cover title="cover ($)" />
-  <Column id=eth_cover title="cover (Ξ)" />
-  <Column id=usd_exposed title="funds exposed ($)" />
-  <Column id=eth_exposed title="funds exposed (Ξ)" />
+  <Column id=usd_cover title="cover ($)" fmt=num2 />
+  <Column id=eth_cover title="cover (Ξ)" fmt=num2 />
+  <Column id=usd_exposed title="funds exposed ($)" fmt=num2 />
+  <Column id=eth_exposed title="funds exposed (Ξ)" fmt=num2 />
 </DataTable>
 
 ## Cover Funds Exposed within <Value data={cover_list} column=plan/>
@@ -80,19 +80,92 @@ order by 2, 3
   <Column id=cover_id title="cover id" totalAgg="grand total"/>
   <Column id=wallet title="wallet"/>
   <Column id=protocol title="protocol" />
-  <Column id=usd_cover title="cover ($)" totalAgg=mean />
-  <Column id=eth_cover title="cover (Ξ)" totalAgg=mean />
-  <Column id=usd_exposed title="funds exposed ($)" totalAgg=sum />
-  <Column id=eth_exposed title="funds exposed (Ξ)" totalAgg=sum />
+  <Column id=usd_exposed title="funds exposed ($)" fmt=num2 totalAgg=sum />
+  <Column id=eth_exposed title="funds exposed (Ξ)" fmt=num4 totalAgg=sum />
 </DataTable>
+
+```sql cover_wallet_protocol_usd_treemap
+select protocol as name, usd_exposed as value
+from ${cover_wallet_protocol_list}
+```
+
+```sql cover_wallet_protocol_eth_treemap
+select protocol as name, eth_exposed as value
+from ${cover_wallet_protocol_list}
+```
+
+<Tabs>
+  <Tab label='USD'>
+    <ECharts config={
+      {
+        title: {
+          left: 'center'
+        },
+        tooltip: {
+          formatter: '{b}: {c}'
+        },
+        series: [
+          {
+            type: 'treemap',
+            visibleMin: 300,
+            label: {
+              show: true,
+              formatter: '{b}'
+            },
+            itemStyle: {
+              borderColor: '#fff'
+            },
+            roam: false,
+            nodeClick: false,
+            data: [...cover_wallet_protocol_usd_treemap],
+            breadcrumb: {
+              show: false
+            }
+          }
+        ]
+        }
+      }
+    />
+  </Tab>
+  <Tab label='ETH'>
+    <ECharts config={
+      {
+        title: {
+          left: 'center'
+        },
+        tooltip: {
+          formatter: '{b}: {c}'
+        },
+        series: [
+          {
+            type: 'treemap',
+            visibleMin: 300,
+            label: {
+              show: true,
+              formatter: '{b}'
+            },
+            itemStyle: {
+              borderColor: '#fff'
+            },
+            roam: false,
+            nodeClick: false,
+            data: [...cover_wallet_protocol_eth_treemap],
+            breadcrumb: {
+              show: false
+            }
+          }
+        ]
+        }
+      }
+    />
+  </Tab>
+</Tabs>
 
 ## Cover Funds Exposed outside <Value data={cover_list} column=plan/>
 <DataTable data={cover_wallet_protocol_diff_list} totalRow=true search=true>
   <Column id=cover_id title="cover id" totalAgg="grand total"/>
   <Column id=wallet title="wallet"/>
   <Column id=protocol title="protocol" />
-  <Column id=usd_cover title="cover ($)" totalAgg=mean />
-  <Column id=eth_cover title="cover (Ξ)" totalAgg=mean />
-  <Column id=usd_exposed title="funds exposed ($)" totalAgg=sum />
-  <Column id=eth_exposed title="funds exposed (Ξ)" totalAgg=sum />
+  <Column id=usd_exposed title="funds exposed ($)" fmt=num2 totalAgg=sum />
+  <Column id=eth_exposed title="funds exposed (Ξ)" fmt=num4 totalAgg=sum />
 </DataTable>

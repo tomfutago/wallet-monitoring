@@ -49,58 +49,18 @@ order by plan_id
   <Column id=plan title="plan" totalAgg="grand total"/>
   <Column id=cnt_cover title="# covers" />
   <Column id=cnt_wallet title="# wallets" />
-  <Column id=usd_cover title="cover ($)" />
-  <Column id=eth_cover title="cover (Ξ)" />
-  <Column id=usd_exposed title="funds exposed ($)" contentType=colorscale colorScale=negative />
-  <Column id=eth_exposed title="funds exposed (Ξ)" contentType=colorscale colorScale=negative />
+  <Column id=usd_cover title="cover ($)" fmt=num0/>
+  <Column id=eth_cover title="cover (Ξ)" fmt=num0/>
+  <Column id=usd_exposed title="funds exposed ($)" fmt=num0 contentType=colorscale colorScale=negative />
+  <Column id=eth_exposed title="funds exposed (Ξ)" fmt=num0 contentType=colorscale colorScale=negative />
 </DataTable>
 
 <Tabs>
   <Tab label='USD'>
-    <BarChart 
-      data={plan_cover_stack}
-      title='Totals'
-      x=plan
-      y=usd_total
-      series=total_type
-      swapXY=true
-      type=grouped
-      sort=false
-    />
-    <BarChart 
-      data={plan_cover_stack}
-      title='% Share'
-      x=plan
-      y=usd_total
-      series=total_type
-      type=stacked100
-      labels=true
-      swapXY=true
-      sort=false
-    />
+    <BarChart data={plan_cover_stack} title='Totals' x=plan y=usd_total yFmt=usd0k series=total_type swapXY=true type=grouped sort=false />
   </Tab>
   <Tab label='ETH'>
-    <BarChart 
-      data={plan_cover_stack}
-      title='Totals'
-      x=plan
-      y=eth_total
-      series=total_type
-      swapXY=true
-      type=grouped
-      sort=false
-    />
-    <BarChart 
-      data={plan_cover_stack}
-      title="% Share"
-      x=plan
-      y=eth_total
-      series=total_type
-      type=stacked100
-      labels=true
-      swapXY=true
-      sort=false
-    />
+    <BarChart data={plan_cover_stack} title='Totals' x=plan y=eth_total yFmt=num0 series=total_type swapXY=true type=grouped sort=false />
   </Tab>
 </Tabs>
 
@@ -130,7 +90,7 @@ order by pc.plan_id
 
 ```plan_cover_protocol_stack
 with agg_wallet_positions as (
-  select
+  /*select
     plan_id,
     plan,
     plan as protocol,
@@ -138,7 +98,7 @@ with agg_wallet_positions as (
     usd_cover as usd_total,
     eth_cover as eth_total
   from md_wallets.int_plan_cover_agg
-  union all
+  union all*/
   select
     plan_id,
     plan,
@@ -161,34 +121,22 @@ order by 1
 <DataTable data={plan_cover_protocol_list} totalRow=true search=true>
   <Column id=plan title="plan" totalAgg="grand total" />
   <Column id=protocol title="protocol"/>
-  <Column id=cnt_cover title="# covers" totalAgg=mean />
-  <Column id=cnt_wallet title="# wallets" totalAgg=mean />
-  <Column id=usd_cover title="cover ($)" totalAgg=mean />
-  <Column id=eth_cover title="cover (Ξ)" totalAgg=mean />
-  <Column id=usd_exposed title="funds exposed ($)" totalAgg=sum contentType=colorscale colorScale=negative />
-  <Column id=eth_exposed title="funds exposed (Ξ)" totalAgg=sum contentType=colorscale colorScale=negative />
+  <Column id=usd_cover title="cover ($)" fmt='#,##0.00' totalAgg=mean />
+  <Column id=eth_cover title="cover (Ξ)" fmt='#,##0.00' totalAgg=mean />
+  <Column id=usd_exposed title="funds exposed ($)" fmt='#,##0.00' totalAgg=sum contentType=colorscale colorScale=negative />
+  <Column id=eth_exposed title="funds exposed (Ξ)" fmt='#,##0.0000' totalAgg=sum contentType=colorscale colorScale=negative />
 </DataTable>
 
 <Tabs>
   <Tab label='USD'>
-    <BarChart 
-      data={plan_cover_protocol_stack}
-      title='Totals'
-      x=total_type
-      y=usd_total
-      series=protocol
-      swapXY=true
-    />
+    <BarChart data={plan_cover_protocol_stack} title='Totals' x=total_type y=usd_total series=protocol swapXY=true yFmt=usd2 >
+      <ReferenceLine data={plan_cover_protocol_list} y=usd_cover color=red label=covered lineColor=red lineWidth=3 labelPosition=aboveCenter />
+    </BarChart>
   </Tab>
   <Tab label='ETH'>
-    <BarChart 
-      data={plan_cover_protocol_stack}
-      title='Totals'
-      x=total_type
-      y=eth_total
-      series=protocol
-      swapXY=true
-    />
+    <BarChart data={plan_cover_protocol_stack} title='Totals' x=total_type y=eth_total series=protocol swapXY=true yFmt=num4 >
+      <ReferenceLine data={plan_cover_protocol_list} y=eth_cover color=red label=covered lineColor=red lineWidth=3 labelPosition=aboveCenter />
+    </BarChart>
   </Tab>
 </Tabs>
 
