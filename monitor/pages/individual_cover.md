@@ -34,36 +34,6 @@ from md_wallets.int_cover_agg c
 where c.cover_id = '${inputs.cover_id.value}'
 ```
 
-```cover_wallet_protocol_list
-select
-  c.cover_id,
-  cw.wallet,
-  cw.protocol,
-  c.usd_cover,
-  c.eth_cover,
-  cw.usd_exposed,
-  cw.eth_exposed
-from md_wallets.int_cover_agg c
-  left join md_wallets.int_cover_protocol_wallet_agg cw on c.cover_id = cw.cover_id
-where c.cover_id = '${inputs.cover_id.value}'
-order by 2, 3
-```
-
-```cover_wallet_protocol_diff_list
-select
-  c.cover_id,
-  cw.wallet,
-  cw.protocol,
-  c.usd_cover,
-  c.eth_cover,
-  cw.usd_exposed,
-  cw.eth_exposed
-from md_wallets.int_cover_agg c
-  left join md_wallets.int_cover_protocol_wallet_diff_agg cw on c.cover_id = cw.cover_id
-where c.cover_id = '${inputs.cover_id.value}'
-order by 2, 3
-```
-
 ## Cover Overview
 <DataTable data={cover_list}>
   <Column id=cover_id title="cover id"/>
@@ -75,10 +45,48 @@ order by 2, 3
   <Column id=eth_exposed title="funds exposed (Ξ)" fmt=num2 />
 </DataTable>
 
+```cover_wallets
+select cover_id, cover_owner, monitored_wallet as wallet
+from md_wallets.src_cover_wallets
+where cover_id = '${inputs.cover_id.value}'
+```
+
+<Details title="Wallets">
+
+### Cover owner
+
+<Value data={cover_wallets} column=cover_owner/>
+
+### Designated wallet(s)
+
+{#each cover_wallets as row}
+
+  - <Value data={row} column=wallet/>
+
+{/each}
+
+</Details>
+
+```cover_wallet_protocol_list
+select
+  c.cover_id,
+  cw.wallet,
+  cw.wallet_short,
+  cw.protocol,
+  c.usd_cover,
+  c.eth_cover,
+  cw.usd_exposed,
+  cw.eth_exposed
+from md_wallets.int_cover_agg c
+  left join md_wallets.int_cover_protocol_wallet_agg cw on c.cover_id = cw.cover_id
+where c.cover_id = '${inputs.cover_id.value}'
+order by 2, 3
+```
+
 ## Cover Funds Exposed within <Value data={cover_list} column=plan/>
 <DataTable data={cover_wallet_protocol_list} totalRow=true search=true>
   <Column id=cover_id title="cover id" totalAgg="grand total"/>
-  <Column id=wallet title="wallet"/>
+  <Column id=wallet_short title="wallet"/>
   <Column id=protocol title="protocol" />
   <Column id=usd_exposed title="funds exposed ($)" fmt=num2 totalAgg=sum />
   <Column id=eth_exposed title="funds exposed (Ξ)" fmt=num4 totalAgg=sum />
@@ -102,7 +110,7 @@ from ${cover_wallet_protocol_list}
           left: 'center'
         },
         tooltip: {
-          formatter: '{b}: {c}'
+          formatter: params => `${params.name}: ${Number(params.value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
         },
         series: [
           {
@@ -110,7 +118,7 @@ from ${cover_wallet_protocol_list}
             visibleMin: 300,
             label: {
               show: true,
-              formatter: '{b}'
+              formatter: params => `${params.name}: ${Math.round(params.value / 1000).toLocaleString()}k`
             },
             itemStyle: {
               borderColor: '#fff'
@@ -134,7 +142,7 @@ from ${cover_wallet_protocol_list}
           left: 'center'
         },
         tooltip: {
-          formatter: '{b}: {c}'
+          formatter: params => `${params.name}: ${Number(params.value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
         },
         series: [
           {
@@ -142,7 +150,7 @@ from ${cover_wallet_protocol_list}
             visibleMin: 300,
             label: {
               show: true,
-              formatter: '{b}'
+              formatter: params => `${params.name}: ${Math.round(params.value).toLocaleString()}`
             },
             itemStyle: {
               borderColor: '#fff'
@@ -161,6 +169,21 @@ from ${cover_wallet_protocol_list}
   </Tab>
 </Tabs>
 
+```cover_wallet_protocol_diff_list
+select
+  c.cover_id,
+  cw.wallet,
+  cw.protocol,
+  c.usd_cover,
+  c.eth_cover,
+  cw.usd_exposed,
+  cw.eth_exposed
+from md_wallets.int_cover_agg c
+  left join md_wallets.int_cover_protocol_wallet_diff_agg cw on c.cover_id = cw.cover_id
+where c.cover_id = '${inputs.cover_id.value}'
+order by 2, 3
+```
+
 ## Cover Funds Exposed outside <Value data={cover_list} column=plan/>
 <DataTable data={cover_wallet_protocol_diff_list} totalRow=true search=true>
   <Column id=cover_id title="cover id" totalAgg="grand total"/>
@@ -169,3 +192,80 @@ from ${cover_wallet_protocol_list}
   <Column id=usd_exposed title="funds exposed ($)" fmt=num2 totalAgg=sum />
   <Column id=eth_exposed title="funds exposed (Ξ)" fmt=num4 totalAgg=sum />
 </DataTable>
+
+```sql cover_wallet_protocol_diff_usd_treemap
+select protocol as name, usd_exposed as value
+from ${cover_wallet_protocol_diff_list}
+```
+
+```sql cover_wallet_protocol_diff_eth_treemap
+select protocol as name, eth_exposed as value
+from ${cover_wallet_protocol_diff_list}
+```
+
+<Tabs>
+  <Tab label='USD'>
+    <ECharts config={
+      {
+        title: {
+          left: 'center'
+        },
+        tooltip: {
+          formatter: params => `${params.name}: ${Number(params.value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+        },
+        series: [
+          {
+            type: 'treemap',
+            visibleMin: 300,
+            label: {
+              show: true,
+              formatter: params => `${params.name}: ${Math.round(params.value / 1000).toLocaleString()}k`
+            },
+            itemStyle: {
+              borderColor: '#fff'
+            },
+            roam: false,
+            nodeClick: false,
+            data: [...cover_wallet_protocol_diff_usd_treemap],
+            breadcrumb: {
+              show: false
+            }
+          }
+        ]
+        }
+      }
+    />
+  </Tab>
+  <Tab label='ETH'>
+    <ECharts config={
+      {
+        title: {
+          left: 'center'
+        },
+        tooltip: {
+          formatter: params => `${params.name}: ${Number(params.value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+        },
+        series: [
+          {
+            type: 'treemap',
+            visibleMin: 300,
+            label: {
+              show: true,
+              formatter: params => `${params.name}: ${Math.round(params.value).toLocaleString()}`
+            },
+            itemStyle: {
+              borderColor: '#fff'
+            },
+            roam: false,
+            nodeClick: false,
+            data: [...cover_wallet_protocol_diff_eth_treemap],
+            breadcrumb: {
+              show: false
+            }
+          }
+        ]
+        }
+      }
+    />
+  </Tab>
+</Tabs>
