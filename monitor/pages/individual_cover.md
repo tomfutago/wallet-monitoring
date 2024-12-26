@@ -53,11 +53,11 @@ where cover_id = '${inputs.cover_id.value}'
 
 <Details title="Wallets">
 
-### Cover owner
+### Cover owner:
 
 <Value data={cover_wallets} column=cover_owner/>
 
-### Designated wallet(s)
+### Designated wallet(s):
 
 {#each cover_wallets as row}
 
@@ -84,6 +84,13 @@ order by 2, 3
 ```
 
 ## Cover Funds Exposed within <Value data={cover_list} column=plan/>
+
+{#if cover_wallet_protocol_list[0].wallet == null}
+
+None found.
+
+{:else}
+
 <DataTable data={cover_wallet_protocol_list} totalRow=true search=true>
   <Column id=cover_id title="cover id" totalAgg="grand total"/>
   <Column id=wallet_short title="wallet"/>
@@ -92,21 +99,37 @@ order by 2, 3
   <Column id=eth_exposed title="funds exposed (Ξ)" fmt=num4 totalAgg=sum />
 </DataTable>
 
-```sql cover_wallet_protocol_usd_treemap
+```sql cover_usd_exposed_by_protocol_treemap
 select protocol as name, usd_exposed as value
 from ${cover_wallet_protocol_list}
 ```
 
-```sql cover_wallet_protocol_eth_treemap
+```sql cover_usd_exposed_by_chain_pie
+select chain as name, usd_exposed as value
+from md_wallets.int_cover_exposed_chain_agg
+where cover_id = '${inputs.cover_id.value}'
+```
+
+```sql cover_eth_exposed_by_protocol_treemap
 select protocol as name, eth_exposed as value
 from ${cover_wallet_protocol_list}
 ```
 
+```sql cover_eth_exposed_by_chain_pie
+select chain as name, eth_exposed as value
+from md_wallets.int_cover_exposed_chain_agg
+where cover_id = '${inputs.cover_id.value}'
+```
+
 <Tabs>
   <Tab label='USD'>
+
+    <Grid cols=2>
+
     <ECharts config={
       {
         title: {
+          text: 'Protocol Exposure',
           left: 'center'
         },
         tooltip: {
@@ -125,7 +148,7 @@ from ${cover_wallet_protocol_list}
             },
             roam: false,
             nodeClick: false,
-            data: [...cover_wallet_protocol_usd_treemap],
+            data: [...cover_usd_exposed_by_protocol_treemap],
             breadcrumb: {
               show: false
             }
@@ -134,11 +157,59 @@ from ${cover_wallet_protocol_list}
         }
       }
     />
-  </Tab>
-  <Tab label='ETH'>
+
     <ECharts config={
       {
         title: {
+          text: 'Chain Exposure',
+          left: 'center'
+        },
+        tooltip: {
+          trigger: 'item',
+          formatter: params => `${params.name}: ${Number(params.value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+        },
+        series: [
+          {
+            name: 'Access From',
+            type: 'pie',
+            radius: ['40%', '70%'],
+            avoidLabelOverlap: false,
+            itemStyle: {
+              borderRadius: 10,
+              borderColor: '#fff',
+              borderWidth: 2
+            },
+            label: {
+              show: false,
+              position: 'center'
+            },
+            emphasis: {
+              label: {
+                show: true,
+                fontSize: 30,
+                fontWeight: 'bold'
+              }
+            },
+            labelLine: {
+              show: false
+            },
+            data: [...cover_usd_exposed_by_chain_pie]
+          }
+        ]
+      }
+    }/>
+
+    </Grid>
+
+  </Tab>
+  <Tab label='ETH'>
+
+    <Grid cols=2>
+
+    <ECharts config={
+      {
+        title: {
+          text: 'Protocol Exposure',
           left: 'center'
         },
         tooltip: {
@@ -157,7 +228,7 @@ from ${cover_wallet_protocol_list}
             },
             roam: false,
             nodeClick: false,
-            data: [...cover_wallet_protocol_eth_treemap],
+            data: [...cover_eth_exposed_by_protocol_treemap],
             breadcrumb: {
               show: false
             }
@@ -166,8 +237,55 @@ from ${cover_wallet_protocol_list}
         }
       }
     />
+
+    <ECharts config={
+      {
+        title: {
+          text: 'Chain Exposure',
+          left: 'center'
+        },
+        tooltip: {
+          trigger: 'item',
+          formatter: params => `${params.name}: ${Math.round(params.value).toLocaleString()}`
+        },
+        series: [
+          {
+            name: 'Access From',
+            type: 'pie',
+            radius: ['40%', '70%'],
+            avoidLabelOverlap: false,
+            itemStyle: {
+              borderRadius: 10,
+              borderColor: '#fff',
+              borderWidth: 2
+            },
+            label: {
+              show: false,
+              position: 'center'
+            },
+            emphasis: {
+              label: {
+                show: true,
+                fontSize: 30,
+                fontWeight: 'bold'
+              }
+            },
+            labelLine: {
+              show: false
+            },
+            data: [...cover_eth_exposed_by_chain_pie]
+          }
+        ]
+      }
+    }/>
+
+    </Grid>
+
   </Tab>
 </Tabs>
+
+{/if}
+
 
 ```cover_wallet_protocol_diff_list
 select
@@ -200,21 +318,37 @@ None found.
   <Column id=eth_exposed title="funds exposed (Ξ)" fmt=num4 totalAgg=sum />
 </DataTable>
 
-```sql cover_wallet_protocol_diff_usd_treemap
+```sql cover_usd_exposed_by_protocol_diff_treemap
 select protocol as name, usd_exposed as value
 from ${cover_wallet_protocol_diff_list}
 ```
 
-```sql cover_wallet_protocol_diff_eth_treemap
+```sql cover_usd_exposed_by_chain_diff_pie
+select chain as name, usd_exposed as value
+from md_wallets.int_cover_exposed_chain_diff_agg
+where cover_id = '${inputs.cover_id.value}'
+```
+
+```sql cover_eth_exposed_by_protocol_diff_treemap
 select protocol as name, eth_exposed as value
 from ${cover_wallet_protocol_diff_list}
 ```
 
+```sql cover_eth_exposed_by_chain_diff_pie
+select chain as name, eth_exposed as value
+from md_wallets.int_cover_exposed_chain_diff_agg
+where cover_id = '${inputs.cover_id.value}'
+```
+
 <Tabs>
   <Tab label='USD'>
+
+    <Grid cols=2>
+
     <ECharts config={
       {
         title: {
+          text: 'Protocol Exposure',
           left: 'center'
         },
         tooltip: {
@@ -233,7 +367,7 @@ from ${cover_wallet_protocol_diff_list}
             },
             roam: false,
             nodeClick: false,
-            data: [...cover_wallet_protocol_diff_usd_treemap],
+            data: [...cover_usd_exposed_by_protocol_diff_treemap],
             breadcrumb: {
               show: false
             }
@@ -242,11 +376,59 @@ from ${cover_wallet_protocol_diff_list}
         }
       }
     />
-  </Tab>
-  <Tab label='ETH'>
+
     <ECharts config={
       {
         title: {
+          text: 'Chain Exposure',
+          left: 'center'
+        },
+        tooltip: {
+          trigger: 'item',
+          formatter: params => `${params.name}: ${Number(params.value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+        },
+        series: [
+          {
+            name: 'Access From',
+            type: 'pie',
+            radius: ['40%', '70%'],
+            avoidLabelOverlap: false,
+            itemStyle: {
+              borderRadius: 10,
+              borderColor: '#fff',
+              borderWidth: 2
+            },
+            label: {
+              show: false,
+              position: 'center'
+            },
+            emphasis: {
+              label: {
+                show: true,
+                fontSize: 30,
+                fontWeight: 'bold'
+              }
+            },
+            labelLine: {
+              show: false
+            },
+            data: [...cover_usd_exposed_by_chain_diff_pie]
+          }
+        ]
+      }
+    }/>
+
+    </Grid>
+
+  </Tab>
+  <Tab label='ETH'>
+
+    <Grid cols=2>
+
+    <ECharts config={
+      {
+        title: {
+          text: 'Protocol Exposure',
           left: 'center'
         },
         tooltip: {
@@ -265,7 +447,7 @@ from ${cover_wallet_protocol_diff_list}
             },
             roam: false,
             nodeClick: false,
-            data: [...cover_wallet_protocol_diff_eth_treemap],
+            data: [...cover_eth_exposed_by_protocol_diff_treemap],
             breadcrumb: {
               show: false
             }
@@ -274,6 +456,50 @@ from ${cover_wallet_protocol_diff_list}
         }
       }
     />
+
+    <ECharts config={
+      {
+        title: {
+          text: 'Chain Exposure',
+          left: 'center'
+        },
+        tooltip: {
+          trigger: 'item',
+          formatter: params => `${params.name}: ${Math.round(params.value).toLocaleString()}`
+        },
+        series: [
+          {
+            name: 'Access From',
+            type: 'pie',
+            radius: ['40%', '70%'],
+            avoidLabelOverlap: false,
+            itemStyle: {
+              borderRadius: 10,
+              borderColor: '#fff',
+              borderWidth: 2
+            },
+            label: {
+              show: false,
+              position: 'center'
+            },
+            emphasis: {
+              label: {
+                show: true,
+                fontSize: 30,
+                fontWeight: 'bold'
+              }
+            },
+            labelLine: {
+              show: false
+            },
+            data: [...cover_eth_exposed_by_chain_diff_pie]
+          }
+        ]
+      }
+    }/>
+
+    </Grid>
+
   </Tab>
 </Tabs>
 

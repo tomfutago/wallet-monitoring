@@ -50,14 +50,15 @@ from wallets.cover_wallets;
 
 create or replace view vw_debank_data as
 select
-  wallet,
-  name as debank_name,
-  chain,
-  net_usd_value,
-  asset_usd_value,
-  coalesce(debt_usd_value__v_double, debt_usd_value) as debt_usd_value,
-  to_timestamp(cast(_dlt_load_id as double)) as load_dt
-from wallets.debank_wallet_protocol_balance;
+  b.wallet,
+  b.name as debank_name,
+  c.name as chain,
+  b.net_usd_value,
+  b.asset_usd_value,
+  coalesce(b.debt_usd_value__v_double, b.debt_usd_value) as debt_usd_value,
+  to_timestamp(cast(b._dlt_load_id as double)) as load_dt
+from wallets.debank_wallet_protocol_balance b
+  left join wallets.debank_chains c on b.chain = c.id;
 
 create or replace view vw_debank_data_latest as
 with
@@ -148,6 +149,7 @@ select
   c.plan,
   c.cover_id,
   api.protocol,
+  api.chain,
   api.wallet,
   concat(left(api.wallet, 6), '..', right(api.wallet, 4)) as wallet_short,
   api.net_usd_value as usd_exposed,
