@@ -129,7 +129,7 @@ mapping_unique_procols as (
 
 select
   d.wallet,
-  m.protocol,
+  d.debank_name as protocol,
   d.chain,
   d.net_usd_value,
   d.asset_usd_value,
