@@ -185,6 +185,13 @@ order by 2, 3
 ```
 
 ## Cover Funds Exposed outside <Value data={cover_list} column=plan/>
+
+{#if cover_wallet_protocol_diff_list[0].wallet == null}
+
+None found.
+
+{:else}
+
 <DataTable data={cover_wallet_protocol_diff_list} totalRow=true search=true>
   <Column id=cover_id title="cover id" totalAgg="grand total"/>
   <Column id=wallet title="wallet"/>
@@ -269,3 +276,5 @@ from ${cover_wallet_protocol_diff_list}
     />
   </Tab>
 </Tabs>
+
+{/if}
