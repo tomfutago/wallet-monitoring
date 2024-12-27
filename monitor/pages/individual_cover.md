@@ -200,7 +200,18 @@ where cover_id = '${inputs.cover_id.value}'
             labelLine: {
               show: false
             },
-            data: [...cover_usd_exposed_by_chain_pie]
+            data: cover_usd_exposed_by_chain_pie.map(item => ({
+              ...item,
+              itemStyle: {
+                color: ({
+                  'Ethereum': '#00875F',
+                  'OP': '#FF0420',
+                  'Polygon': '#7047EB',
+                  'Base': '#0052FF',
+                  'Arbitrum': '#98C6E6'
+                })[item.name] || null // default color for any other name
+              }
+            }))
           }
         ]
       }
@@ -287,7 +298,18 @@ where cover_id = '${inputs.cover_id.value}'
             labelLine: {
               show: false
             },
-            data: [...cover_eth_exposed_by_chain_pie]
+            data: cover_eth_exposed_by_chain_pie.map(item => ({
+              ...item,
+              itemStyle: {
+                color: ({
+                  'Ethereum': '#00875F',
+                  'OP': '#FF0420',
+                  'Polygon': '#7047EB',
+                  'Base': '#0052FF',
+                  'Arbitrum': '#98C6E6'
+                })[item.name] || null // default color for any other name
+              }
+            }))
           }
         ]
       }
@@ -433,7 +455,18 @@ where cover_id = '${inputs.cover_id.value}'
             labelLine: {
               show: false
             },
-            data: [...cover_usd_exposed_by_chain_diff_pie]
+            data: cover_usd_exposed_by_chain_diff_pie.map(item => ({
+              ...item,
+              itemStyle: {
+                color: ({
+                  'Ethereum': '#00875F',
+                  'OP': '#FF0420',
+                  'Polygon': '#7047EB',
+                  'Base': '#0052FF',
+                  'Arbitrum': '#98C6E6'
+                })[item.name] || null // default color for any other name
+              }
+            }))
           }
         ]
       }
@@ -520,7 +553,18 @@ where cover_id = '${inputs.cover_id.value}'
             labelLine: {
               show: false
             },
-            data: [...cover_eth_exposed_by_chain_diff_pie]
+            data: cover_eth_exposed_by_chain_diff_pie.map(item => ({
+              ...item,
+              itemStyle: {
+                color: ({
+                  'Ethereum': '#00875F',
+                  'OP': '#FF0420',
+                  'Polygon': '#7047EB',
+                  'Base': '#0052FF',
+                  'Arbitrum': '#98C6E6'
+                })[item.name] || null // default color for any other name
+              }
+            }))
           }
         ]
       }
