@@ -1,19 +1,9 @@
-# Ignore Mac system files
-.DS_store
-
-# Ignore compiled bytecode python files
-*.pyc
-__pycache__
-
-# Ignore secrets
+.venv
 .env
 secrets.toml
-
-# Ignore virtual env
-.venv
-
-# Ignore external setup
+*.pyc
+__pycache__
 .vscode
-
-# ignore duckdb
-#*.duckdb
+.DS_store
+/transform/logs
+/transform/.cache
