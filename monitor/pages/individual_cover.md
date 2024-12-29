@@ -28,21 +28,24 @@ select
   c.usd_cover,
   c.eth_cover,
   cw.usd_exposed,
-  cw.eth_exposed
+  cw.eth_exposed,
+  c.usd_cover * 0.05 as usd_deductible,
+  c.eth_cover * 0.05 as eth_deductible
 from md_wallets.int_cover_agg c
   left join md_wallets.int_cover_wallet_agg cw on c.cover_id = cw.cover_id
 where c.cover_id = '${inputs.cover_id.value}'
 ```
 
-## Cover Overview
+## <Value data={cover_list} column=plan/> <Value data={cover_list} column=cover_id/> - Overview
+
 <DataTable data={cover_list}>
-  <Column id=cover_id title="cover id"/>
-  <Column id=plan title="plan"/>
   <Column id=cnt_wallet title="# wallets" />
   <Column id=usd_cover title="cover ($)" fmt=num2 />
   <Column id=eth_cover title="cover (Ξ)" fmt=num2 />
   <Column id=usd_exposed title="funds exposed ($)" fmt=num2 />
   <Column id=eth_exposed title="funds exposed (Ξ)" fmt=num2 />
+  <Column id=usd_deductible title="deductible ($)" fmt=num2 />
+  <Column id=eth_deductible title="deductible (Ξ)" fmt=num2 />
 </DataTable>
 
 ```cover_wallets
@@ -76,14 +79,17 @@ select
   c.usd_cover,
   c.eth_cover,
   cw.usd_exposed,
-  cw.eth_exposed
+  cw.eth_exposed,
+  cw.usd_exposed * c.usd_cover / cw_total.usd_exposed as usd_liability,
+  cw.eth_exposed * c.eth_cover / cw_total.eth_exposed as eth_liability
 from md_wallets.int_cover_agg c
   left join md_wallets.int_cover_protocol_wallet_agg cw on c.cover_id = cw.cover_id
+  left join md_wallets.int_cover_wallet_agg cw_total on c.cover_id = cw_total.cover_id
 where c.cover_id = '${inputs.cover_id.value}'
 order by 2, 3
 ```
 
-## Cover Funds Exposed within <Value data={cover_list} column=plan/>
+## Funds Exposed within <Value data={cover_list} column=plan/>
 
 {#if cover_wallet_protocol_list[0].wallet == null}
 
@@ -97,6 +103,8 @@ None found.
   <Column id=protocol title="protocol" />
   <Column id=usd_exposed title="funds exposed ($)" fmt=num2 totalAgg=sum />
   <Column id=eth_exposed title="funds exposed (Ξ)" fmt=num4 totalAgg=sum />
+  <Column id=usd_liability title="liability ($)" fmt=num2 totalAgg=sum />
+  <Column id=eth_liability title="liability (Ξ)" fmt=num2 totalAgg=sum />
 </DataTable>
 
 ```sql cover_usd_exposed_by_protocol_treemap
@@ -338,7 +346,7 @@ where c.cover_id = '${inputs.cover_id.value}'
 order by 2, 3
 ```
 
-## Cover Funds Exposed outside <Value data={cover_list} column=plan/>
+## Funds Exposed outside <Value data={cover_list} column=plan/>
 
 {#if cover_wallet_protocol_diff_list[0].wallet == null}
 
