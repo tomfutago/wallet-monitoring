@@ -3,6 +3,7 @@ gateways:
     connection:
       type: motherduck
       database: wallets
+      token: {{ env_var('MD_TOKEN') }}
 
 default_gateway: local
 
