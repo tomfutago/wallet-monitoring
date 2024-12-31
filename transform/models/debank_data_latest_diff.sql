@@ -12,7 +12,7 @@ mapping_unique_procols as (
 
 select
   d.wallet::varchar as wallet,
-  m.protocol::varchar as protocol,
+  d.protocol::varchar as protocol,
   d.chain::varchar as chain,
   d.net_usd_value::double as net_usd_value,
   d.asset_usd_value::double as asset_usd_value,
