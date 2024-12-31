@@ -9,5 +9,5 @@ select distinct
   usd_cover_amount,
   eth_cover_amount,
   cover_owner
-from wallets.vw_cover
+from wallets.prod.cover
 order by 1

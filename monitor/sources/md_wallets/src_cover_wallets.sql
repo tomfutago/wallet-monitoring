@@ -10,5 +10,5 @@ select
   eth_cover_amount,
   cover_owner,
   monitored_wallet
-from wallets.vw_cover_wallet
+from wallets.prod.cover_wallet
 order by cover_id, monitored_wallet
