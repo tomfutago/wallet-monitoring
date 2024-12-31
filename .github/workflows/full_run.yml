@@ -32,8 +32,7 @@ jobs:
         run: |
           pip install poetry
           poetry install
-          cd pipelines 
-      #&& poetry run python main.py
+          cd pipelines && poetry run python main.py
 
       #- name: store wallets db for deployment
       #  id: store-wallet-db
