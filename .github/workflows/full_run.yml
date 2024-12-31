@@ -12,6 +12,7 @@ env:
   SOURCES__DEBANK__ACCESS_KEY: ${{ secrets.SOURCES__DEBANK__ACCESS_KEY }}
   EVIDENCE_SOURCE__md_wallets__database: ${{ secrets.EVIDENCE_SOURCE__MD_WALLETS__DATABASE }}
   EVIDENCE_SOURCE__md_wallets__token: ${{ secrets.EVIDENCE_SOURCE__MD_WALLETS__TOKEN }}
+  MD_TOKEN: ${{ secrets.MD_TOKEN }}
 
 jobs:
   run-pipelines:
@@ -31,11 +32,15 @@ jobs:
         run: |
           pip install poetry
           poetry install
-          cd pipelines && poetry run python main.py
+          cd pipelines 
+      #&& poetry run python main.py
 
       #- name: store wallets db for deployment
       #  id: store-wallet-db
       #  run: echo "wallet_db_path=$GITHUB_WORKSPACE/data/wallets.duckdb" >> $GITHUB_OUTPUT
+
+      - name: run sqlmesh
+        run: cd ./transform && poetry run sqlmesh run
   
   deploy-wallet-monitoring:
     needs: run-pipelines
