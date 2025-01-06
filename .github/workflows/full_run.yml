@@ -5,15 +5,6 @@ on:
     - cron: '0 2 * * *' # daily at 2am UTC
   workflow_dispatch: # keep for manual runs
 
-env:
-  DESTINATION__MOTHERDUCK__CREDENTIALS__DATABASE: ${{ secrets.DESTINATION__MOTHERDUCK__CREDENTIALS__DATABASE }}
-  DESTINATION__MOTHERDUCK__CREDENTIALS__PASSWORD: ${{ secrets.DESTINATION__MOTHERDUCK__CREDENTIALS__PASSWORD }}
-  SOURCES__DUNE__API_KEY: ${{ secrets.SOURCES__DUNE__API_KEY }}
-  SOURCES__DEBANK__ACCESS_KEY: ${{ secrets.SOURCES__DEBANK__ACCESS_KEY }}
-  EVIDENCE_SOURCE__md_wallets__database: ${{ secrets.EVIDENCE_SOURCE__MD_WALLETS__DATABASE }}
-  EVIDENCE_SOURCE__md_wallets__token: ${{ secrets.EVIDENCE_SOURCE__MD_WALLETS__TOKEN }}
-  MD_TOKEN: ${{ secrets.MD_TOKEN }}
-
 jobs:
   run-pipelines:
     runs-on: ubuntu-22.04
@@ -28,17 +19,26 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: install poetry and run pipelines
+      - name: install poetry
         run: |
           pip install poetry
           poetry install
-          cd pipelines && poetry run python main.py
+
+      - name: run pipelines
+        env:
+          DESTINATION__MOTHERDUCK__CREDENTIALS__DATABASE: ${{ secrets.DESTINATION__MOTHERDUCK__CREDENTIALS__DATABASE }}
+          DESTINATION__MOTHERDUCK__CREDENTIALS__PASSWORD: ${{ secrets.DESTINATION__MOTHERDUCK__CREDENTIALS__PASSWORD }}
+          SOURCES__DUNE__API_KEY: ${{ secrets.SOURCES__DUNE__API_KEY }}
+          SOURCES__DEBANK__ACCESS_KEY: ${{ secrets.SOURCES__DEBANK__ACCESS_KEY }}
+        run: cd ./pipelines && poetry run python main.py
 
       #- name: store wallets db for deployment
       #  id: store-wallet-db
       #  run: echo "wallet_db_path=$GITHUB_WORKSPACE/data/wallets.duckdb" >> $GITHUB_OUTPUT
 
       - name: run sqlmesh
+        env:
+          MD_TOKEN: ${{ secrets.MD_TOKEN }}
         run: cd ./transform && poetry run sqlmesh run
   
   deploy-wallet-monitoring:
@@ -72,6 +72,8 @@ jobs:
       - name: build
         env:
           BASE_PATH: '/${{ github.event.repository.name }}'
+          EVIDENCE_SOURCE__md_wallets__database: ${{ secrets.EVIDENCE_SOURCE__MD_WALLETS__DATABASE }}
+          EVIDENCE_SOURCE__md_wallets__token: ${{ secrets.EVIDENCE_SOURCE__MD_WALLETS__TOKEN }}
         run: |
           cd ./monitor
           npm run sources
