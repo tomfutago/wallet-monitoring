@@ -1,18 +1,6 @@
 ---
-title: Individual Cover Tracker
+title: Cover Tracker
 ---
-
-```duped_wallets
-select * from md_wallets.int_duped_wallets order by 1
-```
-
-## Wallets with Multiple Covers
-<DataTable data={duped_wallets} totalRow=true>
-  <Column id=wallet title=wallet totalAgg="grand total"/>
-  <Column id=plans title=plans/>
-  <Column id=covers title=covers/>
-  <Column id=count title="# wallets" totalAgg=sum />
-</DataTable>
 
 ```cover_dropdown
 select cover_id from md_wallets.src_cover order by 1
@@ -29,6 +17,7 @@ select
   c.eth_cover,
   cw.usd_exposed,
   cw.eth_exposed,
+  c.usd_cover / cw.usd_exposed as coverage_ratio,
   c.usd_cover * 0.05 as usd_deductible,
   c.eth_cover * 0.05 as eth_deductible
 from md_wallets.int_cover_agg c
@@ -44,6 +33,7 @@ where c.cover_id = '${inputs.cover_id.value}'
   <Column id=eth_cover title="cover (Ξ)" fmt=num2 />
   <Column id=usd_exposed title="funds exposed ($)" fmt=num2 />
   <Column id=eth_exposed title="funds exposed (Ξ)" fmt=num2 />
+  <Column id=coverage_ratio title="coverage (%)" fmt=pct2 />
   <Column id=usd_deductible title="deductible ($)" fmt=num2 />
   <Column id=eth_deductible title="deductible (Ξ)" fmt=num2 />
 </DataTable>
