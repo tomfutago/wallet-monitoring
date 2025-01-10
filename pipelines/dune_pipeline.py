@@ -23,6 +23,23 @@ def load_capital_pool():
     )
     print(load_info)
 
+def load_active_cover_wallets():
+  df = dune.run_query_dataframe(QueryBase(query_id=4471976))
+  
+  if not df.empty:
+    pipeline = dlt.pipeline(
+      pipeline_name="dune_active_cover_wallets",
+      destination="motherduck",
+      dataset_name="main"
+    )
+
+    load_info = pipeline.run(
+      df,
+      table_name="cover_wallets",
+      write_disposition="append"
+    )
+    print(load_info)
+
 def load_cover_wallets(max_cover_id: int):
   cover_list_query = QueryBase(
     query_id=4340708,
@@ -47,5 +64,6 @@ def load_cover_wallets(max_cover_id: int):
     print(load_info)
 
 if __name__ == "__main__":
-  load_capital_pool()
+  #load_capital_pool()
   #load_cover_wallets(max_cover_id=1600) # test
+  load_active_cover_wallets()
