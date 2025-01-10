@@ -65,5 +65,5 @@ def load_cover_wallets(max_cover_id: int):
 
 if __name__ == "__main__":
   #load_capital_pool()
-  #load_cover_wallets(max_cover_id=1600) # test
-  load_active_cover_wallets()
+  #load_active_cover_wallets()
+  load_cover_wallets(max_cover_id=1784) # test
