@@ -21,7 +21,7 @@ select distinct
     when 'Essential Cover' then 2
     when 'Elite Cover' then 3
   end::int as plan_id,
-  plan::varchar as plan,
+  nullif(plan, '<nil>')::varchar as plan,
   cover_start_date::date as cover_start_date,
   cover_end_date::date as cover_end_date,
   if(cover_end_date::date >= current_date, true, false)::boolean as is_active,
