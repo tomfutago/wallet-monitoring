@@ -24,6 +24,7 @@ select distinct
   plan::varchar as plan,
   cover_start_date::date as cover_start_date,
   cover_end_date::date as cover_end_date,
+  if(cover_end_date::date >= current_date, true, false)::boolean as is_active,
   cover_asset::varchar as cover_asset,
   native_cover_amount::double as native_cover_amount,
   usd_cover_amount::double as usd_cover_amount,
