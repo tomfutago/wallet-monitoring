@@ -4,6 +4,7 @@ from dune_pipeline import *
 
 def loop_through_cover_wallets():
   wallet = "0xbad"
+  query = "SELECT DISTINCT monitored_wallet FROM prod.cover_wallet WHERE cover_end_date > current_date"
 
   try:
     # fetch cover wallets as df
@@ -14,7 +15,7 @@ def loop_through_cover_wallets():
     )
 
     with pipeline.sql_client() as client:
-      with client.execute_query("SELECT DISTINCT monitored_wallet FROM cover_wallets") as cursor:
+      with client.execute_query(query) as cursor:
         result_df = cursor.df()
     
     if not result_df.empty:
@@ -34,7 +35,7 @@ if __name__ == "__main__":
   )
 
   with pipeline.sql_client() as client:
-    with client.execute_query("SELECT MAX(cover_id) FROM cover_wallets") as cursor:
+    with client.execute_query("SELECT MAX(cover_id) FROM main.cover_wallets") as cursor:
       max_cover_id = cursor.fetchone()[0]
 
   if max_cover_id > 0:
