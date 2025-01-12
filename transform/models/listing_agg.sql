@@ -16,7 +16,7 @@ from wallets.prod.cover cu
   inner join (
     select
       cover_id,
-      count(distinct monitored_wallet) as cnt_wallet
+      count(distinct wallet) as cnt_wallet
     from wallets.prod.cover_wallet
     group by 1
   ) cw on cu.cover_id = cw.cover_id
