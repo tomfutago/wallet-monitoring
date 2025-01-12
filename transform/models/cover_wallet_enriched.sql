@@ -4,9 +4,12 @@ model (
 );
 
 select
+  c.cover_id::bigint as cover_id,
+  c.product_id::int as product_id,
+  c.product_name::varchar as product_name,
+  c.product_type::varchar as product_type,
   c.plan_id::int as plan_id,
   c.plan::varchar as plan,
-  c.cover_id::bigint as cover_id,
   api.protocol::varchar as protocol,
   api.chain::varchar as chain,
   api.wallet::varchar as wallet,
@@ -15,4 +18,4 @@ select
   api.net_eth_value::double as eth_exposed
 from wallets.prod.cover_wallet c
   inner join wallets.prod.debank_data_latest_match api on c.monitored_wallet = api.wallet
-  inner join wallets.prod.plan_mapping m on c.plan_id = m.plan_id and api.protocol = m.protocol;
+  inner join wallets.prod.listing_mapping m on c.product_id = m.product_id and api.protocol = m.protocol;

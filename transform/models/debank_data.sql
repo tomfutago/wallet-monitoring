@@ -5,15 +5,15 @@ model (
   ),
   cron '@daily',
   audits (
-    not_null(columns := (wallet, protocol, chain, load_ts)),
-    unique_combination_of_columns(columns := (wallet, protocol, chain, load_ts))
+    not_null(columns := (wallet, debank_name, chain, load_ts)),
+    unique_combination_of_columns(columns := (wallet, debank_name, chain, load_ts))
   )
 );
 
 with api_data as (
   select
     b.wallet,
-    b.name as protocol,
+    b.name as debank_name,
     c.name as chain,
     b.net_usd_value,
     b.asset_usd_value,
@@ -26,7 +26,7 @@ with api_data as (
 
 select
   wallet::varchar as wallet,
-  protocol::varchar as protocol,
+  debank_name::varchar as debank_name,
   chain::varchar as chain,
   net_usd_value::double as net_usd_value,
   asset_usd_value::double as asset_usd_value,

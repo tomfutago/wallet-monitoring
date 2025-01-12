@@ -13,7 +13,7 @@ latest_prices as (
 debank_data_latest as (
   select
     d.wallet,
-    d.protocol,
+    d.debank_name,
     d.chain,
     max_by(d.net_usd_value, d.load_ts) as net_usd_value,
     max_by(d.asset_usd_value, d.load_ts) as asset_usd_value,
@@ -29,7 +29,7 @@ debank_data_latest as (
 
 select
   wallet::varchar as wallet,
-  protocol::varchar as protocol,
+  debank_name::varchar as debank_name,
   chain::varchar as chain,
   net_usd_value::double as net_usd_value,
   asset_usd_value::double as asset_usd_value,

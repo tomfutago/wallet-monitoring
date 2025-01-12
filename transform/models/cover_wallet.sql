@@ -6,13 +6,16 @@ model (
   cron '@daily',
   grain (columns := (cover_id, monitored_wallet)),
   audits (
-    not_null(columns := (cover_id, monitored_wallet)),
+    not_null(columns := (cover_id, product_id, monitored_wallet)),
     unique_combination_of_columns(columns := (cover_id, monitored_wallet))
   )
 );
 
 select
   cover_id::bigint as cover_id,
+  product_id::int as product_id,
+  product_name::varchar as product_name,
+  product_type::varchar as product_type,
   case plan
     when 'Entry Cover' then 1
     when 'Essential Cover' then 2

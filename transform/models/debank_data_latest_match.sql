@@ -6,8 +6,8 @@ model (
 with
 
 mapping_unique_procols as (
-  select distinct protocol, debank_id, debank_name
-  from wallets.prod.plan_mapping
+  select distinct protocol, debank_name
+  from wallets.prod.listing_mapping
 )
 
 select
@@ -22,4 +22,4 @@ select
   d.debt_eth_value::double as debt_eth_value,
   d.load_ts::timestamp as load_ts
 from wallets.prod.debank_data_latest d
-  inner join mapping_unique_procols m on d.protocol = m.debank_name;
+  inner join mapping_unique_procols m on d.debank_name = m.debank_name;
