@@ -12,14 +12,14 @@ select
   pw.usd_exposed,
   pw.eth_exposed
 from md_wallets.listing_agg pc
-  left join md_wallets.int_plan_wallet_agg pw on pc.plan_id = pw.plan_id
-order by pc.plan_id
+  left join md_wallets.int_plan_wallet_agg pw on pc.product_id = pw.product_id
+order by pc.product_id
 ```
 
 ```plan_cover_stack
 with agg_wallet_positions as (
   select
-    plan_id,
+    product_id,
     plan,
     'Covered Amount' as total_type,
     usd_cover as usd_total,
@@ -27,7 +27,7 @@ with agg_wallet_positions as (
   from md_wallets.listing_agg
   union all
   select
-    plan_id,
+    product_id,
     plan,
     'Exposed Funds' as total_type,
     usd_exposed as usd_total,
@@ -40,7 +40,7 @@ select
   usd_total,
   eth_total
 from agg_wallet_positions
-order by plan_id
+order by product_id
 ```
 
 ## Exposed Funds vs Covered Amount per Cover Plan
@@ -83,15 +83,15 @@ select
   pw.usd_exposed,
   pw.eth_exposed
 from md_wallets.listing_agg pc
-  left join md_wallets.int_plan_protocol_wallet_agg pw on pc.plan_id = pw.plan_id
+  left join md_wallets.int_plan_protocol_wallet_agg pw on pc.product_id = pw.product_id
 where pc.plan = '${inputs.plan}'
-order by pc.plan_id
+order by pc.product_id
 ```
 
 ```plan_cover_protocol_stack
 with agg_wallet_positions as (
   /*select
-    plan_id,
+    product_id,
     plan,
     plan as protocol,
     'Covered Amount' as total_type,
@@ -100,7 +100,7 @@ with agg_wallet_positions as (
   from md_wallets.listing_agg
   union all*/
   select
-    plan_id,
+    product_id,
     plan,
     protocol,
     'Exposed Funds' as total_type,

@@ -15,6 +15,8 @@ select
   usd_cover_amount,
   eth_cover_amount,
   cover_owner,
-  monitored_wallet
+  wallet
 from prod.cover_wallet
-order by cover_id, monitored_wallet
+where is_active
+  and is_plan
+order by cover_id, wallet

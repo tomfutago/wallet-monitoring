@@ -3,13 +3,13 @@ title: Cover List
 ---
 
 ```duped_wallets
-select * from md_wallets.int_duped_wallets order by 1
+select * from md_wallets.duped_wallets order by 1
 ```
 
 ## Wallets with Multiple Covers
 <DataTable data={duped_wallets} totalRow=true>
   <Column id=wallet title=wallet totalAgg="grand total"/>
-  <Column id=plans title=plans/>
+  <Column id=listings title=listings/>
   <Column id=covers title=covers/>
   <Column id=count title="# wallets" totalAgg=sum />
 </DataTable>
