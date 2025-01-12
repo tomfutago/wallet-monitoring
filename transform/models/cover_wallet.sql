@@ -22,6 +22,7 @@ select
     when 'Elite Cover' then 3
   end::int as plan_id,
   nullif(plan, '<nil>')::varchar as plan,
+  coalesce(nullif(plan, '<nil>'), product_name)::varchar as listing,
   if(nullif(plan, '<nil>') is not null, true, false)::boolean as is_plan,
   cover_start_date::date as cover_start_date,
   cover_end_date::date as cover_end_date,
