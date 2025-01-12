@@ -4,7 +4,7 @@ from dune_pipeline import *
 
 def loop_through_cover_wallets():
   wallet = "0xbad"
-  query = "SELECT DISTINCT monitored_wallet FROM prod.cover_wallet WHERE cover_end_date > current_date"
+  query = "SELECT DISTINCT monitored_wallet FROM prod.cover_wallet WHERE is_active"
 
   try:
     # fetch cover wallets as df
