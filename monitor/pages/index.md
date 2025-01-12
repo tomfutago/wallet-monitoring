@@ -11,7 +11,7 @@ select
   pc.eth_cover,
   pw.usd_exposed,
   pw.eth_exposed
-from md_wallets.int_plan_cover_agg pc
+from md_wallets.listing_agg pc
   left join md_wallets.int_plan_wallet_agg pw on pc.plan_id = pw.plan_id
 order by pc.plan_id
 ```
@@ -24,7 +24,7 @@ with agg_wallet_positions as (
     'Covered Amount' as total_type,
     usd_cover as usd_total,
     eth_cover as eth_total
-  from md_wallets.int_plan_cover_agg
+  from md_wallets.listing_agg
   union all
   select
     plan_id,
@@ -82,7 +82,7 @@ select
   pc.eth_cover,
   pw.usd_exposed,
   pw.eth_exposed
-from md_wallets.int_plan_cover_agg pc
+from md_wallets.listing_agg pc
   left join md_wallets.int_plan_protocol_wallet_agg pw on pc.plan_id = pw.plan_id
 where pc.plan = '${inputs.plan}'
 order by pc.plan_id
@@ -97,7 +97,7 @@ with agg_wallet_positions as (
     'Covered Amount' as total_type,
     usd_cover as usd_total,
     eth_cover as eth_total
-  from md_wallets.int_plan_cover_agg
+  from md_wallets.listing_agg
   union all*/
   select
     plan_id,

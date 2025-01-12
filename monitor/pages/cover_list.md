@@ -28,7 +28,7 @@ select
   c.eth_cover * 0.05 as eth_deductible,
   c.cover_start_date,
   c.cover_end_date
-from md_wallets.int_cover_agg c
+from md_wallets.cover_agg c
   left join md_wallets.int_cover_wallet_agg cw on c.cover_id = cw.cover_id
 ```
 

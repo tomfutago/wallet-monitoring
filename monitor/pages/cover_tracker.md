@@ -3,7 +3,7 @@ title: Cover Tracker
 ---
 
 ```cover_dropdown
-select cover_id from md_wallets.src_cover order by 1
+select cover_id from md_wallets.cover order by 1
 ```
 
 <Dropdown data={cover_dropdown} name=cover_id value=cover_id title="Select Cover ID" />
@@ -20,7 +20,7 @@ select
   c.usd_cover / cw.usd_exposed as coverage_ratio,
   c.usd_cover * 0.05 as usd_deductible,
   c.eth_cover * 0.05 as eth_deductible
-from md_wallets.int_cover_agg c
+from md_wallets.cover_agg c
   left join md_wallets.int_cover_wallet_agg cw on c.cover_id = cw.cover_id
 where c.cover_id = '${inputs.cover_id.value}'
 ```
@@ -40,7 +40,7 @@ where c.cover_id = '${inputs.cover_id.value}'
 
 ```cover_wallets
 select cover_id, cover_owner, monitored_wallet as wallet
-from md_wallets.src_cover_wallets
+from md_wallets.cover_wallets
 where cover_id = '${inputs.cover_id.value}'
 ```
 
@@ -72,7 +72,7 @@ select
   cw.eth_exposed,
   cw.usd_exposed * c.usd_cover / cw_total.usd_exposed as usd_liability,
   cw.eth_exposed * c.eth_cover / cw_total.eth_exposed as eth_liability
-from md_wallets.int_cover_agg c
+from md_wallets.cover_agg c
   left join md_wallets.int_cover_protocol_wallet_agg cw on c.cover_id = cw.cover_id
   left join md_wallets.int_cover_wallet_agg cw_total on c.cover_id = cw_total.cover_id
 where c.cover_id = '${inputs.cover_id.value}'
@@ -330,7 +330,7 @@ select
   c.eth_cover,
   cw.usd_exposed,
   cw.eth_exposed
-from md_wallets.int_cover_agg c
+from md_wallets.cover_agg c
   left join md_wallets.int_cover_protocol_wallet_diff_agg cw on c.cover_id = cw.cover_id
 where c.cover_id = '${inputs.cover_id.value}'
 order by 2, 3
