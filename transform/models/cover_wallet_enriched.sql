@@ -10,6 +10,7 @@ select
   c.product_type::varchar as product_type,
   c.plan_id::int as plan_id,
   c.plan::varchar as plan,
+  c.is_plan::boolean as is_plan,
   c.cover_start_date::date as cover_start_date,
   c.cover_end_date::date as cover_end_date,
   c.is_active::boolean as is_active,
