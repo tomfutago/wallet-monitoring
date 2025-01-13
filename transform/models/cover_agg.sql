@@ -19,6 +19,8 @@ from wallets.prod.cover cu
       cover_id,
       count(distinct wallet) as cnt_wallet
     from wallets.prod.cover_wallet
+    where is_active
     group by 1
   ) cw on cu.cover_id = cw.cover_id
-group by 1, 2
+where cu.is_active
+group by 1, 2;
