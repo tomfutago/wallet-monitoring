@@ -12,5 +12,5 @@ select
   eth_deductible,
   cover_start_date,
   cover_end_date
-from md_wallets.cover_agg
+from prod.cover_totals
 order by 1
