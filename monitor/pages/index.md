@@ -76,39 +76,41 @@ order by product_id
 
 ```plan_cover_protocol_list
 select
-  pc.listing as plan,
-  pw.protocol,
-  pc.cnt_cover,
-  pc.cnt_wallet,
-  pc.usd_cover,
-  pc.eth_cover,
-  pw.usd_exposed,
-  pw.eth_exposed
-from md_wallets.listing_agg pc
-  left join md_wallets.int_plan_protocol_wallet_agg pw on pc.product_id = pw.product_id
-where pc.listing = '${inputs.plan}'
-order by pc.product_id
+  listing as plan,
+  protocol,
+  cnt_cover,
+  cnt_wallet,
+  usd_cover,
+  eth_cover,
+  usd_exposed,
+  eth_exposed
+from md_wallets.listing_protocol_totals
+where is_plan
+  and listing = '${inputs.plan}'
+order by product_id
 ```
 
 ```plan_cover_protocol_stack
 with agg_wallet_positions as (
   /*select
     product_id,
-    plan,
-    plan as protocol,
+    listing as plan,
+    listing as protocol,
     'Covered Amount' as total_type,
     usd_cover as usd_total,
     eth_cover as eth_total
   from md_wallets.listing_agg
+  where is_plan
   union all*/
   select
     product_id,
-    plan,
+    listing as plan,
     protocol,
     'Exposed Funds' as total_type,
     usd_exposed as usd_total,
     eth_exposed as eth_total
-  from md_wallets.int_plan_protocol_wallet_agg
+  from md_wallets.listing_protocol_totals
+  where is_plan
 )
 select
   protocol,
