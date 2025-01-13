@@ -6,12 +6,11 @@ model (
 with cover_exposed_agg as (
   select
     cover_id,
-    listing,
     sum(usd_exposed) as usd_exposed,
     sum(eth_exposed) as eth_exposed
   from wallets.prod.cover_wallet_enriched
   where is_active
-  group by 1, 2
+  group by 1
   having sum(usd_exposed) >= 0.01
 )
 
