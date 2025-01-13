@@ -20,11 +20,12 @@ order by product_id
 with agg_wallet_positions as (
   select
     product_id,
-    plan,
+    listing as plan,
     'Covered Amount' as total_type,
     usd_cover as usd_total,
     eth_cover as eth_total
   from md_wallets.listing_agg
+  where is_plan
   union all
   select
     product_id,
