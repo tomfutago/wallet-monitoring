@@ -29,5 +29,5 @@ select
   (c.eth_cover * 0.05)::double as eth_deductible,
   c.cover_start_date::date as cover_start_date,
   c.cover_end_date::date as cover_end_date
-from md_wallets.cover_agg c
-  left join md_wallets.int_cover_wallet_agg cw on c.cover_id = cw.cover_id;
+from wallets.prod.cover_agg c
+  left join cover_exposed_agg cw on c.cover_id = cw.cover_id;
