@@ -4,16 +4,16 @@ title: Wallet Monitoring
 
 ```plan_cover_list
 select
-  pc.plan,
-  pc.cnt_cover,
-  pc.cnt_wallet,
-  pc.usd_cover,
-  pc.eth_cover,
-  pw.usd_exposed,
-  pw.eth_exposed
-from md_wallets.listing_agg pc
-  left join md_wallets.int_plan_wallet_agg pw on pc.product_id = pw.product_id
-order by pc.product_id
+  listing as plan,
+  cnt_cover,
+  cnt_wallet,
+  usd_cover,
+  eth_cover,
+  usd_exposed,
+  eth_exposed
+from md_wallets.listing_totals
+where is_plan
+order by product_id
 ```
 
 ```plan_cover_stack
@@ -28,11 +28,12 @@ with agg_wallet_positions as (
   union all
   select
     product_id,
-    plan,
+    listing as plan,
     'Exposed Funds' as total_type,
     usd_exposed as usd_total,
     eth_exposed as eth_total
-  from md_wallets.int_plan_wallet_agg
+  from md_wallets.listing_totals
+  where is_plan
 )
 select
   plan,
@@ -74,7 +75,7 @@ order by product_id
 
 ```plan_cover_protocol_list
 select
-  pc.plan,
+  pc.listing as plan,
   pw.protocol,
   pc.cnt_cover,
   pc.cnt_wallet,
@@ -84,7 +85,7 @@ select
   pw.eth_exposed
 from md_wallets.listing_agg pc
   left join md_wallets.int_plan_protocol_wallet_agg pw on pc.product_id = pw.product_id
-where pc.plan = '${inputs.plan}'
+where pc.listing = '${inputs.plan}'
 order by pc.product_id
 ```
 
