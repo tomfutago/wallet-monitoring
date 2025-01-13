@@ -10,19 +10,19 @@ select cover_id from md_wallets.cover order by 1
 
 ```cover_list
 select
-  c.cover_id,
-  c.plan,
-  c.cnt_wallet,
-  c.usd_cover,
-  c.eth_cover,
-  cw.usd_exposed,
-  cw.eth_exposed,
-  c.usd_cover / cw.usd_exposed as coverage_ratio,
-  c.usd_cover * 0.05 as usd_deductible,
-  c.eth_cover * 0.05 as eth_deductible
-from md_wallets.cover_agg c
-  left join md_wallets.int_cover_wallet_agg cw on c.cover_id = cw.cover_id
-where c.cover_id = '${inputs.cover_id.value}'
+  cover_id,
+  listing as plan,
+  cnt_wallet,
+  usd_cover,
+  eth_cover,
+  usd_exposed,
+  eth_exposed,
+  coverage_ratio,
+  usd_deductible,
+  eth_deductible
+from md_wallets.cover_totals
+where is_plan
+  and cover_id = '${inputs.cover_id.value}'
 ```
 
 ## <Value data={cover_list} column=plan/> <Value data={cover_list} column=cover_id/> - Overview
@@ -62,20 +62,18 @@ where cover_id = '${inputs.cover_id.value}'
 
 ```cover_wallet_protocol_list
 select
-  c.cover_id,
-  cw.wallet,
-  cw.wallet_short,
-  cw.protocol,
-  c.usd_cover,
-  c.eth_cover,
-  cw.usd_exposed,
-  cw.eth_exposed,
-  cw.usd_exposed * c.usd_cover / cw_total.usd_exposed as usd_liability,
-  cw.eth_exposed * c.eth_cover / cw_total.eth_exposed as eth_liability
-from md_wallets.cover_agg c
-  left join md_wallets.int_cover_protocol_wallet_agg cw on c.cover_id = cw.cover_id
-  left join md_wallets.int_cover_wallet_agg cw_total on c.cover_id = cw_total.cover_id
-where c.cover_id = '${inputs.cover_id.value}'
+  cover_id,
+  wallet,
+  wallet_short,
+  protocol,
+  usd_cover,
+  eth_cover,
+  usd_exposed,
+  eth_exposed,
+  usd_liability,
+  eth_liability
+from md_wallets.cover_wallet_protocol_totals
+where cover_id = '${inputs.cover_id.value}'
 order by 2, 3
 ```
 
@@ -104,7 +102,7 @@ from ${cover_wallet_protocol_list}
 
 ```sql cover_usd_exposed_by_chain_pie
 select chain as name, usd_exposed as value
-from md_wallets.int_cover_exposed_chain_agg
+from md_wallets.cover_chain_totals
 where cover_id = '${inputs.cover_id.value}'
 ```
 
@@ -115,7 +113,7 @@ from ${cover_wallet_protocol_list}
 
 ```sql cover_eth_exposed_by_chain_pie
 select chain as name, eth_exposed as value
-from md_wallets.int_cover_exposed_chain_agg
+from md_wallets.cover_chain_totals
 where cover_id = '${inputs.cover_id.value}'
 ```
 
@@ -323,16 +321,15 @@ where cover_id = '${inputs.cover_id.value}'
 
 ```cover_wallet_protocol_diff_list
 select
-  c.cover_id,
-  cw.wallet,
-  cw.protocol,
-  c.usd_cover,
-  c.eth_cover,
-  cw.usd_exposed,
-  cw.eth_exposed
-from md_wallets.cover_agg c
-  left join md_wallets.int_cover_protocol_wallet_diff_agg cw on c.cover_id = cw.cover_id
-where c.cover_id = '${inputs.cover_id.value}'
+  cover_id,
+  wallet,
+  protocol,
+  usd_cover,
+  eth_cover,
+  usd_exposed,
+  eth_exposed
+from md_wallets.cover_wallet_protocol_diff_totals
+where cover_id = '${inputs.cover_id.value}'
 order by 2, 3
 ```
 
@@ -359,7 +356,7 @@ from ${cover_wallet_protocol_diff_list}
 
 ```sql cover_usd_exposed_by_chain_diff_pie
 select chain as name, usd_exposed as value
-from md_wallets.int_cover_exposed_chain_diff_agg
+from md_wallets.cover_chain_diff_totals
 where cover_id = '${inputs.cover_id.value}'
 ```
 
@@ -370,7 +367,7 @@ from ${cover_wallet_protocol_diff_list}
 
 ```sql cover_eth_exposed_by_chain_diff_pie
 select chain as name, eth_exposed as value
-from md_wallets.int_cover_exposed_chain_diff_agg
+from md_wallets.cover_chain_diff_totals
 where cover_id = '${inputs.cover_id.value}'
 ```
 
