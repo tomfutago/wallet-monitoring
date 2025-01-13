@@ -39,7 +39,7 @@ where c.cover_id = '${inputs.cover_id.value}'
 </DataTable>
 
 ```cover_wallets
-select cover_id, cover_owner, monitored_wallet as wallet
+select cover_id, cover_owner, wallet
 from md_wallets.cover_wallets
 where cover_id = '${inputs.cover_id.value}'
 ```
