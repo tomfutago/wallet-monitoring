@@ -3,7 +3,9 @@ title: Cover List
 ---
 
 ```duped_wallets
-select * from md_wallets.duped_wallets order by 1
+select wallet, listings, covers, count
+from md_wallets.duped_wallets
+order by 1
 ```
 
 ## Wallets with Multiple Covers
@@ -16,20 +18,21 @@ select * from md_wallets.duped_wallets order by 1
 
 ```cover_list
 select
-  c.cover_id,
-  c.plan,
-  c.cnt_wallet,
-  c.usd_cover,
-  c.eth_cover,
-  cw.usd_exposed,
-  cw.eth_exposed,
-  c.usd_cover / cw.usd_exposed as coverage_ratio,
-  c.usd_cover * 0.05 as usd_deductible,
-  c.eth_cover * 0.05 as eth_deductible,
-  c.cover_start_date,
-  c.cover_end_date
-from md_wallets.cover_agg c
-  left join md_wallets.int_cover_wallet_agg cw on c.cover_id = cw.cover_id
+  cover_id,
+  listing as plan,
+  cnt_wallet,
+  usd_cover,
+  eth_cover,
+  usd_exposed,
+  eth_exposed,
+  coverage_ratio,
+  usd_deductible,
+  eth_deductible,
+  cover_start_date,
+  cover_end_date
+from md_wallets.cover_totals
+where is_plan
+order by 1
 ```
 
 ## Nexus Mutual Cover List
