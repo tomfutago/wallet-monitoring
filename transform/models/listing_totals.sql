@@ -18,6 +18,7 @@ with listing_exposed_agg as (
 select
   pc.product_id::int as product_id,
   pc.listing::varchar as listing,
+  pc.is_plan::boolean as is_plan,
   pc.cnt_cover::int as cnt_cover,
   pc.cnt_wallet::int as cnt_wallet,
   pc.usd_cover::double as usd_cover,
