@@ -1,5 +1,5 @@
 model (
-  name prod.listing_totals_list,
+  name prod.listing_totals,
   kind view
 );
 
