@@ -323,6 +323,7 @@ where cover_id = '${inputs.cover_id.value}'
 select
   cover_id,
   wallet,
+  wallet_short,
   protocol,
   usd_cover,
   eth_cover,
@@ -343,7 +344,7 @@ None found.
 
 <DataTable data={cover_wallet_protocol_diff_list} totalRow=true search=true>
   <Column id=cover_id title="cover id" totalAgg="grand total"/>
-  <Column id=wallet title="wallet"/>
+  <Column id=wallet_short title="wallet"/>
   <Column id=protocol title="protocol" />
   <Column id=usd_exposed title="funds exposed ($)" fmt=num2 totalAgg=sum />
   <Column id=eth_exposed title="funds exposed (Ξ)" fmt=num4 totalAgg=sum />
