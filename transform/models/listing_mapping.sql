@@ -11,7 +11,6 @@ select
   product_id::int as product_id,
   product_type::varchar as product_type,
   product_name::varchar as product_name,
-  null::int as plan_id,
   null::varchar as plan,
   coalesce(included_protocol, product_name)::varchar as protocol,
   debank_id::varchar as debank_id,
@@ -26,11 +25,6 @@ select
   end::int as product_id,
   'Nexus Mutual Cover'::varchar as product_type,
   plan::varchar as product_name,
-  case plan
-    when 'Entry Cover' then 1
-    when 'Essential Cover' then 2
-    when 'Elite Cover' then 3
-  end::int as plan_id,
   plan::varchar as plan,
   protocol::varchar as protocol,
   debank_id::varchar as debank_id,

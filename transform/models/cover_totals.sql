@@ -21,12 +21,12 @@ select
   c.cnt_wallet::int as cnt_wallet,
   c.usd_cover::double as usd_cover,
   c.eth_cover::double as eth_cover,
-  cw.usd_exposed::double as usd_exposed,
-  cw.eth_exposed::double as eth_exposed,
-  (c.usd_cover / cw.usd_exposed)::double as coverage_ratio,
+  ca.usd_exposed::double as usd_exposed,
+  ca.eth_exposed::double as eth_exposed,
+  (c.usd_cover / ca.usd_exposed)::double as coverage_ratio,
   (c.usd_cover * 0.05)::double as usd_deductible,
   (c.eth_cover * 0.05)::double as eth_deductible,
   c.cover_start_date::date as cover_start_date,
   c.cover_end_date::date as cover_end_date
 from wallets.prod.cover_agg c
-  left join cover_exposed_agg cw on c.cover_id = cw.cover_id;
+  left join cover_exposed_agg ca on c.cover_id = ca.cover_id;
