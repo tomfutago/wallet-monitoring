@@ -3,7 +3,7 @@ model (
   kind full,
   audits (
     not_null(columns := (product_id, product_type, product_name, protocol)),
-    unique_combination_of_columns(columns := (product_id, product_type, protocol, debank_name))
+    unique_combination_of_columns(columns := (product_id, product_type, product_name, protocol, debank_name))
   )
 );
 
@@ -16,6 +16,7 @@ select
   debank_id::varchar as debank_id,
   debank_name::varchar as debank_name
 from wallets.main.listing_mapping
+where 1=1 -- dummy condition to trigger re-load
 union all
 select
   case plan
@@ -29,4 +30,5 @@ select
   protocol::varchar as protocol,
   debank_id::varchar as debank_id,
   debank_name::varchar as debank_name
-from wallets.main.plan_mapping;
+from wallets.main.plan_mapping
+where 1=1; -- dummy condition to trigger re-load
