@@ -17,5 +17,4 @@ select
   cover_owner
 from prod.cover
 where is_active
-  and is_plan
 order by 1

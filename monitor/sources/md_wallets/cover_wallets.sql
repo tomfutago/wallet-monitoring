@@ -18,5 +18,4 @@ select
   wallet
 from prod.cover_wallet
 where is_active
-  and is_plan
 order by cover_id, wallet
