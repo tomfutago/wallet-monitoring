@@ -3,7 +3,6 @@ select
   product_id,
   product_name,
   product_type,
-  plan_id,
   plan,
   listing,
   is_plan,
