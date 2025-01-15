@@ -11,5 +11,5 @@ select
   eth_exposed,
   cover_start_date,
   cover_end_date
-from prod.cover_wallet_protocol_totals
+from prod.cover_wallet_protocol_diff_totals
 order by 1
