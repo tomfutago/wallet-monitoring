@@ -3,14 +3,17 @@ model (
   kind view
 );
 
-with listing_exposed_agg as (
+with wallet_listing_exposed_agg as (
   select
     product_id,
     listing,
     sum(usd_exposed) as usd_exposed,
     sum(eth_exposed) as eth_exposed
-  from wallets.prod.cover_wallet_enriched
-  where is_active
+  from (
+    select distinct wallet, product_id, listing, usd_exposed, eth_exposed
+    from wallets.prod.cover_wallet_enriched
+    where is_active
+  ) t
   group by 1, 2
   having sum(usd_exposed) >= 0.01
 )
@@ -26,4 +29,4 @@ select
   pw.usd_exposed::double as usd_exposed,
   pw.eth_exposed::double as eth_exposed
 from wallets.prod.listing_agg pc
-  left join listing_exposed_agg pw on pc.product_id = pw.product_id;
+  left join wallet_listing_exposed_agg pw on pc.product_id = pw.product_id;
