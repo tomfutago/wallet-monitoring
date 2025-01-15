@@ -11,7 +11,7 @@ select cover_id from md_wallets.cover order by 1
 ```cover_list
 select
   cover_id,
-  listing as plan,
+  listing,
   cnt_wallet,
   usd_cover,
   eth_cover,
@@ -21,11 +21,11 @@ select
   usd_deductible,
   eth_deductible
 from md_wallets.cover_totals
-where is_plan
-  and cover_id = '${inputs.cover_id.value}'
+where cover_id = ${inputs.cover_id.value}
+  --and is_plan
 ```
 
-## <Value data={cover_list} column=plan/> <Value data={cover_list} column=cover_id/> - Overview
+## <Value data={cover_list} column=listing/> <Value data={cover_list} column=cover_id/> - Overview
 
 <DataTable data={cover_list}>
   <Column id=cnt_wallet title="# wallets" />
@@ -39,9 +39,10 @@ where is_plan
 </DataTable>
 
 ```cover_wallets
-select cover_id, cover_owner, wallet
-from md_wallets.cover_wallets
-where cover_id = '${inputs.cover_id.value}'
+select c.cover_id, c.cover_owner, cw.wallet
+from md_wallets.cover c
+  inner join md_wallets.cover_wallets cw on c.cover_id = cw.cover_id
+where c.cover_id = ${inputs.cover_id.value}
 ```
 
 <Details title="Wallets">
@@ -73,11 +74,11 @@ select
   usd_liability,
   eth_liability
 from md_wallets.cover_wallet_protocol_totals
-where cover_id = '${inputs.cover_id.value}'
+where cover_id = ${inputs.cover_id.value}
 order by 2, 3
 ```
 
-## Funds Exposed within <Value data={cover_list} column=plan/>
+## Funds Exposed within <Value data={cover_list} column=listing/>
 
 {#if cover_wallet_protocol_list[0].wallet == null}
 
@@ -103,7 +104,7 @@ from ${cover_wallet_protocol_list}
 ```sql cover_usd_exposed_by_chain_pie
 select chain as name, usd_exposed as value
 from md_wallets.cover_chain_totals
-where cover_id = '${inputs.cover_id.value}'
+where cover_id = ${inputs.cover_id.value}
 ```
 
 ```sql cover_eth_exposed_by_protocol_treemap
@@ -114,7 +115,7 @@ from ${cover_wallet_protocol_list}
 ```sql cover_eth_exposed_by_chain_pie
 select chain as name, eth_exposed as value
 from md_wallets.cover_chain_totals
-where cover_id = '${inputs.cover_id.value}'
+where cover_id = ${inputs.cover_id.value}
 ```
 
 <Tabs>
@@ -330,11 +331,11 @@ select
   usd_exposed,
   eth_exposed
 from md_wallets.cover_wallet_protocol_diff_totals
-where cover_id = '${inputs.cover_id.value}'
+where cover_id = ${inputs.cover_id.value}
 order by 2, 3
 ```
 
-## Funds Exposed outside <Value data={cover_list} column=plan/>
+## Funds Exposed outside <Value data={cover_list} column=listing/>
 
 {#if cover_wallet_protocol_diff_list[0].wallet == null}
 
@@ -358,7 +359,7 @@ from ${cover_wallet_protocol_diff_list}
 ```sql cover_usd_exposed_by_chain_diff_pie
 select chain as name, usd_exposed as value
 from md_wallets.cover_chain_diff_totals
-where cover_id = '${inputs.cover_id.value}'
+where cover_id = ${inputs.cover_id.value}
 ```
 
 ```sql cover_eth_exposed_by_protocol_diff_treemap
@@ -369,7 +370,7 @@ from ${cover_wallet_protocol_diff_list}
 ```sql cover_eth_exposed_by_chain_diff_pie
 select chain as name, eth_exposed as value
 from md_wallets.cover_chain_diff_totals
-where cover_id = '${inputs.cover_id.value}'
+where cover_id = ${inputs.cover_id.value}
 ```
 
 <Tabs>
@@ -572,3 +573,5 @@ where cover_id = '${inputs.cover_id.value}'
 </Tabs>
 
 {/if}
+
+<LastRefreshed prefix="Data last updated"/>
