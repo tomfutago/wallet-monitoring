@@ -193,7 +193,6 @@ order by usd_total desc
 <DataTable data={listing_list} totalRow=true>
   <Column id=listing title="listing" totalAgg="grand total"/>
   <Column id=cnt_cover title="# covers" />
-  <Column id=cnt_wallet title="# wallets" />
   <Column id=usd_cover title="cover ($)" fmt=num0/>
   <Column id=eth_cover title="cover (Ξ)" fmt=num0/>
   <Column id=usd_exposed title="funds exposed ($)" fmt=num0 contentType=colorscale colorScale=negative />
