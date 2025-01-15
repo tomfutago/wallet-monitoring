@@ -2,8 +2,17 @@
 title: Cover Tracker
 ---
 
+<Dropdown name=is_plan title="only Nexus Mutual Cover?" defaultValue="1" >
+    <DropdownOption valueLabel="All" value=-1 />
+    <DropdownOption valueLabel="Yes" value=1 />
+    <DropdownOption valueLabel="No" value=0 />
+</Dropdown>
+
 ```cover_dropdown
-select cover_id from md_wallets.cover order by 1
+select cover_id from md_wallets.cover
+where ${inputs.is_plan.value} = -1
+  or is_plan = ${inputs.is_plan.value}
+order by 1
 ```
 
 <Dropdown data={cover_dropdown} name=cover_id value=cover_id title="Select Cover ID" />
@@ -25,7 +34,7 @@ where cover_id = ${inputs.cover_id.value}
   --and is_plan
 ```
 
-## <Value data={cover_list} column=listing/> <Value data={cover_list} column=cover_id/> - Overview
+## Cover ID: <Value data={cover_list} column=cover_id/> - <Value data={cover_list} column=listing/> - Overview
 
 <DataTable data={cover_list}>
   <Column id=cnt_wallet title="# wallets" />
@@ -78,7 +87,7 @@ where cover_id = ${inputs.cover_id.value}
 order by 2, 3
 ```
 
-## Funds Exposed within <Value data={cover_list} column=listing/>
+## Funds Exposed within cover
 
 {#if cover_wallet_protocol_list[0].wallet == null}
 
@@ -335,7 +344,7 @@ where cover_id = ${inputs.cover_id.value}
 order by 2, 3
 ```
 
-## Funds Exposed outside <Value data={cover_list} column=listing/>
+## Funds Exposed outside cover
 
 {#if cover_wallet_protocol_diff_list[0].wallet == null}
 
