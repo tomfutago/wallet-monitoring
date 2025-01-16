@@ -87,7 +87,7 @@ select
 from md_wallets.listing_protocol_totals
 where is_plan
   and listing = '${inputs.plan}'
-order by product_id
+order by product_id, protocol
 ```
 
 ```plan_cover_protocol_stack
