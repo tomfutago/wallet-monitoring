@@ -29,7 +29,12 @@ select
   cw.wallet::varchar as wallet,
   cw.wallet_short::varchar as wallet_short,
   api.net_usd_value::double as usd_exposed,
-  api.net_eth_value::double as eth_exposed
+  api.net_eth_value::double as eth_exposed,
+  if(
+    row_number() over (
+      partition by c.cover_id, cw.wallet, api.protocol, api.chain order by api.load_dt desc
+    ) = 1, true, false
+   ) as is_latest
 from wallets.prod.cover c
   inner join wallets.prod.cover_wallet cw on c.cover_id = cw.cover_id
   inner join wallets.prod.debank_data_daily_match api on cw.wallet = api.wallet
