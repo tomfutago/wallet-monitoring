@@ -10,22 +10,25 @@ with listing_exposed_agg as (
     protocol,
     sum(usd_exposed) as usd_exposed,
     sum(eth_exposed) as eth_exposed
-  from wallets.prod.cover_wallet_enriched
-  where is_active
+  from (
+    select distinct wallet, product_id, listing, protocol, usd_exposed, eth_exposed
+    from wallets.prod.cover_wallet_enriched
+    where is_active
+  ) t
   group by 1, 2, 3
   having sum(usd_exposed) >= 0.01
 )
 
 select
-  pc.product_id::int as product_id,
-  pc.listing::varchar as listing,
-  pw.protocol::varchar as protocol,
-  pc.is_plan::boolean as is_plan,
-  pc.cnt_cover::int as cnt_cover,
-  pc.cnt_wallet::int as cnt_wallet,
-  pc.usd_cover::double as usd_cover,
-  pc.eth_cover::double as eth_cover,
-  pw.usd_exposed::double as usd_exposed,
-  pw.eth_exposed::double as eth_exposed
-from wallets.prod.listing_agg pc
-  left join listing_exposed_agg pw on pc.product_id = pw.product_id;
+  la.product_id::int as product_id,
+  la.listing::varchar as listing,
+  lea.protocol::varchar as protocol,
+  la.is_plan::boolean as is_plan,
+  la.cnt_cover::int as cnt_cover,
+  la.cnt_wallet::int as cnt_wallet,
+  la.usd_cover::double as usd_cover,
+  la.eth_cover::double as eth_cover,
+  lea.usd_exposed::double as usd_exposed,
+  lea.eth_exposed::double as eth_exposed
+from wallets.prod.listing_agg la
+  left join listing_exposed_agg lea on la.product_id = lea.product_id;

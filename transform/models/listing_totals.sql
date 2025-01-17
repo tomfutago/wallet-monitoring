@@ -3,7 +3,7 @@ model (
   kind view
 );
 
-with wallet_listing_exposed_agg as (
+with listing_wallet_exposed_agg as (
   select
     product_id,
     listing,
@@ -19,14 +19,14 @@ with wallet_listing_exposed_agg as (
 )
 
 select
-  pc.product_id::int as product_id,
-  pc.listing::varchar as listing,
-  pc.is_plan::boolean as is_plan,
-  pc.cnt_cover::int as cnt_cover,
-  pc.cnt_wallet::int as cnt_wallet,
-  pc.usd_cover::double as usd_cover,
-  pc.eth_cover::double as eth_cover,
-  pw.usd_exposed::double as usd_exposed,
-  pw.eth_exposed::double as eth_exposed
-from wallets.prod.listing_agg pc
-  left join wallet_listing_exposed_agg pw on pc.product_id = pw.product_id;
+  la.product_id::int as product_id,
+  la.listing::varchar as listing,
+  la.is_plan::boolean as is_plan,
+  la.cnt_cover::int as cnt_cover,
+  la.cnt_wallet::int as cnt_wallet,
+  la.usd_cover::double as usd_cover,
+  la.eth_cover::double as eth_cover,
+  lwa.usd_exposed::double as usd_exposed,
+  lwa.eth_exposed::double as eth_exposed
+from wallets.prod.listing_agg la
+  left join listing_wallet_exposed_agg lwa on la.product_id = lwa.product_id;
