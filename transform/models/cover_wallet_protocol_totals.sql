@@ -4,7 +4,7 @@ model (
 );
 
 with cover_wallet_protocol_totals_daily_ext as (
-  select *, row_number() over (order by load_dt desc) as load_dt_rn
+  select *, row_number() over (partition by cover_id, wallet, protocol order by load_dt desc) as load_dt_rn
   from wallets.prod.cover_wallet_protocol_totals_daily
 )
 
