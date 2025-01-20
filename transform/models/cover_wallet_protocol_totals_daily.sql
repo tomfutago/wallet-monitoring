@@ -49,4 +49,4 @@ select
   if(coalesce(ca.load_dt_dr, 1) = 1, true, false)::boolean as is_latest
 from wallets.prod.cover_agg c
   left join cover_wallet_protocol_exposed_daily_agg ca on c.cover_id = ca.cover_id
-  left join wallets.prod.cover_totals ct on c.cover_id = ct.cover_id;
+  left join wallets.prod.cover_totals_daily ct on c.cover_id = ct.cover_id and ca.load_dt = ct.load_dt;
