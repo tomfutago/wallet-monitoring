@@ -60,11 +60,14 @@ where c.cover_id = ${inputs.cover_id.value}
 
 <Value data={cover_wallets} column=cover_owner/>
 
+<LineBreak lines=2/>
+
 ### Designated wallet(s):
 
 {#each cover_wallets as row}
 
-  - <Value data={row} column=wallet/>
+  <Value data={row} column=wallet/>
+  <LineBreak />
 
 {/each}
 
@@ -127,7 +130,7 @@ from md_wallets.cover_chain_totals
 where cover_id = ${inputs.cover_id.value}
 ```
 
-<Tabs>
+<Tabs fullWidth=true background=true>
   <Tab label='USD'>
 
     <Grid cols=2>
@@ -382,7 +385,7 @@ from md_wallets.cover_chain_diff_totals
 where cover_id = ${inputs.cover_id.value}
 ```
 
-<Tabs>
+<Tabs fullWidth=true background=true>
   <Tab label='USD'>
 
     <Grid cols=2>
