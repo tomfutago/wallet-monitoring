@@ -17,8 +17,7 @@ with cover_chain_diff_exposed_daily_agg as (
     api.chain,
     min(c.is_plan) as is_plan,
     sum(api.net_usd_value) as usd_exposed,
-    sum(api.net_eth_value) as eth_exposed,
-    dense_rank() over (order by api.load_dt desc) as load_dt_dr
+    sum(api.net_eth_value) as eth_exposed
   from wallets.prod.cover c
     inner join wallets.prod.cover_wallet cw on c.cover_id = cw.cover_id
     inner join wallets.prod.debank_data_daily_diff api on cw.wallet = api.wallet
@@ -39,7 +38,6 @@ select
   ca.usd_exposed::double as usd_exposed,
   ca.eth_exposed::double as eth_exposed,
   c.cover_start_date::date as cover_start_date,
-  c.cover_end_date::date as cover_end_date,
-  if(coalesce(ca.load_dt_dr, 1) = 1, true, false)::boolean as is_latest
+  c.cover_end_date::date as cover_end_date
 from wallets.prod.cover_agg c
   inner join cover_chain_diff_exposed_daily_agg ca on c.cover_id = ca.cover_id;

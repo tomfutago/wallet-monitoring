@@ -3,6 +3,13 @@ model (
   kind view
 );
 
+with cover_wallet_enriched_daily_ext as (
+  select
+    *,
+    row_number() over (partition by cover_id, wallet, protocol, chain order by load_dt desc) as load_dt_rn
+  from wallets.prod.cover_wallet_enriched_daily
+)
+
 select
   cover_id::bigint as cover_id,
   product_id::int as product_id,
@@ -22,5 +29,5 @@ select
   wallet_short::varchar as wallet_short,
   usd_exposed::double as usd_exposed,
   eth_exposed::double as eth_exposed
-from wallets.prod.cover_wallet_enriched_daily
-where is_latest;
+from cover_wallet_enriched_daily_ext
+where load_dt_rn = 1;

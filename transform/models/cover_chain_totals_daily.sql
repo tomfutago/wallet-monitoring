@@ -16,8 +16,7 @@ with cover_chain_exposed_daily_agg as (
     cover_id,
     chain,
     sum(usd_exposed) as usd_exposed,
-    sum(eth_exposed) as eth_exposed,
-    dense_rank() over (order by load_dt desc) as load_dt_dr
+    sum(eth_exposed) as eth_exposed
   from wallets.prod.cover_wallet_enriched_daily
   where is_active
     and load_dt between @start_dt and @end_dt
@@ -39,7 +38,6 @@ select
   (c.usd_cover * 0.05)::double as usd_deductible,
   (c.eth_cover * 0.05)::double as eth_deductible,
   c.cover_start_date::date as cover_start_date,
-  c.cover_end_date::date as cover_end_date,
-  if(coalesce(ca.load_dt_dr, 1) = 1, true, false)::boolean as is_latest
+  c.cover_end_date::date as cover_end_date
 from wallets.prod.cover_agg c
   inner join cover_chain_exposed_daily_agg ca on c.cover_id = ca.cover_id;

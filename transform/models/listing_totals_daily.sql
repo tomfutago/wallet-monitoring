@@ -16,8 +16,7 @@ with listing_wallet_exposed_daily_agg as (
     product_id,
     listing,
     sum(usd_exposed) as usd_exposed,
-    sum(eth_exposed) as eth_exposed,
-    dense_rank() over (order by load_dt desc) as load_dt_dr
+    sum(eth_exposed) as eth_exposed
   from (
     select distinct load_dt, wallet, product_id, listing, usd_exposed, eth_exposed
     from wallets.prod.cover_wallet_enriched_daily
@@ -38,7 +37,6 @@ select
   la.usd_cover::double as usd_cover,
   la.eth_cover::double as eth_cover,
   lwa.usd_exposed::double as usd_exposed,
-  lwa.eth_exposed::double as eth_exposed,
-  if(coalesce(lwa.load_dt_dr, 1) = 1, true, false)::boolean as is_latest
+  lwa.eth_exposed::double as eth_exposed
 from wallets.prod.listing_agg la
   left join listing_wallet_exposed_daily_agg lwa on la.product_id = lwa.product_id;

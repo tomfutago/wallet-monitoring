@@ -3,6 +3,11 @@ model (
   kind view
 );
 
+with cover_wallet_protocol_totals_daily_ext as (
+  select *, row_number() over (order by load_dt desc) as load_dt_rn
+  from wallets.prod.cover_wallet_protocol_totals_daily
+)
+
 select
   cover_id::bigint as cover_id,
   listing::varchar as listing,
@@ -21,5 +26,5 @@ select
   eth_liability::double as eth_liability,
   cover_start_date::date as cover_start_date,
   cover_end_date::date as cover_end_date
-from wallets.prod.cover_wallet_protocol_totals_daily
-where is_latest;
+from cover_wallet_protocol_totals_daily_ext
+where load_dt_rn = 1;
