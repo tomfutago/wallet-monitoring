@@ -39,7 +39,7 @@ order by 1
 
 <DataTable data={cover_list} totalRow=true search=true >
   <Column id=cover_id title="cover id" totalAgg="grand total" />
-  <Column id=listing title="plan" />
+  <Column id=listing title="listing" />
   <Column id=cnt_wallet title="# wallets" />
   <Column id=usd_cover title="cover ($)" fmt=num2 />
   <Column id=eth_cover title="cover (Ξ)" fmt=num2 />
