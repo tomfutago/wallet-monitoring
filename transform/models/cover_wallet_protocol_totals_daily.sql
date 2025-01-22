@@ -41,8 +41,14 @@ select
   (c.usd_cover / ca.usd_exposed)::double as coverage_ratio,
   (c.usd_cover * 0.05)::double as usd_deductible,
   (c.eth_cover * 0.05)::double as eth_deductible,
-  (ca.usd_exposed * c.usd_cover / ct.usd_exposed)::double as usd_liability,
-  (ca.eth_exposed * c.eth_cover / ct.eth_exposed)::double as eth_liability,
+  case when c.usd_cover < coalesce(ca.usd_exposed, 0)
+    then (ca.usd_exposed - (c.usd_cover * 0.05)) * (c.usd_cover / ct.usd_exposed) 
+    else (ca.usd_exposed - (c.usd_cover * 0.05))
+  end as usd_liability,
+  case when c.eth_cover < coalesce(ca.eth_exposed, 0)
+    then (ca.eth_exposed - (c.eth_cover * 0.05)) * (c.eth_cover / ct.eth_exposed) 
+    else (ca.eth_exposed - (c.eth_cover * 0.05))
+  end as eth_liability,
   c.cover_start_date::date as cover_start_date,
   c.cover_end_date::date as cover_end_date
 from wallets.prod.cover_agg c
