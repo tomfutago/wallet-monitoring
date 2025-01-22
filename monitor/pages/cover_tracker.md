@@ -3,9 +3,9 @@ title: Cover Tracker
 ---
 
 <Dropdown name=is_plan title="only Nexus Mutual Cover?" defaultValue="1" >
-    <DropdownOption valueLabel="All" value=-1 />
-    <DropdownOption valueLabel="Yes" value=1 />
-    <DropdownOption valueLabel="No" value=0 />
+  <DropdownOption valueLabel="All" value=-1 />
+  <DropdownOption valueLabel="Yes" value=1 />
+  <DropdownOption valueLabel="No" value=0 />
 </Dropdown>
 
 ```cover_dropdown
@@ -87,7 +87,21 @@ select
   eth_liability
 from md_wallets.cover_wallet_protocol_totals
 where cover_id = ${inputs.cover_id.value}
-order by 2, 3
+order by wallet, protocol
+```
+
+```cover_wallet_protocol_daily
+select
+  cover_id,
+  load_dt,
+  protocol,
+  usd_cover,
+  eth_cover,
+  usd_exposed,
+  eth_exposed
+from md_wallets.cover_wallet_protocol_totals_daily
+where cover_id = ${inputs.cover_id.value}
+order by load_dt, wallet, protocol
 ```
 
 ## Funds Exposed within cover
@@ -184,10 +198,9 @@ where cover_id = ${inputs.cover_id.value}
         },
         series: [
           {
-            name: 'Access From',
             type: 'pie',
             radius: ['40%', '70%'],
-            center: ['40%', '50%'],
+            center: ['50%', '50%'],
             avoidLabelOverlap: false,
             itemStyle: {
               borderRadius: 10,
@@ -195,19 +208,14 @@ where cover_id = ${inputs.cover_id.value}
               borderWidth: 2
             },
             label: {
-              show: false,
-              position: 'center'
-            },
-            emphasis: {
-              label: {
-                show: true,
-                fontSize: 30,
-                fontWeight: 'bold',
-                formatter: params => `${params.name}: ${params.percent}%`
-              }
+              show: true,
+              position: 'outside',
+              formatter: params => `${params.percent}%`
             },
             labelLine: {
-              show: false
+              show: true,
+              length: 10,
+              length2: 10
             },
             data: cover_usd_exposed_by_chain_pie.map(item => ({
               ...item,
@@ -227,6 +235,8 @@ where cover_id = ${inputs.cover_id.value}
     }/>
 
     </Grid>
+
+    <AreaChart data={cover_wallet_protocol_daily} x=load_dt y=usd_exposed yFmt=usd0k series=protocol title="Exposed Funds ($) over time" />
 
   </Tab>
   <Tab label='ETH'>
@@ -282,10 +292,9 @@ where cover_id = ${inputs.cover_id.value}
         },
         series: [
           {
-            name: 'Access From',
             type: 'pie',
             radius: ['40%', '70%'],
-            center: ['40%', '50%'],
+            center: ['50%', '50%'],
             avoidLabelOverlap: false,
             itemStyle: {
               borderRadius: 10,
@@ -293,19 +302,14 @@ where cover_id = ${inputs.cover_id.value}
               borderWidth: 2
             },
             label: {
-              show: false,
-              position: 'center'
-            },
-            emphasis: {
-              label: {
-                show: true,
-                fontSize: 30,
-                fontWeight: 'bold',
-                formatter: params => `${params.name}: ${params.percent}%`
-              }
+              show: true,
+              position: 'outside',
+              formatter: params => `${params.percent}%`
             },
             labelLine: {
-              show: false
+              show: true,
+              length: 10,
+              length2: 10
             },
             data: cover_eth_exposed_by_chain_pie.map(item => ({
               ...item,
@@ -326,11 +330,12 @@ where cover_id = ${inputs.cover_id.value}
 
     </Grid>
 
+    <AreaChart data={cover_wallet_protocol_daily} x=load_dt y=eth_exposed yFmt=num0 series=protocol title="Exposed Funds (Ξ) over time" />
+
   </Tab>
 </Tabs>
 
 {/if}
-
 
 ```cover_wallet_protocol_diff_list
 select
@@ -344,9 +349,22 @@ select
   eth_exposed
 from md_wallets.cover_wallet_protocol_diff_totals
 where cover_id = ${inputs.cover_id.value}
-order by 2, 3
+order by wallet, protocol
 ```
 
+```cover_wallet_protocol_diff_daily
+select
+  cover_id,
+  load_dt,
+  protocol,
+  usd_cover,
+  eth_cover,
+  usd_exposed,
+  eth_exposed
+from md_wallets.cover_wallet_protocol_diff_totals_daily
+where cover_id = ${inputs.cover_id.value}
+order by load_dt, wallet, protocol
+```
 ## Funds Exposed outside cover
 
 {#if cover_wallet_protocol_diff_list[0].wallet == null}
@@ -439,10 +457,9 @@ where cover_id = ${inputs.cover_id.value}
         },
         series: [
           {
-            name: 'Access From',
             type: 'pie',
             radius: ['40%', '70%'],
-            center: ['40%', '50%'],
+            center: ['50%', '50%'],
             avoidLabelOverlap: false,
             itemStyle: {
               borderRadius: 10,
@@ -450,19 +467,14 @@ where cover_id = ${inputs.cover_id.value}
               borderWidth: 2
             },
             label: {
-              show: false,
-              position: 'center'
-            },
-            emphasis: {
-              label: {
-                show: true,
-                fontSize: 30,
-                fontWeight: 'bold',
-                formatter: params => `${params.name}: ${params.percent}%`
-              }
+              show: true,
+              position: 'outside',
+              formatter: params => `${params.percent}%`
             },
             labelLine: {
-              show: false
+              show: true,
+              length: 10,
+              length2: 10
             },
             data: cover_usd_exposed_by_chain_diff_pie.map(item => ({
               ...item,
@@ -482,6 +494,8 @@ where cover_id = ${inputs.cover_id.value}
     }/>
 
     </Grid>
+
+    <AreaChart data={cover_wallet_protocol_diff_daily} x=load_dt y=usd_exposed yFmt=usd0k series=protocol title="Exposed Funds ($) over time" />
 
   </Tab>
   <Tab label='ETH'>
@@ -537,10 +551,9 @@ where cover_id = ${inputs.cover_id.value}
         },
         series: [
           {
-            name: 'Access From',
             type: 'pie',
             radius: ['40%', '70%'],
-            center: ['40%', '50%'],
+            center: ['50%', '50%'],
             avoidLabelOverlap: false,
             itemStyle: {
               borderRadius: 10,
@@ -548,19 +561,14 @@ where cover_id = ${inputs.cover_id.value}
               borderWidth: 2
             },
             label: {
-              show: false,
-              position: 'center'
-            },
-            emphasis: {
-              label: {
-                show: true,
-                fontSize: 30,
-                fontWeight: 'bold',
-                formatter: params => `${params.name}: ${params.percent}%`
-              }
+              show: true,
+              position: 'outside',
+              formatter: params => `${params.percent}%`
             },
             labelLine: {
-              show: false
+              show: true,
+              length: 10,
+              length2: 10
             },
             data: cover_eth_exposed_by_chain_diff_pie.map(item => ({
               ...item,
@@ -580,6 +588,8 @@ where cover_id = ${inputs.cover_id.value}
     }/>
 
     </Grid>
+
+    <AreaChart data={cover_wallet_protocol_diff_daily} x=load_dt y=eth_exposed yFmt=num0 series=protocol title="Exposed Funds (Ξ) over time" />
 
   </Tab>
 </Tabs>
