@@ -6,7 +6,7 @@ title: Wallet Monitoring
 
 ```plan_cover_list
 select
-  listing as plan,
+  listing,
   cnt_cover,
   cnt_wallet,
   usd_cover,
@@ -19,7 +19,7 @@ order by product_id
 ```
 
 <DataTable data={plan_cover_list} totalRow=true>
-  <Column id=plan title="plan" totalAgg="grand total"/>
+  <Column id=listing title="listing" totalAgg="grand total"/>
   <Column id=cnt_cover title="# covers" />
   <Column id=cnt_wallet title="# wallets" />
   <Column id=usd_cover title="cover ($)" fmt=num0/>
@@ -32,7 +32,7 @@ order by product_id
 with agg_wallet_positions as (
   select
     product_id,
-    listing as plan,
+    listing,
     'Covered Amount' as total_type,
     usd_cover as usd_total,
     eth_cover as eth_total
@@ -41,7 +41,7 @@ with agg_wallet_positions as (
   union all
   select
     product_id,
-    listing as plan,
+    listing,
     'Exposed Funds' as total_type,
     usd_exposed as usd_total,
     eth_exposed as eth_total
@@ -49,7 +49,7 @@ with agg_wallet_positions as (
   where is_plan
 )
 select
-  plan,
+  listing,
   total_type,
   usd_total,
   eth_total
@@ -60,7 +60,7 @@ order by product_id
 ```plan_cover_daily
 select
   load_dt,
-  listing as plan,
+  listing,
   cnt_cover,
   cnt_wallet,
   usd_cover,
@@ -75,12 +75,12 @@ order by load_dt, product_id
 
 <Tabs fullWidth=true background=true>
   <Tab label='USD'>
-    <BarChart data={plan_cover_stack} title="Cover Plan Totals ($)" x=plan y=usd_total yFmt=usd0k series=total_type swapXY=true type=grouped sort=false />
-    <AreaChart data={plan_cover_daily} x=load_dt y=usd_exposed yFmt=usd0k series=plan title="Exposed Funds ($) over time (per active cover)" />
+    <BarChart data={plan_cover_stack} title="Cover Plan Totals ($)" x=listing y=usd_total yFmt=usd0k series=total_type swapXY=true type=grouped sort=false />
+    <AreaChart data={plan_cover_daily} x=load_dt y=usd_exposed yFmt=usd0k series=listing title="Exposed Funds ($) over time (per active cover)" />
   </Tab>
   <Tab label='ETH'>
-    <BarChart data={plan_cover_stack} title="Cover Plan Totals (Ξ)" x=plan y=eth_total yFmt=num0 series=total_type swapXY=true type=grouped sort=false />
-    <AreaChart data={plan_cover_daily} x=load_dt y=eth_exposed yFmt=num0 series=plan title="Exposed Funds (Ξ) over time (per active cover)" />
+    <BarChart data={plan_cover_stack} title="Cover Plan Totals (Ξ)" x=listing y=eth_total yFmt=num0 series=total_type swapXY=true type=grouped sort=false />
+    <AreaChart data={plan_cover_daily} x=load_dt y=eth_exposed yFmt=num0 series=listing title="Exposed Funds (Ξ) over time (per active cover)" />
   </Tab>
 </Tabs>
 
@@ -94,7 +94,7 @@ order by load_dt, product_id
 
 ```plan_cover_protocol_list
 select
-  listing as plan,
+  listing,
   protocol,
   cnt_cover,
   cnt_wallet,
@@ -109,7 +109,7 @@ order by product_id, protocol
 ```
 
 <DataTable data={plan_cover_protocol_list} totalRow=true search=true>
-  <Column id=plan title="plan" totalAgg="grand total" />
+  <Column id=listing title="listing" totalAgg="grand total" />
   <Column id=protocol title="protocol"/>
   <Column id=usd_cover title="cover ($)" fmt='#,##0.00' totalAgg=mean />
   <Column id=eth_cover title="cover (Ξ)" fmt='#,##0.00' totalAgg=mean />
@@ -121,7 +121,7 @@ order by product_id, protocol
 with agg_wallet_positions as (
   /*select
     product_id,
-    listing as plan,
+    listing,
     listing as protocol,
     'Covered Amount' as total_type,
     usd_cover as usd_total,
@@ -131,7 +131,7 @@ with agg_wallet_positions as (
   union all*/
   select
     product_id,
-    listing as plan,
+    listing,
     protocol,
     'Exposed Funds' as total_type,
     usd_exposed as usd_total,
@@ -145,14 +145,14 @@ select
   usd_total,
   eth_total
 from agg_wallet_positions
-where plan = '${inputs.plan}'
+where listing = '${inputs.plan}'
 order by 1
 ```
 
 ```plan_cover_protocol_daily
 select
   load_dt,
-  listing as plan,
+  listing,
   protocol,
   cnt_cover,
   cnt_wallet,
