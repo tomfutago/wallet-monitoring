@@ -10,9 +10,9 @@ order by 1
 
 ## Wallets with Multiple Covers
 <DataTable data={duped_wallets} totalRow=true>
-  <Column id=wallet title=wallet totalAgg="grand total"/>
-  <Column id=listings title=listings/>
-  <Column id=covers title=covers/>
+  <Column id=wallet title=wallet totalAgg="total"/>
+  <Column id=listings title=listings wrap=true/>
+  <Column id=covers title=covers wrap=true/>
   <Column id=count title="# covers" totalAgg=sum />
 </DataTable>
 
@@ -38,7 +38,7 @@ order by 1
 ## Nexus Mutual Cover List
 
 <DataTable data={cover_list} totalRow=true search=true >
-  <Column id=cover_id title="cover id" totalAgg="grand total" />
+  <Column id=cover_id title="cover id" totalAgg="total" />
   <Column id=listing title="listing" />
   <Column id=cnt_wallet title="# wallets" />
   <Column id=usd_cover title="cover ($)" fmt=num2 />
@@ -74,7 +74,7 @@ order by 1
 ## Non-Nexus Mutual Cover List
 
 <DataTable data={listing_list} totalRow=true search=true >
-  <Column id=cover_id title="cover id" totalAgg="grand total" />
+  <Column id=cover_id title="cover id" totalAgg="total" />
   <Column id=listing title="listing" />
   <Column id=usd_cover title="cover ($)" fmt=num2 />
   <Column id=eth_cover title="cover (Ξ)" fmt=num2 />

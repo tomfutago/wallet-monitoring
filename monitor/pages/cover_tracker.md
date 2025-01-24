@@ -17,6 +17,11 @@ order by 1
 
 <Dropdown data={cover_dropdown} name=cover_id value=cover_id title="Select Cover ID" />
 
+```cover_info
+select cover_id, listing from md_wallets.cover
+where cover_id = ${inputs.cover_id.value}
+```
+
 ```cover_list
 select
   cover_id,
@@ -34,7 +39,7 @@ where cover_id = ${inputs.cover_id.value}
   --and is_plan
 ```
 
-## Cover ID: <Value data={cover_list} column=cover_id/> - <Value data={cover_list} column=listing/> - Overview
+## Cover ID: <Value data={cover_info} column=cover_id/> - <Value data={cover_info} column=listing/> - Overview
 
 <DataTable data={cover_list}>
   <Column id=cnt_wallet title="# wallets" />
@@ -81,8 +86,12 @@ select
   protocol,
   usd_cover,
   eth_cover,
-  usd_exposed,
-  eth_exposed,
+  usd_deductible,
+  eth_deductible,
+  usd_cover_exposed,
+  eth_cover_exposed,
+  usd_protocol_exposed,
+  eth_protocol_exposed,
   usd_liability,
   eth_liability
 from md_wallets.cover_wallet_protocol_totals
@@ -97,8 +106,8 @@ select
   protocol,
   usd_cover,
   eth_cover,
-  usd_exposed,
-  eth_exposed
+  usd_protocol_exposed,
+  eth_protocol_exposed
 from md_wallets.cover_wallet_protocol_totals_daily
 where cover_id = ${inputs.cover_id.value}
 order by load_dt, wallet, protocol
@@ -113,17 +122,17 @@ None found.
 {:else}
 
 <DataTable data={cover_wallet_protocol_list} totalRow=true search=true>
-  <Column id=cover_id title="cover id" totalAgg="grand total"/>
+  <Column id=cover_id title="cover id" totalAgg="total"/>
   <Column id=wallet_short title="wallet"/>
   <Column id=protocol title="protocol" />
-  <Column id=usd_exposed title="funds exposed ($)" fmt=num2 totalAgg=sum />
-  <Column id=eth_exposed title="funds exposed (Ξ)" fmt=num4 totalAgg=sum />
+  <Column id=usd_protocol_exposed title="funds exposed ($)" fmt=num2 totalAgg=sum />
+  <Column id=eth_protocol_exposed title="funds exposed (Ξ)" fmt=num4 totalAgg=sum />
   <Column id=usd_liability title="liability ($)" fmt=num2 totalAgg=sum />
   <Column id=eth_liability title="liability (Ξ)" fmt=num2 totalAgg=sum />
 </DataTable>
 
 ```sql cover_usd_exposed_by_protocol_treemap
-select protocol as name, usd_exposed as value
+select protocol as name, usd_protocol_exposed as value
 from ${cover_wallet_protocol_list}
 ```
 
@@ -134,7 +143,7 @@ where cover_id = ${inputs.cover_id.value}
 ```
 
 ```sql cover_eth_exposed_by_protocol_treemap
-select protocol as name, eth_exposed as value
+select protocol as name, eth_protocol_exposed as value
 from ${cover_wallet_protocol_list}
 ```
 
@@ -236,7 +245,7 @@ where cover_id = ${inputs.cover_id.value}
 
     </Grid>
 
-    <AreaChart data={cover_wallet_protocol_daily} x=load_dt y=usd_exposed yFmt=usd0k series=protocol title="Exposed Funds ($) over time" />
+    <AreaChart data={cover_wallet_protocol_daily} x=load_dt y=usd_protocol_exposed yFmt=usd0k series=protocol title="Exposed Funds ($) over time" />
 
   </Tab>
   <Tab label='ETH'>
@@ -330,7 +339,7 @@ where cover_id = ${inputs.cover_id.value}
 
     </Grid>
 
-    <AreaChart data={cover_wallet_protocol_daily} x=load_dt y=eth_exposed yFmt=num0 series=protocol title="Exposed Funds (Ξ) over time" />
+    <AreaChart data={cover_wallet_protocol_daily} x=load_dt y=eth_protocol_exposed yFmt=num0 series=protocol title="Exposed Funds (Ξ) over time" />
 
   </Tab>
 </Tabs>
@@ -374,7 +383,7 @@ None found.
 {:else}
 
 <DataTable data={cover_wallet_protocol_diff_list} totalRow=true search=true>
-  <Column id=cover_id title="cover id" totalAgg="grand total"/>
+  <Column id=cover_id title="cover id" totalAgg="total"/>
   <Column id=wallet_short title="wallet"/>
   <Column id=protocol title="protocol" />
   <Column id=usd_exposed title="funds exposed ($)" fmt=num2 totalAgg=sum />

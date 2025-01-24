@@ -19,7 +19,7 @@ order by product_id
 ```
 
 <DataTable data={plan_cover_list} totalRow=true>
-  <Column id=listing title="listing" totalAgg="grand total"/>
+  <Column id=listing title="listing" totalAgg="total"/>
   <Column id=cnt_cover title="# covers" />
   <Column id=cnt_wallet title="# wallets" />
   <Column id=usd_cover title="cover ($)" fmt=num0/>
@@ -109,7 +109,7 @@ order by product_id, protocol
 ```
 
 <DataTable data={plan_cover_protocol_list} totalRow=true search=true>
-  <Column id=listing title="listing" totalAgg="grand total" />
+  <Column id=listing title="listing" totalAgg="total" />
   <Column id=protocol title="protocol"/>
   <Column id=usd_cover title="cover ($)" fmt='#,##0.00' totalAgg=mean />
   <Column id=eth_cover title="cover (Ξ)" fmt='#,##0.00' totalAgg=mean />
@@ -228,7 +228,7 @@ order by usd_total desc
 ## Exposed Funds vs Covered Amount per Listing
 
 <DataTable data={listing_list} totalRow=true>
-  <Column id=listing title="listing" totalAgg="grand total"/>
+  <Column id=listing title="listing" totalAgg="total" wrap=true/>
   <Column id=cnt_cover title="# covers" />
   <Column id=usd_cover title="cover ($)" fmt=num0/>
   <Column id=eth_cover title="cover (Ξ)" fmt=num0/>
