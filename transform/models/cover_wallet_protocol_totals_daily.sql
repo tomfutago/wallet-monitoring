@@ -28,29 +28,35 @@ with cover_wallet_protocol_exposed_daily_agg as (
 
 select
   coalesce(ca.load_dt, current_date)::date as load_dt,
+  -- cover level info:
   c.cover_id::bigint as cover_id,
   c.listing::varchar as listing,
   c.is_plan::boolean as is_plan,
+  c.usd_cover::double as usd_cover,
+  c.eth_cover::double as eth_cover,
+  (c.usd_cover * 0.05)::double as usd_deductible,
+  (c.eth_cover * 0.05)::double as eth_deductible,
+  ct.usd_exposed::double as usd_cover_exposed,
+  ct.eth_exposed::double as eth_cover_exposed,
+  (c.usd_cover / ct.usd_exposed)::double as coverage_ratio,
+  -- wallet/protocol level info:
   ca.wallet::varchar as wallet,
   ca.wallet_short::varchar as wallet_short,
   ca.protocol::varchar as protocol,
-  c.usd_cover::double as usd_cover,
-  c.eth_cover::double as eth_cover,
-  ca.usd_exposed::double as usd_exposed,
-  ca.eth_exposed::double as eth_exposed,
-  (c.usd_cover / ca.usd_exposed)::double as coverage_ratio,
-  (c.usd_cover * 0.05)::double as usd_deductible,
-  (c.eth_cover * 0.05)::double as eth_deductible,
-  case when c.usd_cover < coalesce(ca.usd_exposed, 0)
-    then (ca.usd_exposed - (c.usd_cover * 0.05)) * (c.usd_cover / ct.usd_exposed) 
-    else (ca.usd_exposed - (c.usd_cover * 0.05))
-  end as usd_liability,
-  case when c.eth_cover < coalesce(ca.eth_exposed, 0)
-    then (ca.eth_exposed - (c.eth_cover * 0.05)) * (c.eth_cover / ct.eth_exposed) 
-    else (ca.eth_exposed - (c.eth_cover * 0.05))
-  end as eth_liability,
+  ca.usd_exposed::double as usd_protocol_exposed,
+  ca.eth_exposed::double as eth_protocol_exposed,
+  case
+    when (ca.usd_exposed - (c.usd_cover * 0.05)) < 0 then 0
+    when c.usd_cover > coalesce(ct.usd_exposed, 0) then (ca.usd_exposed - (c.usd_cover * 0.05))
+    else (ca.usd_exposed - (c.usd_cover * 0.05)) * (c.usd_cover / ct.usd_exposed)
+  end::double as usd_liability,
+  case
+    when (ca.eth_exposed - (c.eth_cover * 0.05)) < 0 then 0
+    when c.eth_cover > coalesce(ct.eth_exposed, 0) then (ca.eth_exposed - (c.eth_cover * 0.05))
+    else (ca.eth_exposed - (c.eth_cover * 0.05)) * (c.eth_cover / ct.eth_exposed)
+  end::double as eth_liability,
   c.cover_start_date::date as cover_start_date,
   c.cover_end_date::date as cover_end_date
 from wallets.prod.cover_agg c
-  left join cover_wallet_protocol_exposed_daily_agg ca on c.cover_id = ca.cover_id
-  left join wallets.prod.cover_totals_daily ct on c.cover_id = ct.cover_id and ca.load_dt = ct.load_dt;
+  inner join wallets.prod.cover_totals_daily ct on c.cover_id = ct.cover_id
+  left join cover_wallet_protocol_exposed_daily_agg ca on ct.cover_id = ca.cover_id and ct.load_dt = ca.load_dt;
