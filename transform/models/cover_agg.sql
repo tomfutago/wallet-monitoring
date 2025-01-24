@@ -5,6 +5,7 @@ model (
 
 select
   cu.cover_id::bigint as cover_id,
+  cu.product_id::int as product_id,
   cu.listing::varchar as listing,
   min(cu.is_plan)::boolean as is_plan,
   min(cu.cover_start_date)::date as cover_start_date,
@@ -23,4 +24,4 @@ from wallets.prod.cover cu
     group by 1
   ) cw on cu.cover_id = cw.cover_id
 where cu.is_active
-group by 1, 2;
+group by 1, 2, 3;

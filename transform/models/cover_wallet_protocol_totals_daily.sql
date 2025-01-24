@@ -30,6 +30,7 @@ select
   coalesce(ca.load_dt, current_date)::date as load_dt,
   -- cover level info:
   c.cover_id::bigint as cover_id,
+  ct.product_id::int as product_id,
   c.listing::varchar as listing,
   c.is_plan::boolean as is_plan,
   c.usd_cover::double as usd_cover,

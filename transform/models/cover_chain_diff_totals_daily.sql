@@ -30,6 +30,7 @@ with cover_chain_diff_exposed_daily_agg as (
 select
   ca.load_dt::date as load_dt,
   c.cover_id::bigint as cover_id,
+  c.product_id::int as product_id,
   c.listing::varchar as listing,
   c.is_plan::boolean as is_plan,
   ca.chain::varchar as chain,

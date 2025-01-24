@@ -10,6 +10,7 @@ with cover_wallet_protocol_diff_totals_daily_ext as (
 
 select
   cover_id::bigint as cover_id,
+  product_id::int as product_id,
   listing::varchar as listing,
   is_plan::boolean as is_plan,
   wallet::varchar as wallet,

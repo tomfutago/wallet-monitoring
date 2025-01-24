@@ -26,6 +26,7 @@ with cover_exposed_daily_agg as (
 select
   coalesce(ca.load_dt, current_date)::date as load_dt,
   c.cover_id::bigint as cover_id,
+  c.product_id::int as product_id,
   c.listing::varchar as listing,
   c.is_plan::boolean as is_plan,
   c.cnt_wallet::int as cnt_wallet,
