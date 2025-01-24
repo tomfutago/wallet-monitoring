@@ -1,6 +1,7 @@
 select
   load_dt,
   cover_id,
+  product_id,
   listing,
   is_plan,
   wallet,

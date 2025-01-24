@@ -1,5 +1,6 @@
 select
   cover_id,
+  product_id,
   listing,
   chain,
   is_plan,
