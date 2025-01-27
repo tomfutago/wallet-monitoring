@@ -3,11 +3,6 @@ model (
   kind view
 );
 
-with cover_wallet_protocol_totals_daily_ext as (
-  select *, row_number() over (partition by cover_id, wallet, protocol order by load_dt desc) as load_dt_rn
-  from wallets.prod.cover_wallet_protocol_totals_daily
-)
-
 select
   cover_id::bigint as cover_id,
   product_id::int as product_id,
@@ -30,5 +25,5 @@ select
   eth_liability::double as eth_liability,
   cover_start_date::date as cover_start_date,
   cover_end_date::date as cover_end_date
-from cover_wallet_protocol_totals_daily_ext
-where load_dt_rn = 1;
+from wallets.prod.cover_wallet_protocol_totals_daily
+where load_dt = (select max(load_dt) from wallets.prod.cover_wallet_protocol_totals_daily);

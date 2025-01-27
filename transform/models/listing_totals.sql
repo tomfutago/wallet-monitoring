@@ -3,11 +3,6 @@ model (
   kind view
 );
 
-with listing_totals_daily_ext as (
-  select *, row_number() over (partition by product_id order by load_dt desc) as load_dt_rn
-  from wallets.prod.listing_totals_daily
-)
-
 select
   product_id::int as product_id,
   listing::varchar as listing,
@@ -18,5 +13,5 @@ select
   eth_cover::double as eth_cover,
   usd_exposed::double as usd_exposed,
   eth_exposed::double as eth_exposed
-from listing_totals_daily_ext
-where load_dt_rn = 1;
+from wallets.prod.listing_totals_daily
+where load_dt = (select max(load_dt) from wallets.prod.listing_totals_daily);
