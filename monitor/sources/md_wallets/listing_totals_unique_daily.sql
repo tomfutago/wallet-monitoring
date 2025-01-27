@@ -9,5 +9,5 @@ select
   eth_cover,
   usd_exposed,
   eth_exposed
-from prod.listing_totals_daily
+from prod.listing_totals_unique_daily
 order by 1, 2

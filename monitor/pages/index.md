@@ -13,7 +13,7 @@ select
   eth_cover,
   usd_exposed,
   eth_exposed
-from md_wallets.listing_totals
+from md_wallets.listing_totals_unique
 where is_plan
 order by product_id
 ```
@@ -45,7 +45,7 @@ with agg_wallet_positions as (
     'Exposed Funds' as total_type,
     usd_exposed as usd_total,
     eth_exposed as eth_total
-  from md_wallets.listing_totals
+  from md_wallets.listing_totals_unique
   where is_plan
 )
 select
@@ -68,7 +68,7 @@ select
   usd_exposed,
   eth_exposed,
   listing as label
-from md_wallets.listing_totals_daily
+from md_wallets.listing_totals_unique_daily
 where is_plan
 order by load_dt, product_id
 ```
@@ -102,7 +102,7 @@ select
   eth_cover,
   usd_exposed,
   eth_exposed
-from md_wallets.listing_protocol_totals
+from md_wallets.listing_protocol_totals_unique
 where is_plan
   and listing = '${inputs.plan}'
 order by product_id, protocol
@@ -136,7 +136,7 @@ with agg_wallet_positions as (
     'Exposed Funds' as total_type,
     usd_exposed as usd_total,
     eth_exposed as eth_total
-  from md_wallets.listing_protocol_totals
+  from md_wallets.listing_protocol_totals_unique
   where is_plan
 )
 select
@@ -160,7 +160,7 @@ select
   eth_cover,
   usd_exposed,
   eth_exposed
-from md_wallets.listing_protocol_totals_daily
+from md_wallets.listing_protocol_totals_unique_daily
 where is_plan
   and listing = '${inputs.plan}'
 order by load_dt, product_id, protocol
@@ -190,7 +190,7 @@ select
   eth_cover,
   usd_exposed,
   eth_exposed
-from md_wallets.listing_totals
+from md_wallets.listing_totals_unique
 where is_plan = false
 order by 1
 ```
@@ -212,7 +212,7 @@ with agg_wallet_positions as (
     'Exposed Funds' as total_type,
     usd_exposed as usd_total,
     eth_exposed as eth_total
-  from md_wallets.listing_totals
+  from md_wallets.listing_totals_unique
   where is_plan = false
 )
 select

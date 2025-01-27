@@ -1,7 +1,6 @@
 select
   product_id,
   listing,
-  protocol,
   is_plan,
   cnt_cover,
   cnt_wallet,
@@ -9,5 +8,5 @@ select
   eth_cover,
   usd_exposed,
   eth_exposed
-from prod.listing_protocol_totals
+from prod.listing_totals_unique
 order by 1
