@@ -3,5 +3,5 @@ select
   listings,
   covers,
   count
-from prod.duped_wallets
+from prod.duped_plan_wallets
 order by 1

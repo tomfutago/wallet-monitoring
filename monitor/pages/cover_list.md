@@ -2,14 +2,14 @@
 title: Cover List
 ---
 
-```duped_wallets
+```duped_plan_wallets
 select wallet, listings, covers, count
-from md_wallets.duped_wallets
+from md_wallets.duped_plan_wallets
 order by 1
 ```
 
 ## Wallets with Multiple Covers
-<DataTable data={duped_wallets} totalRow=true>
+<DataTable data={duped_plan_wallets} totalRow=true>
   <Column id=wallet title=wallet totalAgg="total"/>
   <Column id=listings title=listings wrap=true/>
   <Column id=covers title=covers wrap=true/>
