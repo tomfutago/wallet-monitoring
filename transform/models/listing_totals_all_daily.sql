@@ -21,7 +21,6 @@ with listing_wallet_exposed_daily_agg as (
   where is_active
     and load_dt between @start_dt and @end_dt
   group by 1, 2, 3
-  having sum(usd_exposed) >= 0.01
 )
 
 select

@@ -24,7 +24,6 @@ with cover_chain_diff_exposed_daily_agg as (
   where c.is_active
     and api.load_dt between @start_dt and @end_dt
   group by 1, 2, 3
-  having sum(api.net_usd_value) >= 0.01
 )
 
 select
