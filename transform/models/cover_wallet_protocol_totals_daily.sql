@@ -38,14 +38,14 @@ select
   (c.eth_cover * 0.05)::double as eth_deductible,
   ct.usd_exposed::double as usd_cover_exposed,
   ct.eth_exposed::double as eth_cover_exposed,
-  (c.usd_cover / ct.usd_exposed)::double as coverage_cover_ratio,
+  (c.usd_cover / nullif(ct.usd_exposed, 0))::double as coverage_cover_ratio,
   -- wallet/protocol level info:
   ca.wallet::varchar as wallet,
   ca.wallet_short::varchar as wallet_short,
   ca.protocol::varchar as protocol,
   ca.usd_exposed::double as usd_protocol_exposed,
   ca.eth_exposed::double as eth_protocol_exposed,
-  (c.usd_cover / ca.usd_exposed)::double as coverage_protocol_ratio,
+  (c.usd_cover / nullif(ca.usd_exposed, 0))::double as coverage_protocol_ratio,
   case
     when (ca.usd_exposed - (c.usd_cover * 0.05)) < 0 then 0
     when c.usd_cover > coalesce(ct.usd_exposed, 0) then (ca.usd_exposed - (c.usd_cover * 0.05))
