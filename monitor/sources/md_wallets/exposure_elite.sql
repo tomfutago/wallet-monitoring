@@ -1,10 +1,10 @@
-select 1 as id, 'Elite Cover Exposure' as name, format('${:,.2f}', sum(usd_protocol_exposed)) as value
+select 1 as id, 'Elite Cover Exposure' as name, format('${:,.2f}', sum(usd_protocol_exposed)) as usd_value, format('Ξ{:,.2f}', sum(eth_protocol_exposed)) as eth_value
 from prod.cover_wallet_protocol_totals where listing = 'Elite Cover'
 union all
-select 2, 'Coverage Ratio 1>', format('${:,.2f}', sum(usd_protocol_exposed)) as value
+select 2, 'Coverage Ratio 1>', format('${:,.2f}', sum(usd_protocol_exposed)), format('Ξ{:,.2f}', sum(eth_protocol_exposed))
 from prod.cover_wallet_protocol_totals where listing = 'Elite Cover' and coverage_cover_ratio > 1
 union all
-select 3, 'Coverage Ratio 1<', format('${:,.2f}', sum(usd_protocol_exposed)) as value
+select 3, 'Coverage Ratio 1<', format('${:,.2f}', sum(usd_protocol_exposed)), format('Ξ{:,.2f}', sum(eth_protocol_exposed))
 from prod.cover_wallet_protocol_totals where listing = 'Elite Cover' and coverage_cover_ratio <= 1
 union all
 select
@@ -12,8 +12,11 @@ select
   'Percentage of Covered Users',
   format('{:,.2f}%',
     sum(case when coverage_cover_ratio > 1 then usd_protocol_exposed end) / sum(usd_protocol_exposed) * 100
-  ) as value
+  ),
+  format('{:,.2f}%',
+    sum(case when coverage_cover_ratio > 1 then eth_protocol_exposed end) / sum(eth_protocol_exposed) * 100
+  )
 from prod.cover_wallet_protocol_totals where listing = 'Elite Cover'
 union all
-select 5, 'Min Base Price', ''
+select 5, 'Min Base Price', '', ''
 order by 1

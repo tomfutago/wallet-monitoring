@@ -5,21 +5,28 @@ title: Exposure
 ## Overview
 
 ```sql exposure_overview
-select name, value from md_wallets.exposure_overview order by id
+select name, usd_value, eth_value from md_wallets.exposure_overview order by id
 ```
 
-```sql exposure_overview_split
+```sql exposure_overview_split_usd
 select listing as name, sum(usd_exposed) as value
 from md_wallets.listing_totals_all
 where is_plan
 group by 1
 ```
 
-```sql exposure_elite
-select name, value from md_wallets.exposure_elite order by id
+```sql exposure_overview_split_eth
+select listing as name, sum(eth_exposed) as value
+from md_wallets.listing_totals_all
+where is_plan
+group by 1
 ```
 
-```sql exposure_elite_ratio
+```sql exposure_elite
+select name, usd_value, eth_value from md_wallets.exposure_elite order by id
+```
+
+```sql exposure_elite_ratio_usd
 select
   case when coverage_cover_ratio > 1 then 'Coverage Ratio 1>' else 'Coverage Ratio 1<' end as name,
   sum(usd_protocol_exposed) as value
@@ -28,11 +35,20 @@ where listing = 'Elite Cover'
 group by 1
 ```
 
-```sql exposure_essential
-select name, value from md_wallets.exposure_essential order by id
+```sql exposure_elite_ratio_eth
+select
+  case when coverage_cover_ratio > 1 then 'Coverage Ratio 1>' else 'Coverage Ratio 1<' end as name,
+  sum(eth_protocol_exposed) as value
+from md_wallets.cover_wallet_protocol_totals
+where listing = 'Elite Cover'
+group by 1
 ```
 
-```sql exposure_essential_ratio
+```sql exposure_essential
+select name, usd_value, eth_value from md_wallets.exposure_essential order by id
+```
+
+```sql exposure_essential_ratio_usd
 select
   case when coverage_cover_ratio > 1 then 'Coverage Ratio 1>' else 'Coverage Ratio 1<' end as name,
   sum(usd_protocol_exposed) as value
@@ -41,11 +57,20 @@ where listing = 'Essential Cover'
 group by 1
 ```
 
-```sql exposure_entry
-select name, value from md_wallets.exposure_entry order by id
+```sql exposure_essential_ratio_eth
+select
+  case when coverage_cover_ratio > 1 then 'Coverage Ratio 1>' else 'Coverage Ratio 1<' end as name,
+  sum(eth_protocol_exposed) as value
+from md_wallets.cover_wallet_protocol_totals
+where listing = 'Essential Cover'
+group by 1
 ```
 
-```sql exposure_entry_ratio
+```sql exposure_entry
+select name, usd_value, eth_value from md_wallets.exposure_entry order by id
+```
+
+```sql exposure_entry_ratio_usd
 select
   case when coverage_cover_ratio > 1 then 'Coverage Ratio 1>' else 'Coverage Ratio 1<' end as name,
   sum(usd_protocol_exposed) as value
@@ -54,181 +79,375 @@ where listing = 'Entry Cover'
 group by 1
 ```
 
-<Grid cols=2 gapSize=lg>
+```sql exposure_entry_ratio_eth
+select
+  case when coverage_cover_ratio > 1 then 'Coverage Ratio 1>' else 'Coverage Ratio 1<' end as name,
+  sum(eth_protocol_exposed) as value
+from md_wallets.cover_wallet_protocol_totals
+where listing = 'Entry Cover'
+group by 1
+```
 
-  <DataTable data={exposure_overview}>
-    <Column id=name title=" "/>
-    <Column id=value title=" " align=right/>
-  </DataTable>
+<Tabs fullWidth=true background=true>
+  <Tab label='USD'>
 
-  <ECharts config={
-    {
-      tooltip: {
-        trigger: 'item',
-        formatter: params => `${params.name}: ${Number(params.value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
-      },
-      legend: {
-        orient: 'vertical',
-        left: 'right',
-        top: 'top',
-        align: 'right',
-        itemGap: 5,
-        padding: [0, 10, 0, 0],
-        width: 'auto',
-        right: 0
-      },
-      series: [
+    <Grid cols=2 gapSize=lg>
+
+      <DataTable data={exposure_overview}>
+        <Column id=name title=" "/>
+        <Column id=usd_value title=" " align=right/>
+      </DataTable>
+
+      <ECharts config={
         {
-          type: 'pie',
-          radius: ['0%', '50%'],
-          center: ['40%', '30%'],
-          avoidLabelOverlap: false,
-          itemStyle: {
-            borderRadius: 10,
-            borderColor: '#fff',
-            borderWidth: 2
+          tooltip: {
+            trigger: 'item',
+            formatter: params => `${params.name}: ${Number(params.value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
           },
-          label: {
-            show: true,
-            position: 'inside',
-            formatter: params => params.percent < 10 ? '' : `${params.percent}%`
+          legend: {
+            orient: 'vertical',
+            left: 'right',
+            top: 'top',
+            align: 'right',
+            itemGap: 5,
+            padding: [20, 10, 0, 0],
+            width: 'auto',
+            right: 0
           },
-          data: [...exposure_overview_split]
+          series: [
+            {
+              type: 'pie',
+              radius: ['0%', '50%'],
+              center: ['40%', '40%'],
+              avoidLabelOverlap: false,
+              itemStyle: {
+                borderRadius: 10,
+                borderColor: '#fff',
+                borderWidth: 2
+              },
+              label: {
+                show: true,
+                position: 'inside',
+                formatter: params => params.percent < 15 ? '' : `${params.percent}%`
+              },
+              data: [...exposure_overview_split_usd]
+            }
+          ]
         }
-      ]
-    }
-  }/>
+      }/>
 
-  <DataTable data={exposure_elite}>
-    <Column id=name title=" "/>
-    <Column id=value title=" " align=right/>
-  </DataTable>
+      <DataTable data={exposure_elite}>
+        <Column id=name title=" "/>
+        <Column id=usd_value title=" " align=right/>
+      </DataTable>
 
-  <ECharts config={
-    {
-      tooltip: {
-        trigger: 'item',
-        formatter: params => `${params.name}: ${Number(params.value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
-      },
-      legend: {
-        orient: 'vertical',
-        left: 'right',
-        top: 'top',
-        align: 'right',
-        itemGap: 5,
-        padding: [0, 10, 0, 0],
-        width: 'auto',
-        right: 0
-      },
-      series: [
+      <ECharts config={
         {
-          type: 'pie',
-          radius: ['0%', '50%'],
-          center: ['40%', '30%'],
-          avoidLabelOverlap: false,
-          itemStyle: {
-            borderRadius: 10,
-            borderColor: '#fff',
-            borderWidth: 2
+          tooltip: {
+            trigger: 'item',
+            formatter: params => `${params.name}: ${Number(params.value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
           },
-          label: {
-            show: true,
-            position: 'inside',
-            formatter: params => params.percent < 10 ? '' : `${params.percent}%`
+          legend: {
+            orient: 'vertical',
+            left: 'right',
+            top: 'top',
+            align: 'right',
+            itemGap: 5,
+            padding: [20, 10, 0, 0],
+            width: 'auto',
+            right: 0
           },
-          data: [...exposure_elite_ratio]
+          series: [
+            {
+              type: 'pie',
+              radius: ['0%', '50%'],
+              center: ['40%', '40%'],
+              avoidLabelOverlap: false,
+              itemStyle: {
+                borderRadius: 10,
+                borderColor: '#fff',
+                borderWidth: 2
+              },
+              label: {
+                show: true,
+                position: 'inside',
+                formatter: params => params.percent < 15 ? '' : `${params.percent}%`
+              },
+              data: [...exposure_elite_ratio_usd]
+            }
+          ]
         }
-      ]
-    }
-  }/>
+      }/>
 
-  <DataTable data={exposure_essential}>
-    <Column id=name title=" "/>
-    <Column id=value title=" " align=right/>
-  </DataTable>
+      <DataTable data={exposure_essential}>
+        <Column id=name title=" "/>
+        <Column id=usd_value title=" " align=right/>
+      </DataTable>
 
-  <ECharts config={
-    {
-      tooltip: {
-        trigger: 'item',
-        formatter: params => `${params.name}: ${Number(params.value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
-      },
-      legend: {
-        orient: 'vertical',
-        left: 'right',
-        top: 'top',
-        align: 'right',
-        itemGap: 5,
-        padding: [0, 10, 0, 0],
-        width: 'auto',
-        right: 0
-      },
-      series: [
+      <ECharts config={
         {
-          type: 'pie',
-          radius: ['0%', '50%'],
-          center: ['40%', '30%'],
-          avoidLabelOverlap: false,
-          itemStyle: {
-            borderRadius: 10,
-            borderColor: '#fff',
-            borderWidth: 2
+          tooltip: {
+            trigger: 'item',
+            formatter: params => `${params.name}: ${Number(params.value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
           },
-          label: {
-            show: true,
-            position: 'inside',
-            formatter: params => params.percent < 10 ? '' : `${params.percent}%`
+          legend: {
+            orient: 'vertical',
+            left: 'right',
+            top: 'top',
+            align: 'right',
+            itemGap: 5,
+            padding: [20, 10, 0, 0],
+            width: 'auto',
+            right: 0
           },
-          data: [...exposure_essential_ratio]
+          series: [
+            {
+              type: 'pie',
+              radius: ['0%', '50%'],
+              center: ['40%', '40%'],
+              avoidLabelOverlap: false,
+              itemStyle: {
+                borderRadius: 10,
+                borderColor: '#fff',
+                borderWidth: 2
+              },
+              label: {
+                show: true,
+                position: 'inside',
+                formatter: params => params.percent < 15 ? '' : `${params.percent}%`
+              },
+              data: [...exposure_essential_ratio_usd]
+            }
+          ]
         }
-      ]
-    }
-  }/>
+      }/>
 
-  <DataTable data={exposure_entry}>
-    <Column id=name title=" "/>
-    <Column id=value title=" " align=right/>
-  </DataTable>
+      <DataTable data={exposure_entry}>
+        <Column id=name title=" "/>
+        <Column id=usd_value title=" " align=right/>
+      </DataTable>
 
-  <ECharts config={
-    {
-      tooltip: {
-        trigger: 'item',
-        formatter: params => `${params.name}: ${Number(params.value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
-      },
-      legend: {
-        orient: 'vertical',
-        left: 'right',
-        top: 'top',
-        align: 'right',
-        itemGap: 5,
-        padding: [0, 10, 0, 0],
-        width: 'auto',
-        right: 0
-      },
-      series: [
+      <ECharts config={
         {
-          type: 'pie',
-          radius: ['0%', '50%'],
-          center: ['40%', '30%'],
-          avoidLabelOverlap: false,
-          itemStyle: {
-            borderRadius: 10,
-            borderColor: '#fff',
-            borderWidth: 2
+          tooltip: {
+            trigger: 'item',
+            formatter: params => `${params.name}: ${Number(params.value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
           },
-          label: {
-            show: true,
-            position: 'inside',
-            formatter: params => params.percent < 10 ? '' : `${params.percent}%`
+          legend: {
+            orient: 'vertical',
+            left: 'right',
+            top: 'top',
+            align: 'right',
+            itemGap: 5,
+            padding: [20, 10, 0, 0],
+            width: 'auto',
+            right: 0
           },
-          data: [...exposure_entry_ratio]
+          series: [
+            {
+              type: 'pie',
+              radius: ['0%', '50%'],
+              center: ['40%', '40%'],
+              avoidLabelOverlap: false,
+              itemStyle: {
+                borderRadius: 10,
+                borderColor: '#fff',
+                borderWidth: 2
+              },
+              label: {
+                show: true,
+                position: 'inside',
+                formatter: params => params.percent < 15 ? '' : `${params.percent}%`
+              },
+              data: [...exposure_entry_ratio_usd]
+            }
+          ]
         }
-      ]
-    }
-  }/>
+      }/>
 
-</Grid>
+    </Grid>
+
+  </Tab>
+  <Tab label='ETH'>
+
+    <Grid cols=2 gapSize=lg>
+
+      <DataTable data={exposure_overview}>
+        <Column id=name title=" "/>
+        <Column id=eth_value title=" " align=right/>
+      </DataTable>
+
+      <ECharts config={
+        {
+          tooltip: {
+            trigger: 'item',
+            formatter: params => `${params.name}: ${Number(params.value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+          },
+          legend: {
+            orient: 'vertical',
+            left: 'right',
+            top: 'top',
+            align: 'right',
+            itemGap: 5,
+            padding: [20, 10, 0, 0],
+            width: 'auto',
+            right: 0
+          },
+          series: [
+            {
+              type: 'pie',
+              radius: ['0%', '50%'],
+              center: ['40%', '40%'],
+              avoidLabelOverlap: false,
+              itemStyle: {
+                borderRadius: 10,
+                borderColor: '#fff',
+                borderWidth: 2
+              },
+              label: {
+                show: true,
+                position: 'inside',
+                formatter: params => params.percent < 15 ? '' : `${params.percent}%`
+              },
+              data: [...exposure_overview_split_eth]
+            }
+          ]
+        }
+      }/>
+
+      <DataTable data={exposure_elite}>
+        <Column id=name title=" "/>
+        <Column id=eth_value title=" " align=right/>
+      </DataTable>
+
+      <ECharts config={
+        {
+          tooltip: {
+            trigger: 'item',
+            formatter: params => `${params.name}: ${Number(params.value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+          },
+          legend: {
+            orient: 'vertical',
+            left: 'right',
+            top: 'top',
+            align: 'right',
+            itemGap: 5,
+            padding: [20, 10, 0, 0],
+            width: 'auto',
+            right: 0
+          },
+          series: [
+            {
+              type: 'pie',
+              radius: ['0%', '50%'],
+              center: ['40%', '40%'],
+              avoidLabelOverlap: false,
+              itemStyle: {
+                borderRadius: 10,
+                borderColor: '#fff',
+                borderWidth: 2
+              },
+              label: {
+                show: true,
+                position: 'inside',
+                formatter: params => params.percent < 15 ? '' : `${params.percent}%`
+              },
+              data: [...exposure_elite_ratio_eth]
+            }
+          ]
+        }
+      }/>
+
+      <DataTable data={exposure_essential}>
+        <Column id=name title=" "/>
+        <Column id=eth_value title=" " align=right/>
+      </DataTable>
+
+      <ECharts config={
+        {
+          tooltip: {
+            trigger: 'item',
+            formatter: params => `${params.name}: ${Number(params.value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+          },
+          legend: {
+            orient: 'vertical',
+            left: 'right',
+            top: 'top',
+            align: 'right',
+            itemGap: 5,
+            padding: [20, 10, 0, 0],
+            width: 'auto',
+            right: 0
+          },
+          series: [
+            {
+              type: 'pie',
+              radius: ['0%', '50%'],
+              center: ['40%', '40%'],
+              avoidLabelOverlap: false,
+              itemStyle: {
+                borderRadius: 10,
+                borderColor: '#fff',
+                borderWidth: 2
+              },
+              label: {
+                show: true,
+                position: 'inside',
+                formatter: params => params.percent < 15 ? '' : `${params.percent}%`
+              },
+              data: [...exposure_essential_ratio_eth]
+            }
+          ]
+        }
+      }/>
+
+      <DataTable data={exposure_entry}>
+        <Column id=name title=" "/>
+        <Column id=eth_value title=" " align=right/>
+      </DataTable>
+
+      <ECharts config={
+        {
+          tooltip: {
+            trigger: 'item',
+            formatter: params => `${params.name}: ${Number(params.value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+          },
+          legend: {
+            orient: 'vertical',
+            left: 'right',
+            top: 'top',
+            align: 'right',
+            itemGap: 5,
+            padding: [20, 10, 0, 0],
+            width: 'auto',
+            right: 0
+          },
+          series: [
+            {
+              type: 'pie',
+              radius: ['0%', '50%'],
+              center: ['40%', '40%'],
+              avoidLabelOverlap: false,
+              itemStyle: {
+                borderRadius: 10,
+                borderColor: '#fff',
+                borderWidth: 2
+              },
+              label: {
+                show: true,
+                position: 'inside',
+                formatter: params => params.percent < 15 ? '' : `${params.percent}%`
+              },
+              data: [...exposure_entry_ratio_eth]
+            }
+          ]
+        }
+      }/>
+
+    </Grid>
+
+  </Tab>
+</Tabs>
 
 <LineBreak lines=1/>
 
@@ -272,6 +491,8 @@ Grand total on "Cover ($)" is lower here than "Cover Amount" in the Overview sec
   <Column id=cover_start_date title="start date" fmt='yyyy-mm-dd' />
   <Column id=cover_end_date title="end date" fmt='yyyy-mm-dd' />
 </DataTable>
+
+<LineBreak lines=1/>
 
 ## Individual Exposure
 
