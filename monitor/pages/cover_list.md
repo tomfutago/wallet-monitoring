@@ -87,4 +87,6 @@ order by 1
   <Column id=cover_end_date title="end date" fmt='yyyy-mm-dd' />
 </DataTable>
 
+<LineBreak lines=1/>
+
 <LastRefreshed prefix="Data last updated"/>

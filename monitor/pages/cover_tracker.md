@@ -605,4 +605,6 @@ where cover_id = ${inputs.cover_id.value}
 
 {/if}
 
+<LineBreak lines=1/>
+
 <LastRefreshed prefix="Data last updated"/>
