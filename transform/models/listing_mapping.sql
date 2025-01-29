@@ -13,10 +13,11 @@ select
   product_name::varchar as product_name,
   null::varchar as plan,
   coalesce(included_protocol, product_name)::varchar as protocol,
+  null::double as base_pricing,
   debank_id::varchar as debank_id,
-  debank_name::varchar as debank_name
+  debank_name::varchar as debank_name,
+  '0.05' as version
 from wallets.main.listing_mapping
-where 1=1 -- dummy condition to trigger re-load
 union all
 select
   case plan
@@ -28,7 +29,9 @@ select
   plan::varchar as product_name,
   plan::varchar as plan,
   protocol::varchar as protocol,
+  replace(base_pricing, '%', '')::double as base_pricing,
   debank_id::varchar as debank_id,
-  debank_name::varchar as debank_name
+  debank_name::varchar as debank_name,
+  '0.05' as version
 from wallets.main.plan_mapping
-where 1=1; -- dummy condition to trigger re-load
+where is_subprotocol = false;
