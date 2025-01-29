@@ -203,13 +203,18 @@ where cover_id = ${inputs.cover_id.value}
         legend: {
           orient: 'vertical',
           left: 'right',
-          top: 'top'
+          top: 'top',
+          align: 'right',
+          itemGap: 5,
+          padding: [0, 10, 0, 0],
+          width: 'auto',
+          right: 0
         },
         series: [
           {
             type: 'pie',
-            radius: ['40%', '70%'],
-            center: ['50%', '50%'],
+            radius: ['0%', '80%'],
+            center: ['40%', '50%'],
             avoidLabelOverlap: false,
             itemStyle: {
               borderRadius: 10,
@@ -218,13 +223,8 @@ where cover_id = ${inputs.cover_id.value}
             },
             label: {
               show: true,
-              position: 'outside',
-              formatter: params => `${params.percent}%`
-            },
-            labelLine: {
-              show: true,
-              length: 10,
-              length2: 10
+              position: 'inside',
+              formatter: params => params.percent < 5 ? '' : `${params.percent}%`
             },
             data: cover_usd_exposed_by_chain_pie.map(item => ({
               ...item,
@@ -297,13 +297,18 @@ where cover_id = ${inputs.cover_id.value}
         legend: {
           orient: 'vertical',
           left: 'right',
-          top: 'top'
+          top: 'top',
+          align: 'right',
+          itemGap: 5,
+          padding: [0, 10, 0, 0],
+          width: 'auto',
+          right: 0
         },
         series: [
           {
             type: 'pie',
-            radius: ['40%', '70%'],
-            center: ['50%', '50%'],
+            radius: ['0%', '80%'],
+            center: ['40%', '50%'],
             avoidLabelOverlap: false,
             itemStyle: {
               borderRadius: 10,
@@ -312,13 +317,8 @@ where cover_id = ${inputs.cover_id.value}
             },
             label: {
               show: true,
-              position: 'outside',
-              formatter: params => `${params.percent}%`
-            },
-            labelLine: {
-              show: true,
-              length: 10,
-              length2: 10
+              position: 'inside',
+              formatter: params => params.percent < 5 ? '' : `${params.percent}%`
             },
             data: cover_eth_exposed_by_chain_pie.map(item => ({
               ...item,
@@ -462,13 +462,18 @@ where cover_id = ${inputs.cover_id.value}
         legend: {
           orient: 'vertical',
           left: 'right',
-          top: 'top'
+          top: 'top',
+          align: 'right',
+          itemGap: 5,
+          padding: [0, 10, 0, 0],
+          width: 'auto',
+          right: 0
         },
         series: [
           {
             type: 'pie',
-            radius: ['40%', '70%'],
-            center: ['50%', '50%'],
+            radius: ['0%', '80%'],
+            center: ['40%', '50%'],
             avoidLabelOverlap: false,
             itemStyle: {
               borderRadius: 10,
@@ -477,13 +482,8 @@ where cover_id = ${inputs.cover_id.value}
             },
             label: {
               show: true,
-              position: 'outside',
-              formatter: params => `${params.percent}%`
-            },
-            labelLine: {
-              show: true,
-              length: 10,
-              length2: 10
+              position: 'inside',
+              formatter: params => params.percent < 5 ? '' : `${params.percent}%`
             },
             data: cover_usd_exposed_by_chain_diff_pie.map(item => ({
               ...item,
@@ -556,13 +556,18 @@ where cover_id = ${inputs.cover_id.value}
         legend: {
           orient: 'vertical',
           left: 'right',
-          top: 'top'
+          top: 'top',
+          align: 'right',
+          itemGap: 5,
+          padding: [0, 10, 0, 0],
+          width: 'auto',
+          right: 0
         },
         series: [
           {
             type: 'pie',
-            radius: ['40%', '70%'],
-            center: ['50%', '50%'],
+            radius: ['0%', '80%'],
+            center: ['40%', '50%'],
             avoidLabelOverlap: false,
             itemStyle: {
               borderRadius: 10,
@@ -571,13 +576,8 @@ where cover_id = ${inputs.cover_id.value}
             },
             label: {
               show: true,
-              position: 'outside',
-              formatter: params => `${params.percent}%`
-            },
-            labelLine: {
-              show: true,
-              length: 10,
-              length2: 10
+              position: 'inside',
+              formatter: params => params.percent < 5 ? '' : `${params.percent}%`
             },
             data: cover_eth_exposed_by_chain_diff_pie.map(item => ({
               ...item,
