@@ -455,7 +455,7 @@ group by 1
 
 ```sql exposure_pricing
 select
-  plan,
+  listing,
   protocol,
   base_pricing,
   usd_exposed,
@@ -467,7 +467,7 @@ order by product_id, protocol
 ```
 
 <DataTable data={exposure_pricing} totalRow=true search=true >
-  <Column id=plan title=listing totalAgg="total"/>
+  <Column id=listing title=listing totalAgg="total"/>
   <Column id=protocol title=protocol/>
   <Column id=base_pricing title="base pricing" fmt=pct2/>
   <Column id=usd_exposed title="exposure ($)" fmt=num2 />
