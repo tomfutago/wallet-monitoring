@@ -1,6 +1,6 @@
 select
   product_id,
-  plan,
+  listing,
   protocol,
   base_pricing,
   usd_exposed,

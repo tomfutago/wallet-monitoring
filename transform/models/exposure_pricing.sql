@@ -6,7 +6,7 @@ model (
 with listing_exposure as (
   select
     m.product_id,
-    m.plan,
+    m.plan as listing,
     m.protocol,
     m.base_pricing,
     pt.usd_exposed,
@@ -28,7 +28,7 @@ with listing_exposure as (
 
 select
   product_id::int as product_id,
-  plan::varchar as plan,
+  listing::varchar as listing,
   protocol::varchar as protocol,
   base_pricing::varchar as base_pricing,
   usd_exposed::double as usd_exposed,
