@@ -8,11 +8,11 @@ with listing_exposure as (
     m.product_id,
     m.plan,
     m.protocol,
-    format('{:,.2f}%', m.base_pricing) as base_pricing,
+    m.base_pricing,
     pt.usd_exposed,
     pt.eth_exposed,
-    pt.usd_exposed * m.base_pricing / 100 as usd_annual_cost,
-    pt.eth_exposed * m.base_pricing / 100 as eth_annual_cost
+    pt.usd_exposed * m.base_pricing as usd_annual_cost,
+    pt.eth_exposed * m.base_pricing as eth_annual_cost
   from prod.listing_mapping m
     left join (
       select

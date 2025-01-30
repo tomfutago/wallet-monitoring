@@ -29,7 +29,7 @@ select
   plan::varchar as product_name,
   plan::varchar as plan,
   protocol::varchar as protocol,
-  replace(base_pricing, '%', '')::double as base_pricing,
+  replace(base_pricing, '%', '')::double / 100 as base_pricing,
   debank_id::varchar as debank_id,
   debank_name::varchar as debank_name,
   '0.05' as version
