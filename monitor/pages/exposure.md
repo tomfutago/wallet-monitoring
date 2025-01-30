@@ -451,6 +451,33 @@ group by 1
 
 <LineBreak lines=1/>
 
+## Exposure & Pricing
+
+```sql exposure_pricing
+select
+  plan,
+  protocol,
+  base_pricing,
+  usd_exposed,
+  eth_exposed,
+  usd_annual_cost,
+  eth_annual_cost
+from md_wallets.exposure_pricing
+order by product_id, protocol
+```
+
+<DataTable data={exposure_pricing} totalRow=true search=true >
+  <Column id=plan title=listing totalAgg="total"/>
+  <Column id=protocol title=protocol/>
+  <Column id=base_pricing title="base pricing" fmt=pct2/>
+  <Column id=usd_exposed title="exposure ($)" fmt=num2 />
+  <Column id=eth_exposed title="exposure (Ξ)" fmt=num2 />
+  <Column id=usd_annual_cost title="annual cost ($)" fmt=num2 totalAgg=sum />
+  <Column id=eth_annual_cost title="annual cost (Ξ)" fmt=num2 totalAgg=sum />
+</DataTable>
+
+<LineBreak lines=1/>
+
 ## NM Cover Exposure
 
 ```cover_list
