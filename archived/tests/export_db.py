@@ -23,4 +23,4 @@ load_dotenv()
 md_token = os.getenv("MD_TOKEN")
 
 con = duckdb.connect(f"md:?motherduck_token={md_token}")
-con.execute("EXPORT DATABASE './data/parquet' (FORMAT PARQUET);")
+con.execute("EXPORT DATABASE './archived/data/parquet' (FORMAT PARQUET);")
