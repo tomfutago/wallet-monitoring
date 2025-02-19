@@ -32,4 +32,4 @@ select distinct
   cover_owner::varchar as cover_owner,
   concat(left(cover_owner, 6), '..', right(cover_owner, 4))::varchar as cover_owner_short
 from wallets.main.cover_wallets
-where 1=1; -- force re-run
+where 2=2; -- force re-run
