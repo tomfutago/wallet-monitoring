@@ -16,4 +16,5 @@ select
   monitored_wallet::varchar as wallet,
   concat(left(monitored_wallet, 6), '..', right(monitored_wallet, 4))::varchar as wallet_short,
   if(cover_end_date::date >= current_date, true, false)::boolean as is_active
-from wallets.main.cover_wallets;
+from wallets.main.cover_wallets
+where 1=1;
