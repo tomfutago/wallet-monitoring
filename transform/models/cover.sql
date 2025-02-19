@@ -31,4 +31,5 @@ select distinct
   eth_cover_amount::double as eth_cover_amount,
   cover_owner::varchar as cover_owner,
   concat(left(cover_owner, 6), '..', right(cover_owner, 4))::varchar as cover_owner_short
-from wallets.main.cover_wallets;
+from wallets.main.cover_wallets
+where 1=1; -- force re-run
