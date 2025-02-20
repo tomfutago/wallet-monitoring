@@ -37,4 +37,5 @@ select
   lea.usd_exposed::double as usd_exposed,
   lea.eth_exposed::double as eth_exposed
 from wallets.prod.listing_agg la
-  left join listing_exposed_daily_agg lea on la.product_id = lea.product_id;
+  left join listing_exposed_daily_agg lea on la.product_id = lea.product_id
+where 1=1;

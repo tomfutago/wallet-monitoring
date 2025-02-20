@@ -34,4 +34,5 @@ from wallets.prod.cover c
   inner join wallets.prod.cover_wallet cw on c.cover_id = cw.cover_id
   inner join wallets.prod.debank_data_daily_match api on cw.wallet = api.wallet
   inner join wallets.prod.listing_mapping m on c.product_id = m.product_id and api.protocol = m.protocol
-where api.load_dt between @start_dt and @end_dt;
+where api.load_dt between @start_dt and @end_dt
+  and 1=1;

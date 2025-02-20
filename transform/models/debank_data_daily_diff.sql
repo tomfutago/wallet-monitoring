@@ -32,4 +32,5 @@ select
 from wallets.prod.debank_data_daily d
   left join mapping_unique_procols m on d.debank_name = m.debank_name
 where d.load_dt between @start_dt and @end_dt
-  and m.protocol is null;
+  and m.protocol is null
+  and 1=1;

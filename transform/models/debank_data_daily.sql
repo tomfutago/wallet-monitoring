@@ -51,4 +51,5 @@ select
   asset_eth_value::double as asset_eth_value,
   debt_eth_value::double as debt_eth_value,
   is_latest::boolean as is_latest
-from debank_data_daily;
+from debank_data_daily
+where 1=1;

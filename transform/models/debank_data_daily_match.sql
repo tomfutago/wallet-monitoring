@@ -31,4 +31,5 @@ select
   d.is_latest::boolean as is_latest
 from wallets.prod.debank_data_daily d
   inner join mapping_unique_procols m on d.debank_name = m.debank_name
-where d.load_dt between @start_dt and @end_dt;
+where d.load_dt between @start_dt and @end_dt
+  and 1=1;

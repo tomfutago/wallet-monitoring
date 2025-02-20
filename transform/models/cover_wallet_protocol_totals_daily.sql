@@ -60,4 +60,5 @@ select
   c.cover_end_date::date as cover_end_date
 from wallets.prod.cover_agg c
   inner join wallets.prod.cover_totals_daily ct on c.cover_id = ct.cover_id
-  left join cover_wallet_protocol_exposed_daily_agg ca on ct.cover_id = ca.cover_id and ct.load_dt = ca.load_dt;
+  left join cover_wallet_protocol_exposed_daily_agg ca on ct.cover_id = ca.cover_id and ct.load_dt = ca.load_dt
+where 1=1;

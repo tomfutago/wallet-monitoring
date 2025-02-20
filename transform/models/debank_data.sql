@@ -33,4 +33,5 @@ select
   debt_usd_value::double as debt_usd_value,
   load_ts::date as load_dt,
   load_ts::timestamp as load_ts
-from api_data;
+from api_data
+where 1=1;

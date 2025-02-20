@@ -44,4 +44,5 @@ select
   c.cover_start_date::date as cover_start_date,
   c.cover_end_date::date as cover_end_date
 from wallets.prod.cover_agg c
-  left join cover_wallet_protocol_diff_exposed_daily_agg ca on c.cover_id = ca.cover_id;
+  left join cover_wallet_protocol_diff_exposed_daily_agg ca on c.cover_id = ca.cover_id
+where 1=1;
