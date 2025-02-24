@@ -35,5 +35,4 @@ select
   eth_exposed::double as eth_exposed,
   usd_annual_cost::double as usd_annual_cost,
   eth_annual_cost::double as eth_annual_cost
-from listing_exposure
-where 1=1;
+from listing_exposure;

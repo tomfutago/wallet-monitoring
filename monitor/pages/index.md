@@ -164,10 +164,11 @@ order by load_dt, product_id
 
 ## Exposed Funds vs Covered Amount per Cover Plan & Protocol
 
-<ButtonGroup name=plan title="Select Plan">
+<ButtonGroup name=plan>
   <ButtonGroupItem valueLabel="Entry Cover" value="Entry Cover" default />
   <ButtonGroupItem valueLabel="Essential Cover" value="Essential Cover" />
   <ButtonGroupItem valueLabel="Elite Cover" value="Elite Cover" />
+  <ButtonGroupItem valueLabel="L1 Advisors Cover" value="L1 Advisors Cover" />
 </ButtonGroup>
 
 ```plan_cover_protocol_list
@@ -396,7 +397,7 @@ order by usd_total desc
 
 ## Exposed Funds vs Covered Amount per Listing
 
-<DataTable data={inputs.data_level_choice.value=="No" ? listing_list : listing_list_unique} totalRow=true>
+<DataTable data={inputs.data_level_choice.value=="No" ? listing_list : listing_list_unique} totalRow=true search=true>
   <Column id=listing title="listing" totalAgg="total" wrap=true/>
   <Column id=cnt_cover title="# covers" />
   <Column id=usd_cover title="cover ($)" fmt=num0/>

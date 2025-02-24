@@ -88,6 +88,28 @@ where listing = 'Entry Cover'
 group by 1
 ```
 
+```sql exposure_l1_advisors
+select name, usd_value, eth_value from md_wallets.exposure_l1_advisors order by id
+```
+
+```sql exposure_l1_advisors_ratio_usd
+select
+  case when coverage_cover_ratio > 1 then 'Coverage Ratio 1>' else 'Coverage Ratio 1<' end as name,
+  sum(usd_protocol_exposed) as value
+from md_wallets.cover_wallet_protocol_totals
+where listing = 'L1 Advisors Cover'
+group by 1
+```
+
+```sql exposure_l1_advisors_ratio_eth
+select
+  case when coverage_cover_ratio > 1 then 'Coverage Ratio 1>' else 'Coverage Ratio 1<' end as name,
+  sum(eth_protocol_exposed) as value
+from md_wallets.cover_wallet_protocol_totals
+where listing = 'L1 Advisors Cover'
+group by 1
+```
+
 <Tabs fullWidth=true background=true>
   <Tab label='USD'>
 
@@ -260,6 +282,49 @@ group by 1
                 formatter: params => params.percent < 15 ? '' : `${params.percent}%`
               },
               data: [...exposure_entry_ratio_usd]
+            }
+          ]
+        }
+      }/>
+
+      <DataTable data={exposure_l1_advisors}>
+        <Column id=name title=" "/>
+        <Column id=usd_value title=" " align=right/>
+      </DataTable>
+
+      <ECharts config={
+        {
+          tooltip: {
+            trigger: 'item',
+            formatter: params => `${params.name}: ${Number(params.value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+          },
+          legend: {
+            orient: 'vertical',
+            left: 'right',
+            top: 'top',
+            align: 'right',
+            itemGap: 5,
+            padding: [20, 10, 0, 0],
+            width: 'auto',
+            right: 0
+          },
+          series: [
+            {
+              type: 'pie',
+              radius: ['0%', '50%'],
+              center: ['40%', '40%'],
+              avoidLabelOverlap: false,
+              itemStyle: {
+                borderRadius: 10,
+                borderColor: '#fff',
+                borderWidth: 2
+              },
+              label: {
+                show: true,
+                position: 'inside',
+                formatter: params => params.percent < 15 ? '' : `${params.percent}%`
+              },
+              data: [...exposure_l1_advisors_ratio_usd]
             }
           ]
         }
@@ -439,6 +504,49 @@ group by 1
                 formatter: params => params.percent < 15 ? '' : `${params.percent}%`
               },
               data: [...exposure_entry_ratio_eth]
+            }
+          ]
+        }
+      }/>
+
+      <DataTable data={exposure_l1_advisors}>
+        <Column id=name title=" "/>
+        <Column id=eth_value title=" " align=right/>
+      </DataTable>
+
+      <ECharts config={
+        {
+          tooltip: {
+            trigger: 'item',
+            formatter: params => `${params.name}: ${Number(params.value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+          },
+          legend: {
+            orient: 'vertical',
+            left: 'right',
+            top: 'top',
+            align: 'right',
+            itemGap: 5,
+            padding: [20, 10, 0, 0],
+            width: 'auto',
+            right: 0
+          },
+          series: [
+            {
+              type: 'pie',
+              radius: ['0%', '50%'],
+              center: ['40%', '40%'],
+              avoidLabelOverlap: false,
+              itemStyle: {
+                borderRadius: 10,
+                borderColor: '#fff',
+                borderWidth: 2
+              },
+              label: {
+                show: true,
+                position: 'inside',
+                formatter: params => params.percent < 15 ? '' : `${params.percent}%`
+              },
+              data: [...exposure_l1_advisors_ratio_eth]
             }
           ]
         }
