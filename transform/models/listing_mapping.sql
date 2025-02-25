@@ -24,7 +24,7 @@ select
     when 'Entry Cover' then 245
     when 'Essential Cover' then 246
     when 'Elite Cover' then 247
-    when 'L1 Advisors' then 273
+    when 'L1 Advisors Cover' then 273
   end::int as product_id,
   'Nexus Mutual Cover'::varchar as product_type,
   plan::varchar as product_name,
