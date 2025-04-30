@@ -16,7 +16,7 @@ select
   null::double as base_pricing,
   debank_id::varchar as debank_id,
   debank_name::varchar as debank_name,
-  '0.07' as version
+  '0.08' as version
 from wallets.main.listing_mapping
 union all
 select
@@ -25,6 +25,9 @@ select
     when 'Essential Cover' then 246
     when 'Elite Cover' then 247
     when 'L1 Advisors Cover' then 273
+    when 'Brava Conservative Cover' then 296
+    when 'Brava Balanced Cover' then 297
+    when 'Brava Advanced Cover' then 298
   end::int as product_id,
   'Nexus Mutual Cover'::varchar as product_type,
   plan::varchar as product_name,
@@ -33,6 +36,6 @@ select
   replace(base_pricing, '%', '')::double / 100 as base_pricing,
   debank_id::varchar as debank_id,
   debank_name::varchar as debank_name,
-  '0.07' as version
+  '0.08' as version
 from wallets.main.plan_mapping
 where is_subprotocol = false;
