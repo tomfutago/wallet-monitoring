@@ -110,6 +110,72 @@ where listing = 'L1 Advisors Cover'
 group by 1
 ```
 
+```sql exposure_brava_conservative
+select name, usd_value, eth_value from md_wallets.exposure_brava_conservative order by id
+```
+
+```sql exposure_brava_conservative_ratio_usd
+select
+  case when coverage_cover_ratio > 1 then 'Coverage Ratio 1>' else 'Coverage Ratio 1<' end as name,
+  sum(usd_protocol_exposed) as value
+from md_wallets.cover_wallet_protocol_totals
+where listing = 'Brava Conservative Cover'
+group by 1
+```
+
+```sql exposure_brava_conservative_ratio_eth
+select
+  case when coverage_cover_ratio > 1 then 'Coverage Ratio 1>' else 'Coverage Ratio 1<' end as name,
+  sum(eth_protocol_exposed) as value
+from md_wallets.cover_wallet_protocol_totals
+where listing = 'Brava Conservative Cover'
+group by 1
+```
+
+```sql exposure_brava_balanced
+select name, usd_value, eth_value from md_wallets.exposure_brava_balanced order by id
+```
+
+```sql exposure_brava_balanced_ratio_usd
+select
+  case when coverage_cover_ratio > 1 then 'Coverage Ratio 1>' else 'Coverage Ratio 1<' end as name,
+  sum(usd_protocol_exposed) as value
+from md_wallets.cover_wallet_protocol_totals
+where listing = 'Brava Balanced Cover'
+group by 1
+```
+
+```sql exposure_brava_balanced_ratio_eth
+select
+  case when coverage_cover_ratio > 1 then 'Coverage Ratio 1>' else 'Coverage Ratio 1<' end as name,
+  sum(eth_protocol_exposed) as value
+from md_wallets.cover_wallet_protocol_totals
+where listing = 'Brava Balanced Cover'
+group by 1
+```
+
+```sql exposure_brava_advanced
+select name, usd_value, eth_value from md_wallets.exposure_brava_advanced order by id
+```
+
+```sql exposure_brava_advanced_ratio_usd
+select
+  case when coverage_cover_ratio > 1 then 'Coverage Ratio 1>' else 'Coverage Ratio 1<' end as name,
+  sum(usd_protocol_exposed) as value
+from md_wallets.cover_wallet_protocol_totals
+where listing = 'Brava Advanced Cover'
+group by 1
+```
+
+```sql exposure_brava_advanced_ratio_eth
+select
+  case when coverage_cover_ratio > 1 then 'Coverage Ratio 1>' else 'Coverage Ratio 1<' end as name,
+  sum(eth_protocol_exposed) as value
+from md_wallets.cover_wallet_protocol_totals
+where listing = 'Brava Advanced Cover'
+group by 1
+```
+
 <Tabs fullWidth=true background=true>
   <Tab label='USD'>
 
@@ -327,6 +393,147 @@ group by 1
                 formatter: params => params.percent < 15 ? '' : `${params.percent}%`
               },
               data: [...exposure_l1_advisors_ratio_usd]
+            }
+          ]
+        }
+      }/>
+
+      {/if}
+
+      {#if exposure_brava_conservative_ratio_usd.length > 0}
+
+      <DataTable data={exposure_brava_conservative}>
+        <Column id=name title=" "/>
+        <Column id=usd_value title=" " align=right/>
+      </DataTable>
+
+      <ECharts config={
+        {
+          tooltip: {
+            trigger: 'item',
+            formatter: params => `${params.name}: ${Number(params.value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+          },
+          legend: {
+            orient: 'vertical',
+            left: 'right',
+            top: 'top',
+            align: 'right',
+            itemGap: 5,
+            padding: [20, 10, 0, 0],
+            width: 'auto',
+            right: 0
+          },
+          series: [
+            {
+              type: 'pie',
+              radius: ['0%', '50%'],
+              center: ['40%', '40%'],
+              avoidLabelOverlap: false,
+              itemStyle: {
+                borderRadius: 10,
+                borderColor: '#fff',
+                borderWidth: 2
+              },
+              label: {
+                show: true,
+                position: 'inside',
+                formatter: params => params.percent < 15 ? '' : `${params.percent}%`
+              },
+              data: [...exposure_brava_conservative_ratio_usd]
+            }
+          ]
+        }
+      }/>
+
+      {/if}
+
+      {#if exposure_brava_balanced_ratio_usd.length > 0}
+
+      <DataTable data={exposure_brava_balanced}>
+        <Column id=name title=" "/>
+        <Column id=usd_value title=" " align=right/>
+      </DataTable>
+
+      <ECharts config={
+        {
+          tooltip: {
+            trigger: 'item',
+            formatter: params => `${params.name}: ${Number(params.value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+          },
+          legend: {
+            orient: 'vertical',
+            left: 'right',
+            top: 'top',
+            align: 'right',
+            itemGap: 5,
+            padding: [20, 10, 0, 0],
+            width: 'auto',
+            right: 0
+          },
+          series: [
+            {
+              type: 'pie',
+              radius: ['0%', '50%'],
+              center: ['40%', '40%'],
+              avoidLabelOverlap: false,
+              itemStyle: {
+                borderRadius: 10,
+                borderColor: '#fff',
+                borderWidth: 2
+              },
+              label: {
+                show: true,
+                position: 'inside',
+                formatter: params => params.percent < 15 ? '' : `${params.percent}%`
+              },
+              data: [...exposure_brava_balanced_ratio_usd]
+            }
+          ]
+        }
+      }/>
+
+      {/if}
+
+      {#if exposure_brava_advanced_ratio_usd.length > 0}
+
+      <DataTable data={exposure_brava_advanced}>
+        <Column id=name title=" "/>
+        <Column id=usd_value title=" " align=right/>
+      </DataTable>
+
+      <ECharts config={
+        {
+          tooltip: {
+            trigger: 'item',
+            formatter: params => `${params.name}: ${Number(params.value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+          },
+          legend: {
+            orient: 'vertical',
+            left: 'right',
+            top: 'top',
+            align: 'right',
+            itemGap: 5,
+            padding: [20, 10, 0, 0],
+            width: 'auto',
+            right: 0
+          },
+          series: [
+            {
+              type: 'pie',
+              radius: ['0%', '50%'],
+              center: ['40%', '40%'],
+              avoidLabelOverlap: false,
+              itemStyle: {
+                borderRadius: 10,
+                borderColor: '#fff',
+                borderWidth: 2
+              },
+              label: {
+                show: true,
+                position: 'inside',
+                formatter: params => params.percent < 15 ? '' : `${params.percent}%`
+              },
+              data: [...exposure_brava_advanced_ratio_usd]
             }
           ]
         }
@@ -553,6 +760,147 @@ group by 1
                 formatter: params => params.percent < 15 ? '' : `${params.percent}%`
               },
               data: [...exposure_l1_advisors_ratio_eth]
+            }
+          ]
+        }
+      }/>
+
+      {/if}
+
+      {#if exposure_brava_conservative_ratio_eth.length > 0}
+
+      <DataTable data={exposure_brava_conservative}>
+        <Column id=name title=" "/>
+        <Column id=eth_value title=" " align=right/>
+      </DataTable>
+
+      <ECharts config={
+        {
+          tooltip: {
+            trigger: 'item',
+            formatter: params => `${params.name}: ${Number(params.value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+          },
+          legend: {
+            orient: 'vertical',
+            left: 'right',
+            top: 'top',
+            align: 'right',
+            itemGap: 5,
+            padding: [20, 10, 0, 0],
+            width: 'auto',
+            right: 0
+          },
+          series: [
+            {
+              type: 'pie',
+              radius: ['0%', '50%'],
+              center: ['40%', '40%'],
+              avoidLabelOverlap: false,
+              itemStyle: {
+                borderRadius: 10,
+                borderColor: '#fff',
+                borderWidth: 2
+              },
+              label: {
+                show: true,
+                position: 'inside',
+                formatter: params => params.percent < 15 ? '' : `${params.percent}%`
+              },
+              data: [...exposure_brava_conservative_ratio_eth]
+            }
+          ]
+        }
+      }/>
+
+      {/if}
+
+      {#if exposure_brava_balanced_ratio_eth.length > 0}
+
+      <DataTable data={exposure_brava_balanced}>
+        <Column id=name title=" "/>
+        <Column id=eth_value title=" " align=right/>
+      </DataTable>
+
+      <ECharts config={
+        {
+          tooltip: {
+            trigger: 'item',
+            formatter: params => `${params.name}: ${Number(params.value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+          },
+          legend: {
+            orient: 'vertical',
+            left: 'right',
+            top: 'top',
+            align: 'right',
+            itemGap: 5,
+            padding: [20, 10, 0, 0],
+            width: 'auto',
+            right: 0
+          },
+          series: [
+            {
+              type: 'pie',
+              radius: ['0%', '50%'],
+              center: ['40%', '40%'],
+              avoidLabelOverlap: false,
+              itemStyle: {
+                borderRadius: 10,
+                borderColor: '#fff',
+                borderWidth: 2
+              },
+              label: {
+                show: true,
+                position: 'inside',
+                formatter: params => params.percent < 15 ? '' : `${params.percent}%`
+              },
+              data: [...exposure_brava_balanced_ratio_eth]
+            }
+          ]
+        }
+      }/>
+
+      {/if}
+
+      {#if exposure_brava_advanced_ratio_eth.length > 0}
+
+      <DataTable data={exposure_brava_advanced}>
+        <Column id=name title=" "/>
+        <Column id=eth_value title=" " align=right/>
+      </DataTable>
+
+      <ECharts config={
+        {
+          tooltip: {
+            trigger: 'item',
+            formatter: params => `${params.name}: ${Number(params.value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+          },
+          legend: {
+            orient: 'vertical',
+            left: 'right',
+            top: 'top',
+            align: 'right',
+            itemGap: 5,
+            padding: [20, 10, 0, 0],
+            width: 'auto',
+            right: 0
+          },
+          series: [
+            {
+              type: 'pie',
+              radius: ['0%', '50%'],
+              center: ['40%', '40%'],
+              avoidLabelOverlap: false,
+              itemStyle: {
+                borderRadius: 10,
+                borderColor: '#fff',
+                borderWidth: 2
+              },
+              label: {
+                show: true,
+                position: 'inside',
+                formatter: params => params.percent < 15 ? '' : `${params.percent}%`
+              },
+              data: [...exposure_brava_advanced_ratio_eth]
             }
           ]
         }
