@@ -287,6 +287,8 @@ group by 1
         }
       }/>
 
+      {#if exposure_l1_advisors_ratio_usd.length > 0}
+
       <DataTable data={exposure_l1_advisors}>
         <Column id=name title=" "/>
         <Column id=usd_value title=" " align=right/>
@@ -329,6 +331,8 @@ group by 1
           ]
         }
       }/>
+
+      {/if}
 
     </Grid>
 
@@ -509,6 +513,8 @@ group by 1
         }
       }/>
 
+      {#if exposure_l1_advisors_ratio_eth.length > 0}
+
       <DataTable data={exposure_l1_advisors}>
         <Column id=name title=" "/>
         <Column id=eth_value title=" " align=right/>
@@ -551,6 +557,8 @@ group by 1
           ]
         }
       }/>
+
+      {/if}
 
     </Grid>
 
