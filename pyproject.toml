@@ -16,6 +16,7 @@ fsspec = "^2024.10.0"
 dune-client = "^1.7.7"
 dlt = {extras = ["cli", "motherduck", "parquet"], version = "^1.5.0"}
 sqlmesh = {extras = ["web"], version = "^0.141.1"}
+ipython = "8.36.0"  # needed ver below 9.0.0 for sqlmesh to work
 
 [build-system]
 requires = ["poetry-core"]
