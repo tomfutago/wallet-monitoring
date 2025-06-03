@@ -168,7 +168,10 @@ order by load_dt, product_id
   <ButtonGroupItem valueLabel="Entry Cover" value="Entry Cover" default />
   <ButtonGroupItem valueLabel="Essential Cover" value="Essential Cover" />
   <ButtonGroupItem valueLabel="Elite Cover" value="Elite Cover" />
-  <ButtonGroupItem valueLabel="L1 Advisors Cover" value="L1 Advisors Cover" />
+  <ButtonGroupItem valueLabel="L1 Advisors" value="L1 Advisors Cover" />
+  <ButtonGroupItem valueLabel="Brava Conservative" value="Brava Conservative Cover" />
+  <ButtonGroupItem valueLabel="Brava Balanced" value="Brava Balanced Cover" />
+  <ButtonGroupItem valueLabel="Brava Advanced" value="Brava Advanced Cover" />
 </ButtonGroup>
 
 ```plan_cover_protocol_list
