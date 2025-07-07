@@ -19,7 +19,7 @@ select distinct
   nullif(plan, '<nil>')::varchar as plan,
   coalesce(
     nullif(plan, '<nil>'),
-    concat(if(product_type = 'Bundled Protocol Cover', 'Bundled - ', ''), product_name)
+    concat(if(product_type = 'Multi Protocol Cover', 'Bundled - ', ''), product_name)
   )::varchar as listing,
   if(nullif(plan, '<nil>') is not null, true, false)::boolean as is_plan,
   cover_start_date::date as cover_start_date,
