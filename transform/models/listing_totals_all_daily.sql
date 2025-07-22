@@ -10,7 +10,9 @@ model (
   )
 );
 
-with listing_wallet_exposed_daily_agg as (
+with
+
+listing_wallet_exposed_daily_agg as (
   select
     load_dt,
     product_id,
@@ -21,10 +23,24 @@ with listing_wallet_exposed_daily_agg as (
   where is_active
     and load_dt between @start_dt and @end_dt
   group by 1, 2, 3
+),
+
+first_run as (
+  select
+    product_id,
+    min(load_dt) as first_run_date
+  from @this_model
+  group by 1
+),
+
+last_run as (
+  select
+    max(load_dt) as last_run_date
+  from listing_wallet_exposed_daily_agg
 )
 
 select
-  coalesce(lwa.load_dt, current_date)::date as load_dt,
+  coalesce(lwa.load_dt, fr.first_run_date, lr.last_run_date)::date as load_dt,
   la.product_id::int as product_id,
   la.listing::varchar as listing,
   la.is_plan::boolean as is_plan,
@@ -36,4 +52,5 @@ select
   lwa.eth_exposed::double as eth_exposed
 from wallets.prod.listing_agg la
   left join listing_wallet_exposed_daily_agg lwa on la.product_id = lwa.product_id
-where 1=1;
+  left join first_run fr on la.product_id = fr.product_id
+  cross join last_run lr;

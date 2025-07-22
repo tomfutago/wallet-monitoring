@@ -25,10 +25,24 @@ with listing_exposed_daily_agg as (
       and load_dt between @start_dt and @end_dt
   ) t
   group by 1, 2, 3, 4
+),
+
+first_run as (
+  select
+    product_id,
+    min(load_dt) as first_run_date
+  from @this_model
+  group by 1
+),
+
+last_run as (
+  select
+    max(load_dt) as last_run_date
+  from listing_exposed_daily_agg
 )
 
 select
-  coalesce(lea.load_dt, current_date)::date as load_dt,
+  coalesce(lea.load_dt, fr.first_run_date, lr.last_run_date)::date as load_dt,
   la.product_id::int as product_id,
   la.listing::varchar as listing,
   lea.protocol::varchar as protocol,
@@ -41,4 +55,5 @@ select
   lea.eth_exposed::double as eth_exposed
 from wallets.prod.listing_agg la
   left join listing_exposed_daily_agg lea on la.product_id = lea.product_id
-where 1=1;
+  left join first_run fr on la.product_id = fr.product_id
+  cross join last_run lr;
