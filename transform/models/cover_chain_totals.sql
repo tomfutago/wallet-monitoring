@@ -19,5 +19,4 @@ select
   cover_start_date::date as cover_start_date,
   cover_end_date::date as cover_end_date
 from wallets.prod.cover_chain_totals_daily
-where load_dt = (select max(load_dt) from wallets.prod.cover_chain_totals_daily)
-  and 1=1;
+where load_dt = (select max(load_dt) from wallets.prod.cover_chain_totals_daily);

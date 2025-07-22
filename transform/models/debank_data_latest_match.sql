@@ -15,5 +15,4 @@ select
   asset_eth_value::double as asset_eth_value,
   debt_eth_value::double as debt_eth_value
 from wallets.prod.debank_data_daily_match
-where is_latest
-  and 1=1;
+where is_latest;

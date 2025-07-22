@@ -23,5 +23,4 @@ select
   usd_exposed::double as usd_exposed,
   eth_exposed::double as eth_exposed
 from wallets.prod.cover_wallet_enriched_daily
-where load_dt = (select max(load_dt) from wallets.prod.cover_wallet_enriched_daily)
-  and 1=1;
+where load_dt = (select max(load_dt) from wallets.prod.cover_wallet_enriched_daily);

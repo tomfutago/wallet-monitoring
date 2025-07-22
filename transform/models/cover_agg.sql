@@ -24,5 +24,4 @@ from wallets.prod.cover cu
     group by 1
   ) cw on cu.cover_id = cw.cover_id
 where cu.is_active
-  and 1=1
 group by 1, 2, 3;
