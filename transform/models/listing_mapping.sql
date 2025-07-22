@@ -16,7 +16,7 @@ select
   null::double as base_pricing,
   debank_id::varchar as debank_id,
   debank_name::varchar as debank_name,
-  '0.10' as version
+  '0.11' as version
 from wallets.main.listing_mapping
 union all
 select
@@ -36,6 +36,6 @@ select
   replace(base_pricing, '%', '')::double / 100 as base_pricing,
   debank_id::varchar as debank_id,
   debank_name::varchar as debank_name,
-  '0.010' as version
+  '0.11' as version
 from wallets.main.plan_mapping
 where is_subprotocol = false;
