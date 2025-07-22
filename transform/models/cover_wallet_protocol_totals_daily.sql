@@ -23,10 +23,24 @@ with cover_wallet_protocol_exposed_daily_agg as (
   where is_active
     and load_dt between @start_dt and @end_dt
   group by 1, 2, 3, 4, 5
+),
+
+first_run as (
+  select
+    cover_id,
+    min(load_dt) as first_run_date
+  from @this_model
+  group by 1
+),
+
+last_run as (
+  select
+    max(load_dt) as last_run_date
+  from cover_wallet_protocol_exposed_daily_agg
 )
 
 select
-  coalesce(ca.load_dt, current_date)::date as load_dt,
+  coalesce(ca.load_dt, fr.first_run_date, lr.last_run_date)::date as load_dt,
   -- cover level info:
   c.cover_id::bigint as cover_id,
   ct.product_id::int as product_id,
@@ -61,4 +75,5 @@ select
 from wallets.prod.cover_agg c
   inner join wallets.prod.cover_totals_daily ct on c.cover_id = ct.cover_id
   left join cover_wallet_protocol_exposed_daily_agg ca on ct.cover_id = ca.cover_id and ct.load_dt = ca.load_dt
-where 1=1;
+  left join first_run fr on c.cover_id = fr.cover_id
+  cross join last_run lr;
