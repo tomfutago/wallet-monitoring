@@ -14,4 +14,5 @@ select
   usd_exposed::double as usd_exposed,
   eth_exposed::double as eth_exposed
 from wallets.prod.listing_totals_all_daily
-where load_dt = (select max(load_dt) from wallets.prod.listing_totals_all_daily);
+where usd_exposed is null
+  or load_dt = (select max(load_dt) from wallets.prod.listing_totals_all_daily);

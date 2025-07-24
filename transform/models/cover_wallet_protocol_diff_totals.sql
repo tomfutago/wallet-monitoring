@@ -18,4 +18,5 @@ select
   cover_start_date::date as cover_start_date,
   cover_end_date::date as cover_end_date
 from wallets.prod.cover_wallet_protocol_diff_totals_daily
-where load_dt = (select max(load_dt) from wallets.prod.cover_wallet_protocol_diff_totals_daily);
+where usd_exposed is null
+  or load_dt = (select max(load_dt) from wallets.prod.cover_wallet_protocol_diff_totals_daily);
