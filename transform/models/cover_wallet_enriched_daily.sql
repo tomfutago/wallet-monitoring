@@ -1,3 +1,4 @@
+/*
 model (
   name prod.cover_wallet_enriched_daily,
   kind incremental_by_time_range (
@@ -8,6 +9,12 @@ model (
     not_null(columns := (load_dt, cover_id, wallet, protocol, chain)),
     unique_combination_of_columns(columns := (load_dt, cover_id, wallet, protocol, chain))
   )
+);
+*/
+
+model (
+  name prod.cover_wallet_enriched_daily,
+  kind view
 );
 
 select
@@ -34,4 +41,4 @@ from wallets.prod.cover c
   inner join wallets.prod.cover_wallet cw on c.cover_id = cw.cover_id
   inner join wallets.prod.debank_data_daily_match api on cw.wallet = api.wallet
   inner join wallets.prod.listing_mapping m on c.product_id = m.product_id and api.protocol = m.protocol
-where api.load_dt between @start_dt and @end_dt;
+--where api.load_dt between @start_dt and @end_dt;

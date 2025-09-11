@@ -1,3 +1,4 @@
+/*
 model (
   name prod.cover,
   kind incremental_by_unique_key (
@@ -9,6 +10,11 @@ model (
     not_null(columns := (cover_id, product_id)),
     unique_values(columns := (cover_id))
   )
+);*/
+
+model (
+  name prod.cover,
+  kind view
 );
 
 select distinct
@@ -31,5 +37,5 @@ select distinct
   eth_cover_amount::double as eth_cover_amount,
   cover_owner::varchar as cover_owner,
   concat(left(cover_owner, 6), '..', right(cover_owner, 4))::varchar as cover_owner_short,
-  '0.01' as version
+  '0.02' as version
 from wallets.main.cover_wallets;
