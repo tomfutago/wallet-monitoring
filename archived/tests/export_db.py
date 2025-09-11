@@ -22,5 +22,5 @@ con.execute("COPY plan_mapping TO './data/parquet/plan_mapping.parquet' (FORMAT 
 load_dotenv()
 md_token = os.getenv("MD_TOKEN")
 
-con = duckdb.connect(f"md:?motherduck_token={md_token}")
+con = duckdb.connect(f"md:wallets?motherduck_token={md_token}")
 con.execute("EXPORT DATABASE './archived/data/parquet' (FORMAT PARQUET);")
