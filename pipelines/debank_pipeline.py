@@ -105,6 +105,6 @@ def load_user_all_simple_protocol_list(wallet: str):
   print(load_info)
 
 if __name__ == "__main__":
-  #load_chains()
-  #load_protocols()
-  load_user_all_simple_protocol_list(wallet="0x4fdb601aebf2c6ad947d97a00b7eeaf71cc5bf93") #test
+  load_chains()
+  load_protocols()
+  #load_user_all_simple_protocol_list(wallet="0x4fdb601aebf2c6ad947d97a00b7eeaf71cc5bf93") #test
