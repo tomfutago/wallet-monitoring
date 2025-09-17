@@ -11,7 +11,7 @@ python = ">=3.11,<3.13"
 requests = "^2.32.3"
 pandas = "^2.2.3"
 python-dotenv = "^1.0.1"
-duckdb = "^1.2.0"
+duckdb = ">=1.2.0,<1.4.0"
 fsspec = "^2024.10.0"
 dune-client = "^1.7.7"
 dlt = {extras = ["cli", "motherduck", "parquet"], version = "^1.5.0"}
