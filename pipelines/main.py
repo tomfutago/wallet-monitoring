@@ -4,7 +4,7 @@ from dune_pipeline import *
 
 def loop_through_cover_wallets():
   wallet = "0xbad"
-  query = "SELECT DISTINCT wallet FROM prod.cover_wallet WHERE is_active"
+  query = "SELECT DISTINCT monitored_wallet FROM main.cover_wallets WHERE cover_end_date::date >= current_date"
 
   try:
     # fetch cover wallets as df
@@ -20,7 +20,7 @@ def loop_through_cover_wallets():
     
     if not result_df.empty:
       for _, row in result_df.iterrows():
-        wallet = row["wallet"]
+        wallet = row["monitored_wallet"]
         load_user_all_simple_protocol_list(wallet)
 
   except Exception as e:
