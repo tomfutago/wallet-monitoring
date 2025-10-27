@@ -31,5 +31,5 @@ select distinct
   eth_cover_amount::double as eth_cover_amount,
   cover_owner::varchar as cover_owner,
   concat(left(cover_owner, 6), '..', right(cover_owner, 4))::varchar as cover_owner_short,
-  '0.04' as version
+  '0.05' as version
 from wallets.main.cover_wallets;
