@@ -1,3 +1,4 @@
+/*
 model (
   name prod.listing_totals_unique_daily,
   kind incremental_by_time_range (
@@ -8,6 +9,12 @@ model (
     not_null(columns := (load_dt, product_id)),
     unique_combination_of_columns(columns := (load_dt, product_id))
   )
+);
+*/
+
+model (
+  name prod.listing_totals_unique_daily,
+  kind view
 );
 
 with
@@ -23,11 +30,12 @@ listing_wallet_exposed_daily_agg as (
     select distinct load_dt, wallet, product_id, listing, usd_exposed, eth_exposed
     from wallets.prod.cover_wallet_enriched_daily
     where is_active
-      and load_dt between @start_dt and @end_dt
+      --and load_dt between @start_dt and @end_dt
   ) t
   group by 1, 2, 3
 ),
 
+/*
 first_run as (
   select
     product_id,
@@ -35,6 +43,7 @@ first_run as (
   from @this_model
   group by 1
 ),
+*/
 
 last_run as (
   select
@@ -43,7 +52,8 @@ last_run as (
 )
 
 select
-  coalesce(lwa.load_dt, fr.first_run_date, lr.last_run_date)::date as load_dt,
+  --coalesce(lwa.load_dt, fr.first_run_date, lr.last_run_date)::date as load_dt,
+  coalesce(lwa.load_dt, lr.last_run_date)::date as load_dt,
   la.product_id::int as product_id,
   la.listing::varchar as listing,
   la.is_plan::boolean as is_plan,
@@ -55,5 +65,5 @@ select
   lwa.eth_exposed::double as eth_exposed
 from wallets.prod.listing_agg la
   left join listing_wallet_exposed_daily_agg lwa on la.product_id = lwa.product_id
-  left join first_run fr on la.product_id = fr.product_id
+  --left join first_run fr on la.product_id = fr.product_id
   cross join last_run lr;
